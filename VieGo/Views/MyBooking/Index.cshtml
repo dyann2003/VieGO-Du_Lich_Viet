@@ -1,0 +1,873 @@
+﻿<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Traveloka My Bookings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+          rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        /* Fix vertical alignment of icons and text in booking info rows */
+        .booking-info > div {
+            display: flex;
+            align-items: center;
+        }
+
+            .booking-info > div i {
+                flex-shrink: 0;
+            }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    @* <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-6">
+                    <a class="flex items-center space-x-2" href="home.html">
+                        <span class="font-bold text-base text-black select-none">
+                            Viego
+                        </span>
+                    </a>
+                    <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]">
+                        <li>
+                            <a class="hover:underline" href="aboutus.html"> About Us </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="faq.html"> FAQs </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="#"> Blog </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="tourguidedashboard.html">
+                                Tour Guide
+                            </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="serviceproviderdashboard.html">
+                                Service Provider
+                            </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="mybooking.html">
+                                My Bookings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex items-center space-x-4 text-sm font-normal text-[#1a1a1a]">
+                    <button aria-label="Toggle dark mode"
+                            class="hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 rounded">
+                        <i class="fas fa-sun"> </i>
+                    </button>
+                    <button class="flex items-center space-x-1 hover:text-gray-600">
+                        <i class="fas fa-globe"> </i>
+                        <span> EN </span>
+                    </button>
+                    <a class="hover:underline" href="#"> Log In </a>
+                    <a class="bg-[#0f172a] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#1e293b]"
+                       href="#">
+                        Register
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header> *@
+    <!-- Main content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-16">
+        <h1 class="text-lg font-bold text-gray-900 mb-1">My Bookings</h1>
+        <!-- Razor code -->
+        <input type="hidden" id="userId" value="@Context.Session.GetInt32("UserId")" />
+
+        <!-- JavaScript -->
+        <script>
+            const userId = document.getElementById("userId").value;
+            console.log("User ID from session:", userId);
+        </script>
+
+
+        <!-- Tabs -->
+        <div class="flex border border-gray-200 rounded-md bg-gray-50 text-xs font-semibold text-gray-600 mb-6 select-none overflow-x-auto">
+            <button data-tab="all"
+                    class="flex-1 bg-white text-gray-900 px-5 py-2 rounded-t-md border border-b-0 border-gray-200 focus:outline-none">
+                All Bookings
+            </button>
+            <button data-tab="upcoming"
+                    class="flex-1 px-5 py-2 rounded-t-md hover:text-gray-900 focus:outline-none">
+                Upcoming
+            </button>
+            <button data-tab="pending"
+                    class="flex-1 px-5 py-2 rounded-t-md hover:text-gray-900 focus:outline-none">
+                Pending
+            </button>
+            <button data-tab="completed"
+                    class="flex-1 px-5 py-2 rounded-t-md hover:text-gray-900 focus:outline-none">
+                Completed
+            </button>
+            <button data-tab="cancelled"
+                    class="flex-1 px-5 py-2 rounded-t-md hover:text-gray-900 focus:outline-none">
+                Cancelled
+            </button>
+        </div>
+        <!-- Booking cards container -->
+        <div>
+            <!-- All Bookings -->
+            <div id="bookingContainer" data-content="all" class="space-y-6">
+                <!-- Booking 1 -->
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Bali 4D3N: Explore Paradise Island
+                                </h2>
+                                <span class="text-xs font-semibold bg-green-100 text-green-700 rounded-full px-2 py-0.5 select-none">
+                                    Confirmed
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $687.5
+                                </div>
+                                <div class="text-green-600 font-semibold text-xs leading-4">
+                                    Paid
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001234
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                05/05/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 15/06/2024 - 18/06/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 2 Adults, 1 Child </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Confirmed </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <a href="bookingdetails.html">
+                                <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                    View Details
+                                    <i class="fas fa-chevron-right ml-1"> </i>
+                                </button>
+                            </a>
+
+                            <button class="border border-red-400 text-red-600 rounded px-3 py-1 hover:bg-red-50">
+                                Cancel Booking
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Booking 2 -->
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Singapore 3D2N: City Explorer
+                                </h2>
+                                <span class="text-xs font-semibold bg-blue-200 text-blue-700 rounded-full px-2 py-0.5 select-none">
+                                    Completed
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $640
+                                </div>
+                                <div class="text-green-600 font-semibold text-xs leading-4">
+                                    Paid
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001235
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                10/04/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 10/05/2024 - 12/05/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 2 Adults </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Completed </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                            <button class="border border-blue-400 text-blue-600 rounded px-3 py-1 hover:bg-blue-50">
+                                Write Review
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Booking 3 -->
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Bangkok City Tour
+                                </h2>
+                                <span class="text-xs font-semibold bg-yellow-200 text-yellow-700 rounded-full px-2 py-0.5 select-none">
+                                    Pending
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $700
+                                </div>
+                                <div class="text-yellow-600 font-semibold text-xs leading-4">
+                                    Pending
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001236
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                15/04/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 20/07/2024 - 23/07/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 1 Adult, 2 Children </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Pending </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                            <button class="bg-red-600 text-white rounded px-3 py-1 hover:bg-red-700">
+                                Complete Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Booking 4 -->
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Tokyo Adventure
+                                </h2>
+                                <span class="text-xs font-semibold bg-red-200 text-red-700 rounded-full px-2 py-0.5 select-none">
+                                    Cancelled
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $900
+                                </div>
+                                <div class="text-purple-600 font-semibold text-xs leading-4">
+                                    Refunded
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001237
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                01/03/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 05/04/2024 - 10/04/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 2 Adults </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Cancelled </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Upcoming Bookings -->
+            <div data-content="upcoming" class="hidden space-y-6">
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Bali 4D3N: Explore Paradise Island
+                                </h2>
+                                <span class="text-xs font-semibold bg-green-100 text-green-700 rounded-full px-2 py-0.5 select-none">
+                                    Confirmed
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $687.5
+                                </div>
+                                <div class="text-green-600 font-semibold text-xs leading-4">
+                                    Paid
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001234
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                05/05/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 15/06/2024 - 18/06/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 2 Adults, 1 Child </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Confirmed </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                            <button class="border border-red-400 text-red-600 rounded px-3 py-1 hover:bg-red-50">
+                                Cancel Booking
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pending Bookings -->
+            <div data-content="pending" class="hidden space-y-6">
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Bangkok City Tour
+                                </h2>
+                                <span class="text-xs font-semibold bg-yellow-200 text-yellow-700 rounded-full px-2 py-0.5 select-none">
+                                    Pending
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $700
+                                </div>
+                                <div class="text-yellow-600 font-semibold text-xs leading-4">
+                                    Pending
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001236
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                15/04/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 20/07/2024 - 23/07/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 1 Adult, 2 Children </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Pending </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                            <button class="bg-red-600 text-white rounded px-3 py-1 hover:bg-red-700">
+                                Complete Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Completed Bookings -->
+            <div data-content="completed" class="hidden space-y-6">
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Singapore 3D2N: City Explorer
+                                </h2>
+                                <span class="text-xs font-semibold bg-blue-200 text-blue-700 rounded-full px-2 py-0.5 select-none">
+                                    Completed
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $640
+                                </div>
+                                <div class="text-green-600 font-semibold text-xs leading-4">
+                                    Paid
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001235
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                10/04/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 10/05/2024 - 12/05/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 2 Adults </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Completed </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                            <button class="border border-blue-400 text-blue-600 rounded px-3 py-1 hover:bg-blue-50">
+                                Write Review
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Cancelled Bookings -->
+            <div data-content="cancelled" class="hidden space-y-6">
+                <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm">
+                    <div class="hidden">
+                        <!-- Removed image container as requested -->
+                    </div>
+                    <div class="flex flex-col flex-grow p-4 space-y-3">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-bold text-sm text-gray-900 leading-5">
+                                    Tokyo Adventure
+                                </h2>
+                                <span class="text-xs font-semibold bg-red-200 text-red-700 rounded-full px-2 py-0.5 select-none">
+                                    Cancelled
+                                </span>
+                            </div>
+                            <div class="text-right text-xs text-gray-400 select-none">
+                                <div>Total Price</div>
+                                <div class="text-red-600 font-bold text-base leading-5">
+                                    $900
+                                </div>
+                                <div class="text-purple-600 font-semibold text-xs leading-4">
+                                    Refunded
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-600">
+                            <div>
+                                <span class="font-semibold"> Booking ID: </span>
+                                BK-001237
+                            </div>
+                            <div class="mt-0.5">
+                                <span class="font-semibold"> Booked on: </span>
+                                01/03/2024
+                            </div>
+                        </div>
+                        <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-calendar-alt text-xs"> </i>
+                                <span class="font-semibold"> Travel Dates </span>
+                                <span class="ml-1"> 05/04/2024 - 10/04/2024 </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-xs"> </i>
+                                <span class="font-semibold"> Travelers </span>
+                                <span class="ml-1"> 2 Adults </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="far fa-clock text-xs"> </i>
+                                <span class="font-semibold"> Status </span>
+                                <span class="ml-1"> Cancelled </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 text-xs">
+                            <button class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                                View Details
+                                <i class="fas fa-chevron-right ml-1"> </i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    @* <footer class="bg-gray-900 text-gray-300 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-white font-semibold text-sm mb-3">About</h3>
+                <ul class="space-y-2 text-xs">
+                    <li>
+                        <a class="hover:underline" href="#"> How it works </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> About us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Careers </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Press </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold text-sm mb-3">Support</h3>
+                <ul class="space-y-2 text-xs">
+                    <li>
+                        <a class="hover:underline" href="#"> Help Center </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Contact us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Privacy policy </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Terms of service </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold text-sm mb-3">Products</h3>
+                <ul class="space-y-2 text-xs">
+                    <li>
+                        <a class="hover:underline" href="#"> Flights </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Hotels </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Train tickets </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Activities </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold text-sm mb-3">Follow Us</h3>
+                <div class="flex space-x-3 mb-3 text-gray-400 text-sm">
+                    <a aria-label="Facebook" class="hover:text-white" href="#">
+                        <i class="fab fa-facebook-f"> </i>
+                    </a>
+                    <a aria-label="Twitter" class="hover:text-white" href="#">
+                        <i class="fab fa-twitter"> </i>
+                    </a>
+                    <a aria-label="Instagram" class="hover:text-white" href="#">
+                        <i class="fab fa-instagram"> </i>
+                    </a>
+                    <a aria-label="LinkedIn" class="hover:text-white" href="#">
+                        <i class="fab fa-linkedin-in"> </i>
+                    </a>
+                </div>
+                <div class="text-xs font-semibold mb-1">Payment Methods</div>
+                <div class="flex space-x-1 text-xs">
+                    <div class="bg-white text-black px-1.5 py-0.5 rounded border border-gray-300">
+                        Visa
+                    </div>
+                    <div class="bg-white text-black px-1.5 py-0.5 rounded border border-gray-300">
+                        MC
+                    </div>
+                    <div class="bg-white text-black px-1.5 py-0.5 rounded border border-gray-300">
+                        Amex
+                    </div>
+                    <div class="bg-white text-black px-1.5 py-0.5 rounded border border-gray-300">
+                        PayPal
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-10 text-center text-gray-500 text-xs select-none">
+            © 2023 Traveloka Clone. All rights reserved.
+        </div>
+    </footer> *@
+    @section Scripts {
+        <script>
+            // const userId = document.getElementById("userId").value;
+            const API_URL = `/api/BookingApi/user/${userId}`;
+            const bookingContainer = document.getElementById("bookingContainer");
+
+            function formatDate(dateStr) {
+                if (!dateStr) return "-";
+                return new Date(dateStr).toLocaleDateString("en-GB");
+            }
+
+            function getStatusBadge(status) {
+                switch (status) {
+                    case "Confirmed": return "bg-green-100 text-green-700";
+                    case "Pending": return "bg-yellow-100 text-yellow-700";
+                    case "Cancelled": return "bg-red-100 text-red-600";
+                    case "Completed": return "bg-blue-200 text-blue-700";
+                    default: return "bg-gray-200 text-gray-600";
+                }
+            }
+
+            function renderFilteredBookings(bookings, statusFilter = "all") {
+                bookingContainer.innerHTML = "";
+
+                const filterMap = {
+                    upcoming: ["Confirmed"],
+                    pending: ["Pending"],
+                    completed: ["Completed"],
+                    cancelled: ["Cancelled"]
+                };
+
+                bookings.forEach((b) => {
+                    const status = b.bookingStatus;
+                    const show =
+                        statusFilter === "all" ||
+                        (filterMap[statusFilter] && filterMap[statusFilter].includes(status));
+                    if (!show) return;
+
+            const tour = b?.schedule?.tour ?? {};
+                    const tourName = tour?.tourName ?? "Unknown Tour";
+                    const bookingDate = formatDate(b.bookingDate);
+                    const travelDates = `${formatDate(b.travelStartDate)} - ${formatDate(b.travelEndDate)}`;
+                    const price = b.totalPrice ? `$${b.totalPrice.toFixed(2)}` : "$0.00";
+                    const guests = `${b.numAdults || 0} Adults${b.numChildren > 0 ? `, ${b.numChildren} Child` : ""}`;
+                    const paymentStatus = b.paymentStatus ?? "-";
+                    const statusBadge = getStatusBadge(status);
+
+                    const actionButtons = `
+                                    <button onclick="window.location.href='/MyBooking/BookingDetails?id=${b.bookingId}'"
+                class="border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 flex items-center justify-center">
+                View Details <i class="fas fa-chevron-right ml-1"></i>
+            </button>
+
+                        ${status === "Confirmed" ? `
+                        <button class="border border-red-400 text-red-600 rounded px-3 py-1 hover:bg-red-50">
+                            Cancel Booking
+                        </button>` : ""}
+                        ${status === "Completed" ? `
+                        <button class="border border-blue-400 text-blue-600 rounded px-3 py-1 hover:bg-blue-50">
+                            Write Review
+                        </button>` : ""}
+                        ${status === "Pending" ? `
+                        <button class="bg-red-600 text-white rounded px-3 py-1 hover:bg-red-700">
+                            Complete Payment
+                        </button>` : ""}
+                    `;
+
+                    const html = `
+                    <div class="flex flex-col md:flex-row bg-white border border-gray-200 rounded-md shadow-sm mb-4">
+                        <div class="hidden"></div>
+                        <div class="flex flex-col flex-grow p-4 space-y-3">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                                <div class="flex items-center space-x-2">
+                                    <h2 class="font-bold text-sm text-gray-900 leading-5">${tourName}</h2>
+                                    <span class="text-xs font-semibold rounded-full px-2 py-0.5 select-none ${statusBadge}">${status}</span>
+                                </div>
+                                <div class="text-right text-xs text-gray-400 select-none">
+                                    <div>Total Price</div>
+                                    <div class="text-red-600 font-bold text-base leading-5">${price}</div>
+                                    <div class="text-green-600 font-semibold text-xs leading-4">${paymentStatus}</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-600">
+                                <div><span class="font-semibold"> Booking ID: </span> BK-${String(b.bookingId).padStart(6, "0")}</div>
+                                <div class="mt-0.5"><span class="font-semibold"> Booked on: </span> ${bookingDate}</div>
+                            </div>
+                            <div class="booking-info flex flex-col md:flex-row md:items-center md:justify-between text-xs text-gray-600 space-y-3 md:space-y-0">
+                                <div class="flex items-center space-x-1">
+                                    <i class="far fa-calendar-alt text-xs"> </i>
+                                    <span class="font-semibold"> Travel Dates </span>
+                                    <span class="ml-1"> ${travelDates} </span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-user-friends text-xs"> </i>
+                                    <span class="font-semibold"> Travelers </span>
+                                    <span class="ml-1"> ${guests} </span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="far fa-clock text-xs"> </i>
+                                    <span class="font-semibold"> Status </span>
+                                    <span class="ml-1"> ${status} </span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-3 text-xs">
+                                ${actionButtons}
+                            </div>
+                        </div>
+                    </div>`;
+                    bookingContainer.insertAdjacentHTML("beforeend", html);
+                });
+            }
+
+
+
+            const tabs = document.querySelectorAll("[data-tab]");
+            tabs.forEach((tab) => {
+                tab.addEventListener("click", () => {
+                    tabs.forEach((t) => {
+                        t.classList.remove("bg-white", "text-gray-900", "border", "border-b-0", "border-gray-200", "rounded-t-md");
+                    });
+                    tab.classList.add("bg-white", "text-gray-900", "border", "border-b-0", "border-gray-200", "rounded-t-md");
+                    const tabName = tab.getAttribute("data-tab");
+                    renderFilteredBookings(window._bookings, tabName);
+                });
+            });
+
+                        async function fetchBookings() {
+                try {
+                    const res = await fetch(API_URL);
+                    const data = await res.json();
+
+                    // Kiểm tra xem data là mảng hay có $values
+                    const bookings = Array.isArray(data) ? data : data.$values || [];
+                    console.log("Fetched bookings:", bookings);
+
+                    window._bookings = bookings;
+                    renderFilteredBookings(window._bookings, "all");
+                } catch (err) {
+                    console.error("Error loading bookings:", err);
+                }
+            }
+
+
+            window.onload = fetchBookings;
+        </script>
+    }
+
+</body>
+</html>

@@ -1,0 +1,954 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Detail - Traveloka</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <style>
+        /* Custom styles */
+        .badge-outline {
+            background-color: transparent;
+            border: 1px solid #dee2e6;
+            color: #6c757d;
+        }
+
+        .author-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-img-sm {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .blog-card {
+            transition: transform 0.3s ease;
+        }
+
+            .blog-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .blog-title {
+            transition: color 0.3s ease;
+        }
+
+        .blog-card:hover .blog-title {
+            color: #dc3545;
+        }
+
+        .btn-action {
+            border-radius: 30px;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .text-rose {
+            color: #e83e8c;
+        }
+
+        .btn-rose {
+            background-color: #e83e8c;
+            border-color: #e83e8c;
+            color: white;
+        }
+
+            .btn-rose:hover {
+                background-color: #d4317c;
+                border-color: #d4317c;
+                color: white;
+            }
+
+        footer {
+            background-color: #f8f9fa;
+        }
+
+        .prose {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #212529;
+        }
+
+            .prose h2 {
+                font-size: 1.8rem;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+
+            .prose h3 {
+                font-size: 1.4rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                font-weight: 600;
+            }
+
+            .prose p {
+                margin-bottom: 1.25rem;
+            }
+
+            .prose ul,
+            .prose ol {
+                margin-bottom: 1.25rem;
+                padding-left: 1.5rem;
+            }
+
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+
+            .prose strong {
+                font-weight: 600;
+            }
+
+        .sticky-sidebar {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .related-post-img {
+            height: 120px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-6">
+                    <a class="flex items-center space-x-2 cursor-pointer"
+                       id="logo-button"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Toggle mobile menu"
+                       href="/Home">
+                        <!-- Logo Image -->
+                        <img src="/images/logo.png" alt="VieGo Logo" style="height: 120px; width: 120px;" />
+
+                    </a>
+                    <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]">
+                        <li>
+                            <a class="hover:underline" href="aboutus.html"> About Us </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="faq.html"> FAQs </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="blog.html"> Blog </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="/MyBooking">
+                                My Bookings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="bg-light">
+        <article class="container py-5">
+            <!-- Back to blog link -->
+            <div class="mb-4">
+                <a href="blog.html" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-chevron-left"></i> Back to Blog
+                </a>
+            </div>
+
+            <!-- Article header -->
+            <div id="post-header" class="mx-auto mb-5" style="max-width: 800px">
+                <!-- This will be populated by JavaScript -->
+            </div>
+
+            <!-- Featured image -->
+            <div class="position-relative mb-5 mx-auto" style="max-width: 1000px">
+                <img id="featured-image"
+                     src="https://via.placeholder.com/1200x600"
+                     class="img-fluid rounded"
+                     alt="Blog post image" />
+            </div>
+
+            <!-- Article content -->
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <!-- Article content -->
+                    <div id="post-content" class="prose">
+                        <!-- This will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="mt-5">
+                        <h3 class="fw-bold mb-3">Tags</h3>
+                        <div id="post-tags" class="d-flex flex-wrap gap-2">
+                            <!-- This will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Article actions -->
+                    <div class="d-flex align-items-center justify-content-between mt-5 pt-4 border-top">
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary btn-action">
+                                <i class="bi bi-hand-thumbs-up me-1"></i> Like
+                            </button>
+                            <button class="btn btn-outline-secondary btn-action">
+                                <i class="bi bi-chat-square-text me-1"></i> Comment
+                            </button>
+                            <button class="btn btn-outline-secondary btn-action">
+                                <i class="bi bi-share me-1"></i> Share
+                            </button>
+                        </div>
+                        <button class="btn btn-outline-secondary btn-action">
+                            <i class="bi bi-bookmark me-1"></i> Save
+                        </button>
+                    </div>
+
+                    <!-- Author bio -->
+                    <div id="author-bio" class="mt-5 bg-white p-4 rounded shadow-sm">
+                        <!-- This will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="sticky-sidebar">
+                        <h3 class="fw-bold fs-4 mb-4">Related Articles</h3>
+                        <div id="related-posts" class="d-flex flex-column gap-4">
+                            <!-- This will be populated by JavaScript -->
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <h3 class="fw-bold fs-4 mb-3">Popular Categories</h3>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="#" class="badge bg-secondary text-decoration-none">Travel Guides</a>
+                            <a href="#" class="badge bg-secondary text-decoration-none">Food & Cuisine</a>
+                            <a href="#" class="badge bg-secondary text-decoration-none">Adventure</a>
+                            <a href="#" class="badge bg-secondary text-decoration-none">Culture</a>
+                            <a href="#" class="badge bg-secondary text-decoration-none">Off the Beaten Path</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Blog Post Data and Logic -->
+    <script>
+      // Blog post data
+      const blogPosts = {
+        "halong-bay-cruise": {
+          title:
+            "Ultimate Guide to Halong Bay Cruises: Choosing the Right Experience",
+          excerpt:
+            "Discover the different types of cruises available in Halong Bay, from budget-friendly day trips to luxury overnight experiences, and find the perfect option for your travel style.",
+          image:
+            "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRFfU9vqxBbsq_f82Avfr4erQXikK_PeM1S36Lo1ipBo61SrgbU5tPPANMuCMch9WeQtd5IqNTMFgWxIi6dYVI_S7idcPjuyOHFrYCKBg",
+          date: "May 5, 2024",
+          author: "Nguyễn Văn A",
+          authorBio:
+            "Nguyễn Văn A is a travel writer and photographer who has been exploring Vietnam for over a decade. He specializes in adventure travel and cultural experiences.",
+          category: "Travel Guides",
+          readTime: "8 min read",
+          content: `
+          <p>Halong Bay, with its emerald waters and towering limestone islands, is one of Vietnam's most iconic destinations. A UNESCO World Heritage site, this natural wonder attracts millions of visitors each year, all eager to experience its breathtaking beauty. But with hundreds of cruise options available, choosing the right one can be overwhelming.</p>
+
+          <h2>Types of Halong Bay Cruises</h2>
+
+          <p>Halong Bay cruises generally fall into four categories:</p>
+
+          <h3>1. Day Cruises</h3>
+
+          <p>Perfect for travelers on a tight schedule or budget, day cruises typically last 4-6 hours and cover the main highlights of Halong Bay. While you won't get to see the bay at sunrise or sunset, you'll still experience its magnificent landscapes and have time for activities like kayaking or visiting a cave.</p>
+
+          <p><strong>Best for:</strong> Budget travelers, those with limited time</p>
+          <p><strong>Price range:</strong> $40-80 per person</p>
+
+          <h3>2. Budget Overnight Cruises</h3>
+
+          <p>These 2-day, 1-night cruises offer a more comprehensive experience, allowing you to see Halong Bay at different times of day. Accommodations are basic but comfortable, and activities typically include kayaking, swimming, cave exploration, and sometimes a cooking class.</p>
+
+          <p><strong>Best for:</strong> Backpackers, young travelers, those seeking value</p>
+          <p><strong>Price range:</strong> $100-150 per person</p>
+
+          <h3>3. Mid-range Cruises</h3>
+
+          <p>Offering a balance between comfort and affordability, mid-range cruises feature better amenities, more spacious cabins, and higher quality food. These 2-3 day cruises often visit less crowded areas of the bay and include a wider range of activities.</p>
+
+          <p><strong>Best for:</strong> Couples, families, travelers seeking comfort without luxury prices</p>
+          <p><strong>Price range:</strong> $150-250 per person</p>
+
+          <h3>4. Luxury Cruises</h3>
+
+          <p>For those seeking the ultimate Halong Bay experience, luxury cruises offer elegant cabins (often with private balconies), gourmet dining, premium activities, and exceptional service. Many luxury cruises visit Bai Tu Long Bay, a less crowded region with equally stunning scenery.</p>
+
+          <p><strong>Best for:</strong> Honeymooners, special occasions, travelers seeking premium experiences</p>
+          <p><strong>Price range:</strong> $250-500+ per person</p>
+
+          <h2>When to Visit Halong Bay</h2>
+
+          <p>The best time to visit Halong Bay is from October to April, when the weather is cooler and visibility is generally good. March and April offer a pleasant balance of comfortable temperatures and clear skies.</p>
+
+          <p>Summer months (May to September) bring hot, humid weather and occasional typhoons, which can lead to cruise cancellations. However, this is also when the bay is at its most vibrant green.</p>
+
+          <h2>Top Tips for Booking Your Halong Bay Cruise</h2>
+
+          <ul>
+            <li><strong>Book in advance:</strong> Especially during high season (November to March), the best cruises fill up quickly.</li>
+            <li><strong>Check the itinerary carefully:</strong> Some cruises visit the same crowded spots, while others explore more secluded areas.</li>
+            <li><strong>Consider cruise size:</strong> Smaller boats (12-20 passengers) offer a more intimate experience, while larger vessels have more amenities.</li>
+            <li><strong>Read recent reviews:</strong> The quality of cruises can change over time, so look for recent feedback.</li>
+            <li><strong>Pack appropriately:</strong> Bring sunscreen, insect repellent, a light jacket (for evening), and comfortable shoes for cave exploration.</li>
+          </ul>
+
+          <h2>Beyond the Standard Cruise: Unique Halong Bay Experiences</h2>
+
+          <p>For travelers seeking something different, consider these specialized options:</p>
+
+          <h3>Adventure Cruises</h3>
+
+          <p>Focused on active experiences like rock climbing, extended kayaking expeditions, and hiking on the islands.</p>
+
+          <h3>Photography Cruises</h3>
+
+          <p>Timed to capture the bay in the best light, with stops at the most photogenic locations and sometimes including photography workshops.</p>
+
+          <h3>Wellness Cruises</h3>
+
+          <p>Featuring tai chi sessions on deck, spa treatments, and healthy cuisine for a relaxing, rejuvenating experience.</p>
+
+          <h2>Conclusion</h2>
+
+          <p>Halong Bay is a must-visit destination in Vietnam, and choosing the right cruise can make all the difference in your experience. By considering your budget, time constraints, and travel preferences, you can find the perfect way to explore this natural wonder. Whether you opt for a simple day trip or an extended luxury cruise, the magical landscapes of Halong Bay are sure to leave you with unforgettable memories.</p>
+        `,
+          tags: [
+            "Halong Bay",
+            "Cruises",
+            "Vietnam Travel",
+            "UNESCO Sites",
+            "Travel Tips",
+          ],
+          relatedPosts: ["hoi-an-food", "vietnam-festivals", "hanoi-cafes"],
+        },
+        "hoi-an-food": {
+          title: "10 Must-Try Dishes in Hoi An: A Culinary Journey",
+          excerpt:
+            "Explore the unique flavors of Hoi An's cuisine, from the famous Cao Lau noodles to White Rose dumplings, and learn where locals go to find the most authentic versions of these dishes.",
+          image:
+            "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSpvHtE65RjadF1vA_u-sK1FF65cYIq2I5S6fiQG2NoorscP6JzhlixDvL0s3gfZ-5CvM7HZjb4FyCV0xGtjvJMA7lAOO9xd2jq2Fw8bQ",
+          date: "April 28, 2024",
+          author: "Trần Thị B",
+          authorImage: "https://via.placeholder.com/100",
+          authorBio:
+            "Trần Thị B is a food writer and culinary tour guide based in Hoi An. She has written extensively about Vietnamese cuisine and leads food tours throughout central Vietnam.",
+          category: "Food & Cuisine",
+          readTime: "6 min read",
+          content: `
+          <p>Hoi An, a UNESCO World Heritage site on Vietnam's central coast, is not only famous for its well-preserved Ancient Town and colorful lanterns but also for its distinctive cuisine. The city's unique culinary heritage reflects its history as a trading port, blending local Vietnamese flavors with influences from China, Japan, and Europe.</p>
+
+          <p>Here are 10 dishes you absolutely must try when visiting Hoi An, along with recommendations on where to find the most authentic versions:</p>
+
+          <h2>1. Cao Lau</h2>
+
+          <p>Cao Lau is Hoi An's signature dish and cannot be found anywhere else in its authentic form. This unique noodle dish features thick, chewy rice noodles, slices of pork, crispy croutons, bean sprouts, and fresh herbs, all topped with a small amount of intensely flavored broth.</p>
+
+          <p>What makes Cao Lau special is that traditionally, the noodles must be made with water from the ancient Ba Le well and ash from a particular type of tree found on the Cham Islands. While few places still follow this exact method, the dish remains distinctively Hoi An.</p>
+
+          <p><strong>Where to try it:</strong> Cao Lau Thanh on Tran Phu Street or the food stalls at Hoi An Central Market.</p>
+
+          <h2>2. White Rose (Banh Bao Vac)</h2>
+
+          <p>These delicate, translucent dumplings are shaped to resemble white roses. Made from rice flour, they're filled with spiced minced shrimp or pork and topped with crispy fried shallots. The recipe is a closely guarded secret, reportedly known to only one family in Hoi An who supplies the dumplings to restaurants throughout the city.</p>
+
+          <p><strong>Where to try it:</strong> White Rose Restaurant on Thai Phien Street, owned by the family who created the original recipe.</p>
+
+          <h2>3. Fried Wontons (Hoanh Thanh Chien)</h2>
+
+          <p>Hoi An's version of fried wontons differs from Chinese varieties. Here, crispy wonton sheets serve as a base for a colorful topping of stir-fried vegetables, shrimp, and a tangy tomato-based sauce.</p>
+
+          <p><strong>Where to try it:</strong> Bale Well Restaurant in the Ancient Town.</p>
+
+          <h2>4. Chicken Rice (Com Ga Hoi An)</h2>
+
+          <p>Inspired by Hainanese chicken rice but with a distinctly Vietnamese twist, Hoi An chicken rice features shredded chicken mixed with herbs, onions, and Vietnamese coriander, served over rice that's been cooked in chicken broth and turmeric (giving it a distinctive yellow color).</p>
+
+          <p><strong>Where to try it:</strong> Com Ga Ba Buoi on Phan Chu Trinh Street, a family-run establishment operating since the 1950s.</p>
+
+          <h2>5. Banh Mi Phuong</h2>
+
+          <p>While banh mi is available throughout Vietnam, the version at Banh Mi Phuong in Hoi An gained international fame after Anthony Bourdain featured it on his show. What makes it special is the perfect balance of crispy bread, homemade pâté, various meats, and a generous helping of fresh herbs and pickled vegetables.</p>
+
+          <p><strong>Where to try it:</strong> Banh Mi Phuong on Phan Chau Trinh Street, but be prepared to wait in line.</p>
+
+          <h2>6. Quang Noodles (Mi Quang)</h2>
+
+          <p>Originating from Quang Nam province (where Hoi An is located), Mi Quang features thick rice noodles tinted yellow with turmeric, served with just a small amount of broth. Toppings typically include shrimp, pork, chicken, peanuts, and rice crackers, with fresh herbs adding brightness.</p>
+
+          <p><strong>Where to try it:</strong> Mi Quang Ong Hai on Thai Phien Street.</p>
+
+          <h2>7. Grilled Pork with Rice Paper (Thit Nuong Cuon Banh Trang)</h2>
+
+          <p>This interactive dish allows diners to create their own fresh spring rolls. Thin slices of grilled pork are served alongside rice paper, fresh herbs, star fruit, green banana, and other vegetables. Dip the rice paper in water, add your desired fillings, roll it up, and dip in the special peanut sauce.</p>
+
+          <p><strong>Where to try it:</strong> Bale Well Restaurant, known for its set menu featuring this dish.</p>
+
+          <h2>8. Fried Spring Rolls (Nem Ran or Cha Gio)</h2>
+
+          <p>Hoi An's fried spring rolls are filled with a mixture of minced pork, seafood, mushrooms, and vegetables, wrapped in rice paper and deep-fried until golden and crispy. They're typically served with a fish sauce-based dipping sauce and fresh herbs.</p>
+
+          <p><strong>Where to try it:</strong> Morning Glory Restaurant in the Ancient Town.</p>
+
+          <h2>9. Sweet Soup (Che)</h2>
+
+          <p>Che is a category of Vietnamese sweet dessert soups or puddings. In Hoi An, look for che bap (sweet corn pudding), che dau xanh (mung bean pudding), and che chuoi (banana with tapioca pearls and coconut milk).</p>
+
+          <p><strong>Where to try it:</strong> Che Linh on Tran Phu Street.</p>
+
+          <h2>10. Hoi An Pancake (Banh Xeo)</h2>
+
+          <p>While banh xeo is found throughout Vietnam, Hoi An's version is smaller and crispier than those in other regions. These savory pancakes are made from rice flour, turmeric, and coconut milk, filled with shrimp, pork, and bean sprouts, then folded in half like a crepe. They're typically wrapped in rice paper with fresh herbs and dipped in a peanut sauce.</p>
+
+          <p><strong>Where to try it:</strong> Ba Le Well Restaurant or the food stalls at Hoi An Night Market.</p>
+
+          <h2>Tips for Food Exploration in Hoi An</h2>
+
+          <ul>
+            <li><strong>Take a food tour:</strong> Local guides can introduce you to hidden gems and explain the cultural significance of each dish.</li>
+            <li><strong>Visit the Central Market:</strong> Many food stalls here serve excellent local specialties at affordable prices.</li>
+            <li><strong>Look for cooking classes:</strong> Several restaurants and cooking schools offer classes where you can learn to make Hoi An specialties yourself.</li>
+            <li><strong>Eat where the locals eat:</strong> If you see a place packed with Vietnamese diners, that's usually a good sign.</li>
+            <li><strong>Be adventurous:</strong> Don't stick to familiar dishes—Hoi An's unique local specialties are what make its cuisine special.</li>
+          </ul>
+
+          <p>Hoi An's culinary scene is a delightful reflection of its history and culture. By exploring these ten essential dishes, you'll gain a deeper appreciation for this beautiful ancient city and the flavors that make it unique. Happy eating!</p>
+        `,
+          tags: [
+            "Hoi An",
+            "Vietnamese Food",
+            "Culinary Travel",
+            "Food Guide",
+            "Central Vietnam",
+          ],
+          relatedPosts: ["hanoi-cafes", "vietnam-festivals", "mekong-delta"],
+        },
+        "sapa-trekking": {
+          title: "Trekking in Sapa: Routes for Every Experience Level",
+          excerpt:
+            "From gentle half-day walks through rice terraces to challenging multi-day adventures, this guide covers everything you need to know about trekking in Vietnam's northern highlands.",
+          image:
+            "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQKpiwndn5_H4SJ2F1CB_pgT7O3wvMY0eteAFtMjTa7qmqXIc-OaPS76Wk7Fzgwqinxj02DCuhIZJW5O9417slVAbB6kMSKNQxqmo61vg",
+          date: "April 15, 2024",
+          author: "Lê Văn C",
+          authorImage: "https://via.placeholder.com/100",
+          authorBio:
+            "Lê Văn C is an adventure travel specialist who has led trekking expeditions throughout Vietnam's northern mountains for over 8 years.",
+          category: "Adventure",
+          readTime: "10 min read",
+          content: `
+  <p>Nằm ở vùng núi phía Bắc Việt Nam, Sapa là điểm đến lý tưởng cho những ai yêu thích thiên nhiên, văn hóa dân tộc thiểu số và những cung đường trekking ngoạn mục. Từ những con đường mòn nhẹ nhàng đến các hành trình đầy thử thách, Sapa có các tuyến trekking phù hợp với mọi cấp độ kinh nghiệm.</p>
+
+  <h2>1. Dành cho Người Mới Bắt Đầu: Trekking Lao Chai – Ta Van</h2>
+  <p>Đây là tuyến trekking dễ dàng nhất và phổ biến dành cho người mới. Bạn sẽ băng qua những ruộng bậc thang tuyệt đẹp và ghé thăm các bản làng người H’Mông và Giáy.</p>
+  <p><strong>Độ dài:</strong> khoảng 7–10km, đường mòn dễ đi.</p>
+  <p><strong>Thời gian:</strong> nửa ngày hoặc 1 ngày.</p>
+
+  <h2>2. Trình Độ Trung Bình: Trekking Y Linh Ho – Lao Chai – Ta Van</h2>
+  <p>Hành trình này dài hơn và đa dạng hơn với địa hình đồi núi và lối đi nhỏ. Bạn sẽ đi qua các thung lũng, dòng suối và những bản làng cổ kính.</p>
+  <p><strong>Độ dài:</strong> khoảng 12–15km.</p>
+  <p><strong>Thời gian:</strong> 1 ngày.</p>
+
+  <h2>3. Trình Độ Khá: Trekking Sapa – Hau Thao – Giang Ta Chai</h2>
+  <p>Hành trình này dành cho những ai đã có kinh nghiệm trekking. Bạn sẽ phải vượt qua các đoạn dốc, rừng tre và thác nước, đồng thời có cơ hội gặp gỡ người Dao đỏ và H’Mông đen.</p>
+  <p><strong>Độ dài:</strong> khoảng 15–18km.</p>
+  <p><strong>Thời gian:</strong> 1–2 ngày (có thể nghỉ homestay).</p>
+
+  <h2>4. Nâng Cao: Đỉnh Fansipan – “Nóc Nhà Đông Dương”</h2>
+  <p>Fansipan là thử thách lớn cho những ai yêu thích mạo hiểm. Dù hiện đã có cáp treo, nhiều du khách vẫn chọn leo bộ để trải nghiệm cảm giác chinh phục đỉnh núi cao nhất Việt Nam (3.147m).</p>
+  <p><strong>Lưu ý:</strong> Nên đi cùng hướng dẫn viên và chuẩn bị thể lực kỹ.</p>
+  <p><strong>Thời gian:</strong> 2–3 ngày tùy lộ trình.</p>
+
+  <h2>5. Trekking Làng Tả Phìn – Khám Phá Văn Hóa Dao Đỏ</h2>
+  <p>Con đường đến làng Tả Phìn không quá khó khăn, thích hợp cho cả gia đình. Bạn có thể ghé thăm hang động, ngâm lá thuốc Dao đỏ, và khám phá cuộc sống bản địa.</p>
+  <p><strong>Độ dài:</strong> khoảng 8–10km.</p>
+  <p><strong>Thời gian:</strong> nửa ngày hoặc 1 ngày.</p>
+
+  <h2>Lưu Ý Khi Trekking ở Sapa</h2>
+  <ul>
+    <li><strong>Đi cùng người bản địa hoặc hướng dẫn viên:</strong> Họ hiểu rõ địa hình và văn hóa.</li>
+    <li><strong>Chuẩn bị giày trekking tốt:</strong> Đường có thể trơn, đặc biệt vào mùa mưa.</li>
+    <li><strong>Trang phục phù hợp:</strong> Mang theo áo mưa nhẹ, mũ, kem chống nắng và nước uống.</li>
+    <li><strong>Tôn trọng văn hóa bản địa:</strong> Hỏi ý kiến trước khi chụp ảnh người dân, không xả rác.</li>
+  </ul>
+
+  <p>Dù bạn là người mới hay đã có kinh nghiệm trekking lâu năm, Sapa luôn mang đến những cung đường hùng vĩ và những trải nghiệm văn hóa khó quên. Hãy chọn tuyến đường phù hợp và bắt đầu hành trình khám phá vùng núi kỳ diệu này.</p>
+`,
+
+          tags: [
+            "Sapa",
+            "Trekking",
+            "Northern Vietnam",
+            "Adventure Travel",
+            "Outdoor Activities",
+          ],
+          relatedPosts: [
+            "halong-bay-cruise",
+            "vietnam-festivals",
+            "hanoi-cafes",
+          ],
+        },
+        "mekong-delta": {
+          title: "Exploring the Mekong Delta: Beyond the Tourist Trail",
+          excerpt:
+            "Venture beyond the typical day trips to discover the authentic Mekong Delta. Learn about homestay experiences, lesser-known floating markets, and how to experience local life on the water.",
+          image:
+            "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqaLJrOkFsqa5OFQ6LjawJbPik3w_oH8uB7AiHkPzW6VgtwSJh_AOIcnZoH_R42hK5cMq59gh2WXBi2plErIeSag5FeHojBkGfzYmkANwiBWo_aqsg8j3Gypfsm90QwhTn9ihaO=w675-h390-n-k-no",
+          date: "April 8, 2024",
+          author: "Phạm Thị D",
+          authorImage: "https://via.placeholder.com/100",
+          authorBio:
+            "Phạm Thị D grew up in the Mekong Delta and now works as a travel writer specializing in authentic experiences in southern Vietnam.",
+          category: "Off the Beaten Path",
+          readTime: "7 min read",
+          content: `
+  <p>The Mekong Delta, often called the “rice bowl” of Vietnam, is a sprawling region of rivers, swamps, and lush green fields. While many travelers opt for short day trips from Ho Chi Minh City, a deeper dive into the Delta reveals a way of life that remains closely tied to the rhythm of the river.</p>
+
+  <p>To truly experience the Mekong Delta, consider venturing beyond the typical tourist spots. Here are ways you can explore the region authentically and meaningfully:</p>
+
+  <h2>1. Stay with a Local Family</h2>
+
+  <p>Homestays in the Delta offer a warm welcome and a chance to live like a local. You’ll sleep in traditional wooden houses, join in home-cooked meals, and take part in everyday activities like fishing, gardening, or cooking banh xeo (Vietnamese savory pancakes).</p>
+
+  <p><strong>Top locations:</strong> Vinh Long, Ben Tre, and Can Tho offer a wide range of homestay experiences.</p>
+
+  <h2>2. Visit Lesser-Known Floating Markets</h2>
+
+  <p>Cai Rang and Phong Dien markets in Can Tho are well-known, but for a more intimate experience, head to smaller markets like Nga Nam or Long Xuyen. These markets are bustling early in the morning and give you a glimpse into the true commerce of the Delta — locals trading goods by boat in a lively, waterborne rhythm.</p>
+
+  <p><strong>Travel tip:</strong> Arrive by 5–6 a.m. to catch the markets at their busiest.</p>
+
+  <h2>3. Cycle Through the Countryside</h2>
+
+  <p>Flat terrain and quiet rural paths make the Mekong Delta ideal for cycling. Ride past fruit orchards, rice paddies, and stilt houses, and stop at roadside stalls for fresh coconuts or a bowl of hu tieu (rice noodle soup).</p>
+
+  <p><strong>Suggested routes:</strong> Ben Tre’s coconut groves or An Binh Island near Vinh Long.</p>
+
+  <h2>4. Explore the Canals by Rowboat</h2>
+
+  <p>Beyond motorboat tours, rowing through narrow canals gives you a peaceful, up-close view of daily life. Watch locals tending to gardens, kids swimming in the river, and boats ferrying goods between homes.</p>
+
+  <p><strong>Best experience:</strong> Let a local guide take you through less-trafficked waterways for an authentic feel.</p>
+
+  <h2>5. Discover Khmer Culture in Tra Vinh</h2>
+
+  <p>Tra Vinh is home to a large Khmer community, and its ornate temples and distinct customs offer a unique cultural layer to the Delta. Visit Ang Pagoda or Ba Om Pond, and sample Khmer specialties like num banh chok (rice noodle curry).</p>
+
+  <p><strong>When to go:</strong> During Khmer festivals like Chol Chnam Thmay (New Year) in April.</p>
+
+  <h2>6. Learn About Traditional Crafts</h2>
+
+  <p>The Delta is known for cottage industries like coconut candy making, rice paper production, and weaving. Visit family-run workshops to see how these goods are still made by hand — and try your hand at making some!</p>
+
+  <p><strong>Where to go:</strong> My Tho and Ben Tre are known for their local craft villages.</p>
+
+  <h2>7. Support Sustainable Tourism</h2>
+
+  <p>Choose eco-friendly tours and responsible operators that contribute to the community. Look for homestays that practice waste reduction, or tours that donate to local schools and conservation projects.</p>
+
+  <p><strong>Why it matters:</strong> Sustainable travel helps preserve the Delta’s fragile ecosystems and supports local livelihoods.</p>
+
+  <h2>Tips for Travelers</h2>
+  <ul>
+    <li><strong>Travel slowly:</strong> Spend at least 2–3 days in the region to appreciate its pace of life.</li>
+    <li><strong>Bring cash:</strong> Many rural areas have limited access to ATMs.</li>
+    <li><strong>Pack light:</strong> Lightweight clothing, a hat, and mosquito repellent are essentials.</li>
+    <li><strong>Learn a few Vietnamese phrases:</strong> Even basic greetings can make a big difference in connecting with locals.</li>
+  </ul>
+
+  <p>The Mekong Delta is more than just a scenic stop — it’s a living, breathing region full of culture, warmth, and discovery. By going off the beaten path, you’ll uncover the true spirit of this remarkable part of Vietnam.</p>
+`,
+          tags: [
+            "Mekong Delta",
+            "Off the Beaten Path",
+            "Southern Vietnam",
+            "Floating Markets",
+            "Local Experiences",
+          ],
+          relatedPosts: ["hoi-an-food", "vietnam-festivals", "hanoi-cafes"],
+        },
+        "hanoi-cafes": {
+          title: "Hanoi's Hidden Cafes: A Coffee Lover's Guide",
+          excerpt:
+            "Discover the rich coffee culture of Vietnam's capital through its unique cafes, from historic establishments to trendy new spots, and learn how to order and enjoy Vietnamese coffee like a local.",
+          image:
+            "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3mC9Dky20SGhV631jIm5X_vlqJwKyyDWnYhhCBx4NsGa47UyCe7qJYQJ_JoIYJxuONMvcgZ2q3VMrLi0wgqpWBFC9Cm8471kV0S0vO2c3iChosA-X5ZdvcuDRK3X7wb9NfHI3zA=w675-h390-n-k-no",
+          date: "March 30, 2024",
+          author: "Nguyễn Văn A",
+          authorBio:
+            "Nguyễn Văn A is a travel writer and photographer who has been exploring Vietnam for over a decade. He specializes in adventure travel and cultural experiences.",
+          category: "Food & Cuisine",
+          readTime: "5 min read",
+          content: `
+  <p>Hanoi, the capital of Vietnam, boasts a vibrant coffee culture that reflects the city’s deep historical roots and evolving modern tastes. From hidden alleyway gems to charming lakeside spots, Hanoi's cafés offer an unforgettable journey for any coffee enthusiast.</p>
+
+  <p>Here are 10 hidden cafés you must visit in Hanoi, along with tips on how to enjoy Vietnamese coffee like a true local:</p>
+
+  <h2>1. Café Giảng</h2>
+
+  <p>Famous for inventing egg coffee (cà phê trứng), Café Giảng is tucked away in a narrow alley in the Old Quarter. This rich, creamy drink features whisked egg yolk and sweetened condensed milk atop robust Vietnamese coffee.</p>
+
+  <p><strong>Where to find it:</strong> 39 Nguyen Huu Huan, Hoan Kiem District.</p>
+
+  <h2>2. Loading T Café</h2>
+
+  <p>Located in a colonial-era French villa, Loading T Café is known for its peaceful ambiance and signature cinnamon-scented coffee. It’s the perfect retreat from the bustling streets outside.</p>
+
+  <p><strong>Where to find it:</strong> 8 Chan Cam Street, Hoan Kiem District.</p>
+
+  <h2>3. Hidden Gem Coffee</h2>
+
+  <p>True to its name, this upcycled-themed café is filled with recycled furniture and colorful decorations. It offers a relaxed atmosphere and creative coffee drinks like coconut coffee and yoghurt coffee.</p>
+
+  <p><strong>Where to find it:</strong> 3B Hang Tre, Hoan Kiem District.</p>
+
+  <h2>4. Tranquil Books & Coffee</h2>
+
+  <p>A quiet, book-lined haven perfect for reading or studying, Tranquil serves traditional Vietnamese brews alongside Western-style espresso drinks.</p>
+
+  <p><strong>Where to find it:</strong> 5 Nguyen Quang Bich, Hoan Kiem District.</p>
+
+  <h2>5. Note Coffee</h2>
+
+  <p>Every surface of Note Coffee is covered with thousands of handwritten sticky notes from visitors around the world. It’s quirky, cozy, and a must-see for those wanting a fun twist on their coffee stop.</p>
+
+  <p><strong>Where to find it:</strong> 64 Luong Van Can, Hoan Kiem District.</p>
+
+  <h2>6. The Hanoi Social Club</h2>
+
+  <p>A trendy spot in a vintage French villa, this café is popular with locals and expats alike. Alongside great coffee, it offers a diverse food menu and occasional live music events.</p>
+
+  <p><strong>Where to find it:</strong> 6 Hoi Vu, Hoan Kiem District.</p>
+
+  <h2>7. Blackbird Coffee</h2>
+
+  <p>Minimalist and modern, Blackbird Coffee roasts its beans in-house and serves meticulously brewed coffee. It's ideal for those who appreciate the craft of specialty coffee.</p>
+
+  <p><strong>Where to find it:</strong> 5 Chan Cam Street, Hoan Kiem District.</p>
+
+  <h2>8. Café Dinh</h2>
+
+  <p>This nostalgic café, located above an old colonial building overlooking Hoan Kiem Lake, is another beloved spot for egg coffee. Its antique décor and quiet setting take you back in time.</p>
+
+  <p><strong>Where to find it:</strong> 13 Dinh Tien Hoang, Hoan Kiem District.</p>
+
+  <h2>9. Maison de Tet Décor</h2>
+
+  <p>Blending French elegance with Vietnamese charm, Maison de Tet serves ethically sourced, organic coffee in a beautiful setting near West Lake.</p>
+
+  <p><strong>Where to find it:</strong> 26 Quang Ba, Tay Ho District.</p>
+
+  <h2>10. Cong Caphe</h2>
+
+  <p>With a vintage military theme and unique menu, Cong Caphe is a Hanoi-based chain known for its coconut coffee and nostalgic décor inspired by the 1980s.</p>
+
+  <p><strong>Where to find it:</strong> Multiple locations across Hanoi, including 54 Ma May, Hoan Kiem District.</p>
+
+  <h2>Tips for Enjoying Coffee in Hanoi</h2>
+
+  <ul>
+    <li><strong>Try different styles:</strong> Don’t miss out on egg coffee, coconut coffee, and traditional drip-filter (phin) coffee.</li>
+    <li><strong>Visit early or late:</strong> Mornings and evenings are the best times to enjoy a quiet café experience in Hanoi.</li>
+    <li><strong>Go beyond the Old Quarter:</strong> Districts like Tay Ho and Ba Dinh also host unique coffee spots.</li>
+    <li><strong>Learn the lingo:</strong> “Cà phê sữa đá” (iced milk coffee) and “cà phê đen đá” (iced black coffee) are staples you’ll find everywhere.</li>
+    <li><strong>Bring a notebook:</strong> Many cafés in Hanoi are inspiring spaces—perfect for journaling, sketching, or working.</li>
+  </ul>
+
+  <p>Hanoi’s coffee scene is more than just a drink—it’s a cultural experience. Whether you’re sipping egg coffee in a hidden alley or enjoying a modern roast in a sleek café, each cup tells a story. Cheers to discovering the city, one café at a time!</p>
+`,
+          tags: [
+            "Hanoi",
+            "Vietnamese Coffee",
+            "Cafes",
+            "Food & Drink",
+            "Urban Exploration",
+          ],
+          relatedPosts: [
+            "hoi-an-food",
+            "vietnam-festivals",
+            "halong-bay-cruise",
+          ],
+        },
+        "vietnam-festivals": {
+          title: "Vietnam's Most Colorful Festivals and When to See Them",
+          excerpt:
+            "Plan your trip around Vietnam's vibrant traditional festivals. From Tet celebrations to the Hue Festival, this calendar guide helps you experience the country's rich cultural heritage.",
+          image:
+            "https://vietnam.travel/sites/default/files/inline-images/Hue%20Festival%20Vietnam.jpg",
+          date: "March 22, 2024",
+          author: "Trần Thị B",
+          authorImage: "https://via.placeholder.com/100",
+          authorBio:
+            "Trần Thị B is a food writer and culinary tour guide based in Hoi An. She has written extensively about Vietnamese cuisine and leads food tours throughout central Vietnam.",
+          category: "Culture",
+          readTime: "9 min read",
+
+          content: `
+  <p>Vietnam is a country of rich traditions, and one of the best ways to experience its culture is by attending its many colorful festivals. These events offer a glimpse into the spiritual life, historical milestones, and joyful celebrations that define Vietnamese identity.</p>
+
+  <p>Here are 10 of the most vibrant festivals you should consider planning your trip around, along with information on when and where to witness them:</p>
+
+  <h2>1. Tet Nguyen Dan (Lunar New Year)</h2>
+
+  <p>Tet is Vietnam’s most important celebration, marking the arrival of spring based on the lunar calendar. Families reunite, homes are decorated with peach blossoms and kumquat trees, and the streets come alive with fireworks and lion dances.</p>
+
+  <p><strong>When and where:</strong> Nationwide, typically in late January or early February.</p>
+
+  <h2>2. Perfume Pagoda Festival</h2>
+
+  <p>Held at the famous Huong Pagoda near Hanoi, this pilgrimage festival involves a scenic boat ride through limestone mountains followed by a spiritual journey to various temples in the complex.</p>
+
+  <p><strong>When and where:</strong> Hanoi, from mid-January to March (lunar calendar).</p>
+
+  <h2>3. Hung Kings Temple Festival</h2>
+
+  <p>This festival honors the legendary founders of Vietnam, the Hung Kings, with grand ceremonies, parades, and traditional games. It’s a time for national pride and ancestral remembrance.</p>
+
+  <p><strong>When and where:</strong> Phu Tho Province, 10th day of the third lunar month.</p>
+
+  <h2>4. Hue Festival</h2>
+
+  <p>This biennial event celebrates the cultural heritage of Hue, Vietnam’s ancient capital. It features royal court music, áo dài fashion shows, traditional theater, and international art performances.</p>
+
+  <p><strong>When and where:</strong> Hue City, every two years in April or June.</p>
+
+  <h2>5. Mid-Autumn Festival (Tet Trung Thu)</h2>
+
+  <p>Known as the Children’s Festival, Tet Trung Thu is famous for its colorful lanterns, lion dances, and mooncakes. Kids parade with star-shaped lanterns and enjoy storytelling about the Moon Lady and the Jade Rabbit.</p>
+
+  <p><strong>When and where:</strong> Nationwide, 15th day of the 8th lunar month (usually September).</p>
+
+  <h2>6. Lim Festival</h2>
+
+  <p>This festival is a celebration of quan ho folk singing, a UNESCO-recognized tradition. Dressed in traditional costumes, singers perform romantic duets across courtyards, boats, and hills.</p>
+
+  <p><strong>When and where:</strong> Bac Ninh Province, 13th day of the first lunar month.</p>
+
+  <h2>7. Whale Festival (Le Hoi Cau Ngu)</h2>
+
+  <p>This coastal celebration pays homage to whales, considered sacred guardians of fishermen. The festival includes processions, dragon dances, and boat races.</p>
+
+  <p><strong>When and where:</strong> Coastal villages in Central and Southern Vietnam, typically in March or April.</p>
+
+  <h2>8. Hoi An Lantern Festival</h2>
+
+  <p>Every full moon, Hoi An transforms into a magical town lit by thousands of silk lanterns. The lights reflect off the river, and streets are filled with traditional games, music, and performances.</p>
+
+  <p><strong>When and where:</strong> Hoi An, on the 14th day of every lunar month.</p>
+
+  <h2>9. Buddha’s Birthday (Le Phat Dan)</h2>
+
+  <p>Temples across the country decorate with lotus lanterns and host solemn ceremonies, parades, and offerings to celebrate the birth of the Buddha.</p>
+
+  <p><strong>When and where:</strong> Nationwide, 15th day of the 4th lunar month (April/May).</p>
+
+  <h2>10. Kate Festival</h2>
+
+  <p>A major Cham festival, Kate is a colorful expression of the Cham people's heritage, featuring processions, drum dancing, and rituals at ancient tower temples.</p>
+
+  <p><strong>When and where:</strong> Ninh Thuan Province, 7th month of the Cham calendar (around September–October).</p>
+
+  <h2>Tips for Experiencing Vietnamese Festivals</h2>
+
+  <ul>
+    <li><strong>Check the lunar calendar:</strong> Many festivals follow lunar dates, so verify the timing each year.</li>
+    <li><strong>Respect local customs:</strong> Dress modestly, follow rituals if invited, and ask before taking photos at temples or ceremonies.</li>
+    <li><strong>Book accommodations early:</strong> Popular festivals often draw large crowds, so plan ahead.</li>
+    <li><strong>Engage with locals:</strong> Festivals are a great opportunity to connect with Vietnamese traditions through food, dance, and music.</li>
+    <li><strong>Be mindful of traffic and closures:</strong> Festivals may lead to street closures or limited transport in some areas.</li>
+  </ul>
+
+  <p>Vietnam’s festivals are a vibrant tapestry of culture, spirituality, and community. By timing your visit with these events, you'll witness a deeper side of the country and carry unforgettable memories of its joyous spirit.</p>
+`,
+
+          tags: [
+            "Vietnamese Festivals",
+            "Cultural Events",
+            "Traditional Celebrations",
+            "Tet",
+            "Travel Planning",
+          ],
+          relatedPosts: ["hoi-an-food", "hanoi-cafes", "mekong-delta"],
+        },
+      };
+
+      // Get post ID from URL
+      function getPostId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("id");
+      }
+
+      // Display post not found
+      function displayNotFound() {
+        document.title = "Post Not Found - Traveloka";
+
+        const mainContent = document.querySelector("main");
+        mainContent.innerHTML = `
+        <div class="container py-5">
+          <div class="text-center py-5">
+            <h2 class="fs-1 fw-bold mb-4">Post Not Found</h2>
+            <p class="mb-4">The blog post you're looking for doesn't exist or has been removed.</p>
+            <a href="blog.html" class="btn btn-primary">Back to Blog</a>
+          </div>
+        </div>
+      `;
+      }
+
+      // Render post header
+      function renderPostHeader(post) {
+        const headerElement = document.getElementById("post-header");
+        headerElement.innerHTML = `
+        <div class="d-flex align-items-center gap-2 mb-4">
+          <span class="badge badge-outline">${post.category}</span>
+          <span class="text-muted d-flex align-items-center gap-1">
+            <i class="bi bi-clock"></i> ${post.readTime}
+          </span>
+        </div>
+        <h1 class="fs-1 fw-bold mb-4">${post.title}</h1>
+        <p class="fs-5 text-secondary mb-4">${post.excerpt}</p>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-3">
+            <div>
+              <p class="fw-medium mb-0">${post.author}</p>
+              <p class="text-muted small mb-0">${post.date}</p>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary btn-icon">
+              <i class="bi bi-share"></i>
+            </button>
+            <button class="btn btn-outline-secondary btn-icon">
+              <i class="bi bi-bookmark"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      }
+
+      // Render post content
+      function renderPostContent(post) {
+        document.getElementById("post-content").innerHTML = post.content;
+      }
+
+      // Render post tags
+      function renderPostTags(post) {
+        const tagsElement = document.getElementById("post-tags");
+        tagsElement.innerHTML = post.tags
+          .map((tag) => `<span class="badge bg-secondary">${tag}</span>`)
+          .join("");
+      }
+
+      // Render author bio
+      function renderAuthorBio(post) {
+        const bioElement = document.getElementById("author-bio");
+        bioElement.innerHTML = `
+        <div class="d-flex align-items-start gap-4">
+          <div>
+            <h3 class="fw-bold fs-5 mb-2">About ${post.author}</h3>
+            <p class="text-secondary mb-0">${post.authorBio}</p>
+          </div>
+        </div>
+      `;
+      }
+
+      // Render related posts
+      function renderRelatedPosts(post) {
+        const relatedElement = document.getElementById("related-posts");
+        let relatedHTML = "";
+
+        post.relatedPosts.forEach((relatedId) => {
+          const relatedPost = blogPosts[relatedId];
+          if (relatedPost) {
+            relatedHTML += `
+            <div class="card shadow-sm blog-card">
+              <div class="row g-0">
+                <div class="col-4">
+                  <img src="${relatedPost.image}" class="img-fluid related-post-img rounded-start" alt="${relatedPost.title}">
+                </div>
+                <div class="col-8">
+                  <div class="card-body p-3">
+                    <a href="blog-detail.html?id=${relatedId}" class="text-decoration-none text-dark">
+                      <h4 class="fs-6 fw-medium mb-2 blog-title">${relatedPost.title}</h4>
+                    </a>
+                    <div class="d-flex align-items-center justify-content-between mt-2">
+                      <small class="text-muted">${relatedPost.date}</small>
+                      <span class="badge badge-outline">${relatedPost.category}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          }
+        });
+
+        relatedElement.innerHTML = relatedHTML;
+      }
+
+      // Set featured image
+      function setFeaturedImage(post) {
+        const imgElement = document.getElementById("featured-image");
+        imgElement.src = post.image;
+        imgElement.alt = post.title;
+      }
+
+      // Initialize the page
+      function initPage() {
+        const postId = getPostId();
+        const post = blogPosts[postId];
+
+        if (!post) {
+          displayNotFound();
+          return;
+        }
+
+        // Set page title
+        document.title = `${post.title} - Traveloka Blog`;
+
+        // Render all post components
+        renderPostHeader(post);
+        setFeaturedImage(post);
+        renderPostContent(post);
+        renderPostTags(post);
+        renderAuthorBio(post);
+        renderRelatedPosts(post);
+      }
+
+      // Run initialization when DOM is loaded
+      document.addEventListener("DOMContentLoaded", initPage);
+    </script>
+</body>
+</html>

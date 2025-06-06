@@ -1,0 +1,417 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var email = HttpContextAccessor.HttpContext?.Session.GetString("Email");
+    var fullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VieGo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/VieGo.styles.css" asp-append-version="true" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+          rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        /* Custom scrollbar for textarea vertical scroll */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1; /* Tailwind slate-300 */
+            border-radius: 4px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+            .tab-content.active {
+                display: block;
+                .chat-widget
+
+        {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+            .chat-icon:hover {
+                background-color: #1e293b;
+                transform: scale(1.05);
+            }
+
+        .chat-popup {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+            .chat-popup.active {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: all;
+            }
+
+        .chat-header {
+            background-color: #0f172a;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            margin-left: auto;
+            background-color: #e2f5ff;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .assistant-message {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 18px 18px 18px 0;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eaeaea;
+        }
+
+            .chat-input input {
+                flex: 1;
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                border-radius: 20px;
+                outline: none;
+            }
+
+            .chat-input button {
+                background-color: #0f172a;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                margin-left: 10px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .chat-input button:hover {
+                    background-color: #1e293b;
+                }
+
+        .tour-suggestion {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+            .tour-suggestion h4 {
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+        .view-details {
+            color: #0f172a;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+            .view-details:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <header class="bg-white border-b border-gray-200 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-6">
+                    <a class="flex items-center space-x-2 cursor-pointer"
+                       id="logo-button"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Toggle mobile menu"
+                       href="/Home">
+                        <!-- Logo Image -->
+                        <img src="images/logo.png" alt="VieGo Logo" style="height: 120px; width: 120px;" />
+
+                    </a>
+                    <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]"
+                        id="desktop-menu">
+                        <li><a class="hover" href="/pages/aboutus.html"> About Us </a></li>
+                        <li><a class="hover" href="/pages/faq.html"> FAQs </a></li>
+                        <li><a class="hover" href="/pages/blog.html"> Blog </a></li>
+                        <li><a class="hover" href="@Url.Action("Index", "MyBooking")"> My Bookings </a></li>
+                    </ul>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 text-sm font-normal text-[#1a1a1a]"
+                     id="desktop-actions">
+                    <button aria-label="Toggle dark mode"
+                            class="hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 rounded">
+                        <i class="fas fa-sun"> </i>
+                    </button>
+                    <button class="flex items-center space-x-1 hover:text-gray-600">
+                        <i class="fas fa-globe"> </i>
+                        <span> EN </span>
+                    </button>
+                    @if (!string.IsNullOrEmpty(email))
+                    {
+                        <div class="flex items-center space-x-4 text-sm font-normal text-[#1a1a1a]">
+                            <span class="font-semibold">@email</span>
+                            <a class="hover:underline" asp-controller="Login" asp-action="Logout">Logout</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="hover:underline" asp-controller="Login" asp-action="Index">Log In</a>
+                        <a class="bg-[#0f172a] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#1e293b]"
+                           asp-controller="Login" asp-action="Index">Register</a>
+                    }
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button"
+                            id="mobile-menu-button"
+                            class="text-gray-700 hover:text-gray-900 focus:outline-none"
+                            aria-label="Toggle mobile menu"
+                            aria-expanded="false"
+                            aria-controls="mobile-dropdown">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile dropdown menu -->
+            <div class="mobile-dropdown md:hidden hidden"
+                 id="mobile-dropdown"
+                 role="menu"
+                 aria-label="Mobile menu">
+                <nav class="px-4 py-3 space-y-3">
+                    <a href="aboutus.html" class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2">About Us</a>
+                    <a href="faq.html" class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2">FAQs</a>
+                    <a href="#" class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2">Blog</a>
+                    <a href="tourguidedashboard.html" class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2">Tour Guide</a>
+                    <a href="serviceproviderdashboard.html" class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2">Service Provider</a>
+                    <a href="mybooking.html" class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2">My Bookings</a>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-gray-500">Theme</span>
+                            <button class="text-gray-700 hover:text-gray-900 focus:outline-none" aria-label="Toggle dark mode">
+                                <i class="fas fa-sun"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-gray-500">Language</span>
+                            <button class="text-gray-700 hover:text-gray-900 focus:outline-none flex items-center" aria-label="Change language">
+                                <i class="fas fa-globe mr-1"></i>
+                                <span>EN</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-2 pt-3">
+                        @if (!string.IsNullOrEmpty(email))
+                        {
+                            <div class="flex items-center space-x-4 text-sm font-normal text-[#1a1a1a]">
+                                <span class="font-semibold">@email</span>
+                                <a class="hover:underline" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="hover:underline" asp-controller="Login" asp-action="Index">Log In</a>
+                            <a class="bg-[#0f172a] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#1e293b]"
+                               asp-controller="Login" asp-action="Index">Register</a>
+                        }
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300 text-xs">
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div>
+                <h3 class="font-semibold text-white mb-3 text-sm">About</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a class="hover:underline" href="#"> How it works </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> About us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Careers </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Press </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-white mb-3 text-sm">Support</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a class="hover:underline" href="#"> Help Center </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Contact us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Privacy policy </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Terms of service </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-white mb-3 text-sm">Products</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a class="hover:underline" href="#"> Flights </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Hotels </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Train tickets </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Activities </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-white mb-3 text-sm">Follow Us</h3>
+                <div class="flex space-x-3 mb-3">
+                    <a aria-label="Follow on Facebook"
+                       class="hover:text-white"
+                       href="#">
+                        <i class="fab fa-facebook-f"> </i>
+                    </a>
+                    <a aria-label="Follow on Instagram"
+                       class="hover:text-white"
+                       href="#">
+                        <i class="fab fa-instagram"> </i>
+                    </a>
+                    <a aria-label="Follow on Twitter" class="hover:text-white" href="#">
+                        <i class="fab fa-twitter"> </i>
+                    </a>
+                    <a aria-label="Follow on LinkedIn"
+                       class="hover:text-white"
+                       href="#">
+                        <i class="fab fa-linkedin-in"> </i>
+                    </a>
+                </div>
+                <div class="font-semibold text-white mb-1 text-[10px]">
+                    Payment Methods
+                </div>
+                <div class="flex space-x-1">
+                    <img alt="Visa payment method logo"
+                         class="h-4 w-auto"
+                         height="16"
+                         loading="lazy"
+                         src="https://storage.googleapis.com/a1aa/image/2a14e0c1-c919-4585-a290-5db265ab4d07.jpg"
+                         width="40" />
+                    <img alt="MasterCard payment method logo"
+                         class="h-4 w-auto"
+                         height="16"
+                         loading="lazy"
+                         src="https://storage.googleapis.com/a1aa/image/7d8a999d-30a4-4696-a6b9-473f69d6d856.jpg"
+                         width="40" />
+                    <img alt="American Express payment method logo"
+                         class="h-4 w-auto"
+                         height="16"
+                         loading="lazy"
+                         src="https://storage.googleapis.com/a1aa/image/2240a797-2f63-4f3d-d0db-d365900d0d03.jpg"
+                         width="40" />
+                    <img alt="PayPal payment method logo"
+                         class="h-4 w-auto"
+                         height="16"
+                         loading="lazy"
+                         src="https://storage.googleapis.com/a1aa/image/c5b10058-da00-4aa1-2cf5-aa0519dd1675.jpg"
+                         width="40" />
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 text-[10px] pb-4 select-none">
+            © VieGo. All rights reserved.
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

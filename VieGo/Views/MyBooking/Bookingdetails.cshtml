@@ -1,0 +1,708 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Booking Details";
+    var bookingId = ViewBag.bookingId;
+}
+<input type="hidden" id="bookingId" value="@ViewBag.BookingId" />
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Traveloka Booking Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap"
+          rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        /* Star Rating Styles */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+            .star-rating input {
+                display: none;
+            }
+
+            .star-rating label {
+                cursor: pointer;
+                width: 30px;
+                font-size: 24px;
+                color: #ddd;
+                transition: all 0.2s ease;
+            }
+
+                .star-rating label:before {
+                    content: "\f005";
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                }
+
+            .star-rating input:checked ~ label,
+            .star-rating input:checked ~ label ~ label {
+                color: #ffd700;
+            }
+
+            .star-rating label:hover,
+            .star-rating label:hover ~ label {
+                color: #ffd700;
+            }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .close:hover {
+                color: black;
+            }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-16">
+        <section>
+            <h2 class="font-extrabold text-gray-900 text-lg leading-6 mb-1">
+                Booking Details
+            </h2>
+            <div class="flex flex-col lg:flex-row lg:space-x-6 space-y-6 lg:space-y-0">
+                <!-- Left content -->
+                <div class="flex-1 space-y-6">
+                    <!-- Booking card -->
+                    <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 id="tourName" class="font-semibold text-gray-900 text-sm leading-5">
+                                Singapore 3D2N: City Explorer
+                                <span class="ml-2 inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded select-text">
+                                    Completed
+                                </span>
+                            </h3>
+                            <div class="text-right text-sm leading-5">
+                                <div id="totalPrice2" class="text-red-600 font-extrabold text-base select-text">
+                                    $640
+                                </div>
+                                <div id="paymentStatus1" class="text-green-500 text-xs font-semibold select-text">
+                                    Paid
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3 select-text">
+                            Booking ID:
+                            <span id="bookingIdText" class="font-semibold"> BK-001235 </span>
+                        </p>
+
+
+                        <p class="text-xs text-gray-600 mb-3 select-text">
+                            Booked on:
+                            <span id="bookingDate" class="font-semibold"> 10/04/2024 </span>
+                        </p>
+
+                        <div class="flex justify-between text-xs text-gray-600 select-text">
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-calendar-alt text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Travel Dates
+                                    </div>
+                                    <div id="travelDates">10/05/2024 - 12/05/2024</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-user-friends text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Travelers
+                                    </div>
+                                    <div>
+                                        <span id="numGuests" class="font-semibold"> 2 Adults </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-credit-card text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Payment Method
+                                    </div>
+                                    <div>
+                                        <span id="paymentMethod" class="font-semibold"> Bank Transfer </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Itinerary -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                        <h4 class="font-semibold text-gray-900 text-sm mb-3 select-text">
+                            Itinerary
+                        </h4>
+                        <div id="itineraryContainer" class="space-y-4 text-xs text-gray-700 select-text">
+                            <div class="flex space-x-2">
+                                <div class="border-l-2 border-red-600 pl-2 font-semibold text-gray-900">
+                                    Day 1: Arrival - City Tour
+                                </div>
+                                <p class="flex-1">
+                                    Arrive at Changi Airport. Transfer to hotel. City tour
+                                    including Merlion Park, Marina Bay, and Gardens by the Bay.
+                                </p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <div class="border-l-2 border-red-600 pl-2 font-semibold text-gray-900">
+                                    Day 2: Sentosa Island
+                                </div>
+                                <p class="flex-1">
+                                    Full day at Sentosa Island. Visit Universal Studios, S.E.A.
+                                    Aquarium, and enjoy the beach. Evening Wings of Time show.
+                                </p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <div class="border-l-2 border-red-600 pl-2 font-semibold text-gray-900">
+                                    Day 3: Shopping &amp; Departure
+                                </div>
+                                <p class="flex-1">
+                                    Morning shopping at Orchard Road. Visit Little India and
+                                    Chinatown. Transfer to airport for departure.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contact Information -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                        <h4 class="font-semibold text-gray-900 text-sm mb-4 select-text">
+                            Contact Information
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-xs text-gray-700 select-text">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-user text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Full Name
+                                    </div>
+                                    <div id="contactName">-</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-envelope text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Email
+                                    </div>
+                                    <div id="contactEmail" class="font-semibold">-</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-phone-alt text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Phone
+                                    </div>
+                                    <div id="contactPhone" class="font-semibold">-</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-home text-red-600"> </i>
+                                <div>
+                                    <div class="font-semibold text-gray-900 text-[10px] leading-4">
+                                        Address
+                                    </div>
+                                    <div id="contactAddress" class="font-semibold">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4 border-gray-200" />
+                        <div class="text-xs text-gray-700 select-text">
+                            <div class="font-normal">Special Requests</div>
+                            <div id="specialRequests">-</div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex space-x-3 mt-4">
+                        <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100 select-none">
+                            Back to Booking History
+                        </button>
+                        <div id="writeReviewBtnWrapper" class="hidden">
+                            <!-- 👈 class hidden mặc định -->
+                            <button id="writeReviewBtn"
+                                    class="text-xs text-blue-600 hover:underline select-none">
+                                Write Review
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Right content -->
+                <aside class="w-full lg:w-80 bg-white rounded-lg p-4 shadow-sm border border-gray-100 select-text">
+                    <h4 class="font-semibold text-gray-900 text-sm mb-4">
+                        Price Details
+                    </h4>
+                    <div class="flex justify-between text-xs text-gray-700 mb-3">
+                        <span> Slot </span>
+                        <span id="totalPrice"> $640 </span>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-gray-200 pt-2 mb-4">
+                        <span class="font-semibold text-sm text-gray-900"> Total </span>
+                        <span id="totalPrice1" class="font-extrabold text-red-600 text-sm"> $640 </span>
+                    </div>
+                    <div class="text-xs text-gray-600 space-y-3">
+                        <div>
+                            <div class="font-semibold text-gray-900 mb-0.5">
+                                Payment Status
+                            </div>
+                            <div>
+                                Status
+                                <span id="paymentStatus" class="ml-2 inline-block bg-green-100 text-green-600 text-[10px] font-semibold px-2 py-0.5 rounded">
+                                    Paid
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-900 mb-0.5">
+                                Payment Method
+                            </div>
+                            <div class="flex justify-between">
+                                <span id="paymentMethod1" class="font-semibold"> Bank Transfer </span>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-900 mb-0.5">
+                                Payment Date
+                            </div>
+                            <div id="paymentDate">10/04/2024</div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            <!-- Print, Download, Share buttons top right -->
+            <div class="flex justify-end space-x-2 mt-6">
+                <button class="flex items-center space-x-1 border border-gray-300 rounded px-3 py-1 text-xs text-gray-700 hover:bg-gray-100 select-none">
+                    <i class="fas fa-print"> </i>
+                    <span> Print </span>
+                </button>
+                <button class="flex items-center space-x-1 border border-gray-300 rounded px-3 py-1 text-xs text-gray-700 hover:bg-gray-100 select-none">
+                    <i class="fas fa-download"> </i>
+                    <span> Download </span>
+                </button>
+                <button class="flex items-center space-x-1 border border-gray-300 rounded px-3 py-1 text-xs text-gray-700 hover:bg-gray-100 select-none">
+                    <i class="fas fa-share-alt"> </i>
+                    <span> Share </span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Write a Review</h3>
+            <form id="reviewForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rate your experience</label>
+                    <div class="star-rating mb-1">
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label for="star5" title="5 stars"></label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4" title="4 stars"></label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="3 stars"></label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="2 stars"></label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="1 star"></label>
+                    </div>
+                    <p id="ratingText" class="text-xs text-gray-500 mt-1">
+                        Select a rating
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <label for="reviewComment"
+                           class="block text-sm font-medium text-gray-700 mb-2">Your review</label>
+                    <textarea id="reviewComment"
+                              name="comment"
+                              rows="4"
+                              class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder="Share your experience with this tour..."></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit"
+                            class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Submit Review
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    @*   <footer class="bg-gray-900 text-gray-400 text-xs select-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-4 gap-8">
+            <div>
+                <h5 class="font-semibold text-gray-300 mb-4">About</h5>
+                <ul class="space-y-2">
+                    <li>
+                        <a class="hover:underline" href="#"> How it works </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> About us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Careers </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Press </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-semibold text-gray-300 mb-4">Support</h5>
+                <ul class="space-y-2">
+                    <li>
+                        <a class="hover:underline" href="#"> Help Center </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Contact us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Privacy policy </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Terms of service </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-semibold text-gray-300 mb-4">Products</h5>
+                <ul class="space-y-2">
+                    <li>
+                        <a class="hover:underline" href="#"> Flights </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Hotels </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Train tickets </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Activities </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-semibold text-gray-300 mb-4">Follow Us</h5>
+                <div class="flex space-x-3 mb-3 text-gray-400">
+                    <a aria-label="Facebook" class="hover:text-white" href="#">
+                        <i class="fab fa-facebook-f"> </i>
+                    </a>
+                    <a aria-label="Instagram" class="hover:text-white" href="#">
+                        <i class="fab fa-instagram"> </i>
+                    </a>
+                    <a aria-label="Twitter" class="hover:text-white" href="#">
+                        <i class="fab fa-twitter"> </i>
+                    </a>
+                    <a aria-label="LinkedIn" class="hover:text-white" href="#">
+                        <i class="fab fa-linkedin-in"> </i>
+                    </a>
+                </div>
+                <div class="font-semibold text-gray-300 mb-1">Payment Methods</div>
+                <div class="flex space-x-1 text-[9px] font-semibold text-gray-900">
+                    <span class="bg-white rounded border border-gray-300 px-1.5 py-0.5 select-none">
+                        Visa
+                    </span>
+                    <span class="bg-white rounded border border-gray-300 px-1.5 py-0.5 select-none">
+                        MC
+                    </span>
+                    <span class="bg-white rounded border border-gray-300 px-1.5 py-0.5 select-none">
+                        Amex
+                    </span>
+                    <span class="bg-white rounded border border-gray-300 px-1.5 py-0.5 select-none">
+                        PayPal
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 text-center py-4 text-gray-500 select-text text-[10px]">
+            © 2023 Traveloka Clone. All rights reserved.
+        </div>
+    </footer> *@
+
+
+
+    @section Scripts {
+        <script>
+            let currentBooking = null;
+            let currentReview = null;
+
+            const modal = document.getElementById("reviewModal");
+            const span = document.getElementsByClassName("close")[0];
+            const ratingText = document.getElementById("ratingText");
+            const form = document.getElementById("reviewForm");
+            const btn = document.getElementById("writeReviewBtn");
+
+            const ratingDescriptions = {
+                1: "Poor - Not recommended",
+                2: "Fair - Below average",
+                3: "Average - Met expectations",
+                4: "Good - Above average",
+                5: "Excellent - Highly recommended",
+            };
+
+                    function showReviewModal(rating, comment, readOnly) {
+                const ratingInputs = document.querySelectorAll('input[name="rating"]');
+                form.reset();
+                ratingText.textContent = "Select a rating";
+
+                // Gán sao nếu có
+                if (rating) {
+                    const starInput = document.querySelector(`input[name="rating"][value="${rating}"]`);
+                    if (starInput) {
+                        starInput.checked = true;
+                        ratingText.textContent = ratingDescriptions[rating];
+                    }
+                }
+
+                document.getElementById("reviewComment").value = comment ?? "";
+                ratingInputs.forEach(i => i.disabled = readOnly);
+                document.getElementById("reviewComment").readOnly = readOnly;
+
+                // 👉 Ẩn/Hiện nút submit tùy theo chế độ view hay tạo mới
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.classList.toggle("hidden", readOnly); // ẩn nếu readonly
+
+                modal.style.display = "block";
+            }
+
+
+            span.onclick = () => modal.style.display = "none";
+            window.onclick = (e) => {
+                if (e.target == modal) modal.style.display = "none";
+            };
+
+            document.querySelectorAll('input[name="rating"]').forEach((input) => {
+                input.addEventListener("change", function () {
+                    ratingText.textContent = ratingDescriptions[this.value];
+                });
+            });
+
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const rating = document.querySelector('input[name="rating"]:checked');
+                const comment = document.getElementById("reviewComment").value;
+                const bookingId = parseInt(document.getElementById("bookingId").value);
+                const userId = currentBooking?.user?.userId;
+                const tourId = currentBooking?.schedule?.tour?.tourId;
+
+
+                if (!rating || !userId || !tourId) {
+                    alert("Missing rating or data.");
+                    console.error("Missing:", { rating, userId, tourId });
+                    return;
+                }
+
+                const reviewData = {
+                    BookingId: bookingId,
+                    UserId: userId,
+                    TourId: tourId,
+                    Rating: parseInt(rating.value),
+                    Comment: comment
+                };
+
+                const url = `/api/ReviewApi${currentReview ? `/${bookingId}` : ""}`;
+                const method = currentReview ? "PUT" : "POST";
+
+                try {
+                    const res = await fetch(url, {
+                        method: method,
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(reviewData)
+                    });
+
+                    if (res.ok) {
+                        alert("Your review has been saved.");
+                        modal.style.display = "none";
+
+                        currentReview = reviewData;
+
+                        btn.textContent = "View Review";
+                        btn.onclick = () => {
+                            showReviewModal(reviewData.Rating, reviewData.Comment, true);
+                        };
+
+                        form.reset();
+                        ratingText.textContent = "Select a rating";
+                    } else {
+                        alert("Failed to submit review.");
+                    }
+                } catch (err) {
+                    console.error("Error submitting review:", err);
+                    alert("Error submitting review.");
+                }
+            });
+        </script>
+
+
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", async () => {
+                const bookingId = document.getElementById("bookingId").value;
+                const API_URL = `/api/BookingApi/${bookingId}`;
+
+                try {
+                    const res = await fetch(API_URL);
+                    const data = await res.json();
+                    console.log("Fetched booking details:", data); // ✅ debug
+                    renderBookingDetails(data);
+                } catch (err) {
+                    console.error("Error loading booking details:", err);
+                    document.getElementById("mainContent").innerHTML = "<p class='text-red-500'>Không thể tải thông tin.</p>";
+                }
+            });
+
+            const paymentMethodNames = {
+                1: "Credit Card",
+                2: "Cash",
+                3: "Bank Transfer",
+            };
+
+            function formatDate(dateStr) {
+                if (!dateStr) return "-";
+                return new Date(dateStr).toLocaleDateString("en-GB");
+            }
+
+            function renderBookingDetails(b) {
+                        currentBooking = b;
+            currentReview = null;
+                const user = b?.user ?? {};
+                const tour = b?.schedule?.tour ?? {};
+                const schedule = b?.schedule ?? {};
+                const reviewWrapper = document.getElementById("writeReviewBtnWrapper");
+                const reviewBtn = document.getElementById("writeReviewBtn");
+
+                // ⭐️ Handle Review
+                if (b.bookingStatus === "Completed") {
+                    reviewWrapper.classList.remove("hidden");
+
+                    fetch(`/api/ReviewApi/${b.bookingId}`)
+                        .then(res => res.ok ? res.json() : null)
+                        .then(review => {
+                            if (review) {
+                                reviewBtn.textContent = "View Review";
+                                reviewBtn.onclick = () => showReviewModal(review.rating, review.comment, true);
+                            } else {
+                                reviewBtn.textContent = "Write Review";
+                                reviewBtn.onclick = () => showReviewModal(null, "", false);
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Review check failed:", err);
+                        });
+                } else {
+                    reviewWrapper.classList.add("hidden");
+                }
+
+                // ⭐️ Contact Info
+                document.getElementById("contactName").textContent = user.fullName ?? "-";
+                document.getElementById("contactEmail").textContent = user.email ?? "-";
+                document.getElementById("contactPhone").textContent = user.phoneNumber ?? "-";
+                document.getElementById("contactAddress").textContent = user.address ?? "-";
+                document.getElementById("specialRequests").textContent = b.specialRequests ?? "None";
+
+                // ⭐️ Itineraries
+                     const itineraries = tour.itineraries ?? [];
+
+            console.log("Itineraries raw:", tour.itineraries);
+            console.log("Itineraries resolved:", tour.itineraries?.$values ?? tour.itineraries ?? []);
+
+
+                const itineraryContainer = document.getElementById("itineraryContainer");
+
+                if (itineraryContainer) {
+                    if (itineraries.length === 0) {
+                        itineraryContainer.innerHTML = `<p class="text-gray-500 text-sm">No itinerary available.</p>`;
+                    } else {
+                        itineraryContainer.innerHTML = "";
+                        itineraries.sort((a, b) => a.dayNumber - b.dayNumber);
+                        itineraries.forEach(item => {
+                            const html = `
+                                <div class="flex space-x-2">
+                                    <div class="border-l-2 border-red-600 pl-2 font-semibold text-gray-900">
+                                        Day ${item.dayNumber}: ${item.location}
+                                    </div>
+                                    <p class="flex-1">${item.description}</p>
+                                </div>`;
+                            itineraryContainer.insertAdjacentHTML("beforeend", html);
+                        });
+                    }
+                }
+
+                // ⭐️ Booking Info
+                document.getElementById("tourName").textContent = tour.tourName ?? "Unknown Tour";
+                document.getElementById("bookingIdText").textContent = `BK-${String(b.bookingId).padStart(6, "0")}`;
+                document.getElementById("bookingDate").textContent = formatDate(b.bookingDate);
+                document.getElementById("travelDates").textContent = `${formatDate(b.travelStartDate)} - ${formatDate(b.travelEndDate)}`;
+                document.getElementById("numGuests").textContent = `${b.numAdults} Adults, ${b.numChildren} Children`;
+
+                const price = `$${b.totalPrice?.toFixed(2)}`;
+                document.getElementById("totalPrice").textContent = price;
+                document.getElementById("totalPrice1").textContent = price;
+                document.getElementById("totalPrice2").textContent = price;
+
+                document.getElementById("paymentDate").textContent = formatDate(b.paymentDate);
+                document.getElementById("paymentMethod").textContent = paymentMethodNames[b.paymentMethodId] ?? "Unknown";
+                document.getElementById("paymentMethod1").textContent = paymentMethodNames[b.paymentMethodId] ?? "Unknown";
+                document.getElementById("paymentStatus").textContent = b.paymentStatus;
+                document.getElementById("paymentStatus1").textContent = b.paymentStatus;
+                document.getElementById("bookingStatus").textContent = b.bookingStatus;
+                document.getElementById("meetingPoint").textContent = schedule.meetingPoint ?? "-";
+                document.getElementById("timeRange").textContent = `${schedule.startTime ?? "-"} - ${schedule.endTime ?? "-"}`;
+                document.getElementById("description").textContent = tour.description ?? "-";
+
+
+            }
+        </script>
+
+    }
+</body>
+</html>

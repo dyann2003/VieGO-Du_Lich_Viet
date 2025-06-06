@@ -1,0 +1,442 @@
+﻿<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Traveloka FAQ with Tabs and Answers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap"
+          rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#f7f9fc] text-[#1a1a1a]">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-6">
+                    <a class="flex items-center space-x-2 cursor-pointer"
+                       id="logo-button"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Toggle mobile menu"
+                       href="/Home">
+                        <!-- Logo Image -->
+                        <img src="/images/logo.png" alt="VieGo Logo" style="height: 120px; width: 120px;" />
+
+                    </a>
+                    <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]">
+                        <li>
+                            <a class="hover:underline" href="aboutus.html"> About Us </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="faq.html"> FAQs </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="blog.html"> Blog </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="/MyBooking">
+                                My Bookings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Main content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-center font-semibold text-xl md:text-2xl mb-2">
+            Frequently Asked Questions
+        </h1>
+        <p class="text-center text-gray-600 text-sm md:text-base mb-8">
+            Find answers to common questions about our tours, booking process, and
+            travel in Vietnam.
+        </p>
+        <section aria-labelledby="help-heading"
+                 class="bg-white rounded-md shadow-sm p-6 mb-6 border border-gray-100">
+            <h2 class="font-semibold mb-1 text-sm md:text-base" id="help-heading">
+                How can we help you?
+            </h2>
+            <p class="text-xs md:text-sm text-gray-700 mb-4">
+                Can't find the answer you're looking for? Contact our customer support
+                team for assistance.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-gray-700 text-xs md:text-sm">
+                <div class="border border-gray-200 rounded-md py-4 flex flex-col items-center space-y-1 hover:shadow-md cursor-pointer">
+                    <i class="fas fa-phone-alt text-pink-600 text-lg"> </i>
+                    <span class="font-semibold"> Call Us </span>
+                    <span class="text-gray-400"> +84 123 456 789 </span>
+                </div>
+                <div class="border border-gray-200 rounded-md py-4 flex flex-col items-center space-y-1 hover:shadow-md cursor-pointer">
+                    <i class="fas fa-envelope text-pink-600 text-lg"> </i>
+                    <span class="font-semibold"> Email Us </span>
+                    <span class="text-gray-400"> support@traveloka.com </span>
+                </div>
+                <div class="border border-gray-200 rounded-md py-4 flex flex-col items-center space-y-1 hover:shadow-md cursor-pointer">
+                    <i class="fas fa-comment-alt text-pink-600 text-lg"> </i>
+                    <span class="font-semibold"> Live Chat </span>
+                    <span class="text-gray-400"> Available 24/7 </span>
+                </div>
+            </div>
+        </section>
+        <nav aria-label="FAQ categories"
+             class="bg-[#f1f3f8] rounded-md mb-6 text-xs md:text-sm text-gray-600 flex justify-between max-w-md mx-auto">
+            <button aria-current="page"
+                    class="bg-white text-black font-semibold px-5 py-2 rounded-md border border-gray-200 focus:outline-none"
+                    data-tab="booking"
+                    type="button">
+                Booking
+            </button>
+            <button class="px-5 py-2 rounded-md hover:text-black focus:outline-none"
+                    data-tab="cancellation"
+                    type="button">
+                Cancellation
+            </button>
+            <button class="px-5 py-2 rounded-md hover:text-black focus:outline-none"
+                    data-tab="tours"
+                    type="button">
+                Tours
+            </button>
+            <button class="px-5 py-2 rounded-md hover:text-black focus:outline-none"
+                    data-tab="practical"
+                    type="button">
+                Practical Info
+            </button>
+        </nav>
+        <section aria-label="FAQ questions"
+                 class="bg-white rounded-md shadow-sm border border-gray-100 max-w-2xl mx-auto">
+            <div data-tab-content="booking" class="tab-content">
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        How do I book a tour on your website?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        You can book a tour by selecting your desired tour, choosing the
+                        date and number of participants, and completing the payment
+                        process on our website.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Can I book a tour for someone else?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Yes, you can book a tour for someone else by providing their
+                        details during the booking process.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        How far in advance should I book my tour?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        We recommend booking at least 3 days in advance to ensure
+                        availability.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What payment methods do you accept?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        We accept Visa, MasterCard, American Express, and PayPal.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Is my booking confirmed immediately?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Yes, your booking is confirmed immediately after successful
+                        payment.
+                    </p>
+                </details>
+            </div>
+            <div data-tab-content="cancellation" class="tab-content hidden">
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        How do I cancel my booking?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        You can cancel your booking by logging into your account and
+                        selecting the booking you want to cancel.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Is there a cancellation fee?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Cancellation fees depend on the timing of your cancellation.
+                        Please check our policy for details.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        How long does it take to get a refund?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Refunds are processed within 7-10 business days after cancellation
+                        approval.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Can I change my booking instead of canceling?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Yes, you can request changes to your booking by contacting our
+                        support team.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What happens if the tour is canceled by the operator?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        You will receive a full refund or an option to reschedule.
+                    </p>
+                </details>
+            </div>
+            <div data-tab-content="tours" class="tab-content hidden">
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What types of tours do you offer?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        We offer city tours, adventure tours, cultural tours, and more.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Are the tours suitable for children?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Many of our tours are family-friendly. Please check the tour
+                        details for age restrictions.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Can I customize a tour?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Yes, contact us to create a custom tour tailored to your
+                        preferences.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What is included in the tour price?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Tour price typically includes transportation, guide, and entrance
+                        fees. Check each tour for specifics.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        How do I prepare for a tour?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Wear comfortable clothes, bring water, and follow any instructions
+                        provided in your booking confirmation.
+                    </p>
+                </details>
+            </div>
+            <div data-tab-content="practical" class="tab-content hidden">
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What is the best time to visit Vietnam?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        The best time to visit is from November to April when the weather
+                        is dry and cool.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Do I need a visa to travel to Vietnam?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Visa requirements depend on your nationality. Please check with
+                        the Vietnamese embassy or consulate.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What currency is used in Vietnam?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        The official currency is the Vietnamese Dong (VND).
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        Is it safe to travel in Vietnam?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Vietnam is generally safe for tourists, but always take standard
+                        precautions.
+                    </p>
+                </details>
+                <details class="border-b border-gray-200 last:border-none">
+                    <summary class="cursor-pointer py-4 px-6 font-semibold text-sm md:text-base flex justify-between items-center">
+                        What languages are spoken in Vietnam?
+                        <i class="fas fa-chevron-down text-gray-600"> </i>
+                    </summary>
+                    <p class="px-6 pb-4 text-gray-700 text-sm md:text-base">
+                        Vietnamese is the official language. English is commonly spoken in
+                        tourist areas.
+                    </p>
+                </details>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-[#0f172a] text-gray-400 text-xs md:text-sm py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-white font-semibold mb-4">About</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a class="hover:underline" href="#"> How it works </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> About us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Careers </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Press </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold mb-4">Support</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a class="hover:underline" href="#"> Help Center </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Contact us </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Privacy policy </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Terms of service </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold mb-4">Products</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a class="hover:underline" href="#"> Flights </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Hotels </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Train tickets </a>
+                    </li>
+                    <li>
+                        <a class="hover:underline" href="#"> Activities </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold mb-4">Follow Us</h3>
+                <div class="flex space-x-4 mb-4 text-white text-lg">
+                    <a aria-label="Facebook" class="hover:text-gray-300" href="#">
+                        <i class="fab fa-facebook-f"> </i>
+                    </a>
+                    <a aria-label="Instagram" class="hover:text-gray-300" href="#">
+                        <i class="fab fa-instagram"> </i>
+                    </a>
+                    <a aria-label="Twitter" class="hover:text-gray-300" href="#">
+                        <i class="fab fa-twitter"> </i>
+                    </a>
+                    <a aria-label="LinkedIn" class="hover:text-gray-300" href="#">
+                        <i class="fab fa-linkedin-in"> </i>
+                    </a>
+                </div>
+                <p class="font-semibold text-white mb-2">Payment Methods</p>
+                <div class="flex space-x-1 text-xs font-mono">
+                    <span class="bg-white text-black px-1 rounded-sm"> Visa </span>
+                    <span class="bg-white text-black px-1 rounded-sm"> MC </span>
+                    <span class="bg-white text-black px-1 rounded-sm"> Amex </span>
+                    <span class="bg-white text-black px-1 rounded-sm"> PayPal </span>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-gray-500 mt-10 select-none">
+            © 2023 Traveloka Clone. All rights reserved.
+        </p>
+    </footer>
+    <script>
+        // Tab switching logic
+        const tabs = document.querySelectorAll("button[data-tab]");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                // Remove active styles and hide all tab contents
+                tabs.forEach((t) => {
+                    t.classList.remove(
+                        "bg-white",
+                        "text-black",
+                        "font-semibold",
+                        "border",
+                        "border-gray-200"
+                    );
+                    t.setAttribute("aria-current", "false");
+                });
+                tabContents.forEach((tc) => tc.classList.add("hidden"));
+
+                // Add active styles to clicked tab and show corresponding content
+                tab.classList.add(
+                    "bg-white",
+                    "text-black",
+                    "font-semibold",
+                    "border",
+                    "border-gray-200"
+                );
+                tab.setAttribute("aria-current", "page");
+                const target = tab.getAttribute("data-tab");
+                document
+                    .querySelector(`[data-tab-content="${target}"]`)
+                    .classList.remove("hidden");
+            });
+        });
+    </script>
+</body>
+</html>

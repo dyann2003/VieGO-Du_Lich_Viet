@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Payment Cancelled</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 50px;
+            background-color: #fff3f3;
+        }
+
+        .message {
+            color: #c62828;
+            font-size: 24px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #c62828;
+            color: white;
+            border-radius: 5px;
+        }
+        #countdown {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="message">❌ Thanh toán đã bị hủy!</h1>
+    <p>Bạn đã hủy giao dịch hoặc có lỗi xảy ra.</p>
+    <p>Bạn sẽ được chuyển hướng về trang chủ sau <span id="countdown">5</span> giây...</p>
+    <a href="/">Quay lại trang chủ</a>
+    <script>
+        // Countdown logic
+        let countdown = 5;
+        const countdownEl = document.getElementById('countdown');
+
+        const timer = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = "/";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

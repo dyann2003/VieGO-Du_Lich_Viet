@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Cảm ơn";
+}
+
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
+    <h1 class="text-3xl font-semibold text-green-600 mb-6">Cảm ơn bạn đã đăng ký!</h1>
+    <p class="mb-8 text-gray-700 text-center max-w-md">
+        Bạn đã hoàn tất đăng ký tài khoản thành công.
+    </p>
+    <a href="@Url.Action("Index", "Home")"
+       class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded shadow">
+        Back To Home
+    </a>
+</div>

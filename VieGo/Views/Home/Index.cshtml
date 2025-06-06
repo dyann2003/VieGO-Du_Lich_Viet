@@ -1,0 +1,904 @@
+@model List<Model.Models.Tour>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.AspNetCore.Html
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+@functions {
+    public IHtmlContent RenderStars(double rating)
+    {
+        int fullStars = (int)Math.Floor(rating);
+        bool halfStar = (rating - fullStars) >= 0.5;
+        int emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+        var sb = new System.Text.StringBuilder();
+
+        for (int i = 0; i < fullStars; i++)
+            sb.Append("<i class='fas fa-star text-yellow-400'></i>");
+        if (halfStar)
+            sb.Append("<i class='fas fa-star-half-alt text-yellow-400'></i>");
+        for (int i = 0; i < emptyStars; i++)
+            sb.Append("<i class='far fa-star text-yellow-400'></i>");
+
+        return new HtmlString(sb.ToString());
+    }
+}
+
+<section class="bg-gray-400 relative">
+ <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-32 flex flex-col gap-3 relative z-20">
+    <form method="get" class="w-full flex flex-col sm:flex-row gap-3 flex-wrap" aria-label="Travel search form">
+        <!-- Keyword input -->
+        <input
+            name="keyword"
+            value="@(ViewBag.Keyword ?? "")"
+            placeholder="Where would you like to go?"
+            class="rounded-md border border-gray-300 px-6 text-gray-600 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            type="text"
+            style="flex: 1 1 100%; min-width: 0; height: 60px; padding-top: 0.5rem; padding-bottom: 0.5rem;" />
+
+        <!-- Departure Date -->
+        <div class="flex-1 bg-white rounded-md border border-gray-300 px-4 py-3 flex items-center gap-3 min-w-[250px]">
+            <i class="far fa-calendar-alt text-pink-600"></i>
+            <label for="departureDate" class="font-semibold text-gray-900 text-xs whitespace-nowrap">
+                Departure date
+            </label>
+            <input
+                id="departureDate"
+                name="departureDate"
+                type="date"
+                value="@(ViewBag.DepartureDate ?? "")"
+                class="border border-gray-300 rounded px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400 flex-grow"
+            />
+        </div>
+
+        <!-- Departure City -->
+        <div class="flex-1 bg-white rounded-md border border-gray-300 px-4 py-3 flex items-center gap-3 min-w-[250px]">
+            <i class="fas fa-arrow-right text-pink-600"></i>
+            <label for="departureCity" class="font-semibold text-gray-900 text-xs whitespace-nowrap">
+               Departure from
+            </label>
+            @Html.DropDownList("departureCity", (SelectList)ViewBag.DepartureCities, new {
+                @class = "border border-gray-300 rounded px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400 flex-grow",
+                id = "departureCity"
+            })
+        </div>
+
+        <!-- Submit button -->
+        <button
+            type="submit"
+            class="bg-orange-600 hover:bg-orange-700 text-white rounded-md px-6 py-3 font-semibold text-sm whitespace-nowrap min-w-[120px]">
+            Search
+        </button>
+    </form>
+</div>
+
+
+  <img
+        id="background-image"
+        alt="Vietnam travel scenic background"
+        class="absolute inset-0 w-full h-full object-cover opacity-100"
+        height="400"
+        loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/PANO0002-Pano.jpg/1200px-PANO0002-Pano.jpg"
+        width="1200"
+      />
+</section>
+
+<div class="d-flex justify-content-center p-3 border bg-light max-w-[1200px] mx-auto mt-4 flex flex-wrap gap-4">
+    <span class="p-2 whitespace-nowrap font-semibold">Order By</span>
+
+    @{
+        string currentKeyword = ViewBag.Keyword ?? "";
+        string currentDepartureDate = ViewBag.DepartureDate ?? "";
+        string currentDepartureCity = ViewBag.DepartureCity ?? "";
+        string currentSortBy = (ViewBag.SortBy ?? "").ToString().ToLower();
+        string currentSortOrder = (ViewBag.SortOrder ?? "asc").ToString().ToLower();
+
+        Func<string, string> getNextSortOrder = (sortField) =>
+        {
+            if (sortField.ToLower() == currentSortBy)
+                return currentSortOrder == "asc" ? "desc" : "asc";
+            return "asc";
+        };
+    }
+
+    <a href="@Url.Action("Index", "Home", new {
+        keyword = currentKeyword,
+        departureDate = currentDepartureDate,
+        departureCity = currentDepartureCity,
+        sortBy = "departure",
+        sortOrder = getNextSortOrder("departure"),
+        page = 1
+    })"
+       class="sort-option flex items-center space-x-1 text-sm cursor-pointer @(currentSortBy == "departure" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
+        <span>Departure Date</span>
+        <span class="sort-arrow font-bold">@((currentSortBy == "departure") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
+    </a>
+
+    <a href="@Url.Action("Index", "Home", new {
+        keyword = currentKeyword,
+        departureDate = currentDepartureDate,
+        departureCity = currentDepartureCity,
+        sortBy = "price",
+        sortOrder = getNextSortOrder("price"),
+        page = 1
+    })"
+       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "price" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
+        <span>Price</span>
+        <span class="sort-arrow font-bold">@((currentSortBy == "price") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
+    </a>
+
+    <a href="@Url.Action("Index", "Home", new {
+        keyword = currentKeyword,
+        departureDate = currentDepartureDate,
+        departureCity = currentDepartureCity,
+        sortBy = "duration",
+        sortOrder = getNextSortOrder("duration"),
+        page = 1
+    })"
+       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "duration" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
+        <span>Time</span>
+        <span class="sort-arrow font-bold">@((currentSortBy == "duration") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
+    </a>
+
+    <a href="@Url.Action("Index", "Home", new {
+        keyword = currentKeyword,
+        departureDate = currentDepartureDate,
+        departureCity = currentDepartureCity,
+        sortBy = "stars",
+        sortOrder = getNextSortOrder("stars"),
+        page = 1
+    })"
+       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "stars" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
+        <span>Stars Rating</span>
+        <span class="sort-arrow font-bold">@((currentSortBy == "stars") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
+    </a>
+
+    <a href="@Url.Action("Index", "Home", new {
+        keyword = currentKeyword,
+        departureDate = currentDepartureDate,
+        departureCity = currentDepartureCity,
+        sortBy = "popular",
+        sortOrder = getNextSortOrder("popular"),
+        page = 1
+    })"
+       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "popular" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
+        <span>Popular Tour</span>
+        <span class="sort-arrow font-bold">@((currentSortBy == "popular") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
+    </a>
+</div>
+
+<section class="max-w-[1200px] mx-auto px-4 sm:px-6 mt-10">
+    <h2 class="font-semibold text-black mb-4 text-sm">Popular Destinations</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center text-gray-600 py-10 text-lg font-semibold">
+           Can't' found the Tours
+        </div>
+    }
+    else
+    {
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            @foreach (var tour in Model)
+            {
+                decimal price = 0;
+                if (tour.TourSchedules != null && tour.TourSchedules.Any())
+                {
+                    price = tour.TourSchedules.Min(s => s.Price);
+                }
+
+                double avgRating = 0;
+                if (tour.Reviews != null && tour.Reviews.Any())
+                {
+                    avgRating = Math.Round(tour.Reviews.Average(r => r.Rating ?? 0), 1);
+                }
+
+                <a href="/pages/tourdetails.html?id=@tour.TourId" class="block">
+                    <div class="relative rounded-md overflow-hidden">
+                        <img alt="@tour.TourName"
+                             class="w-full h-40 object-cover"
+                             height="160"
+                             loading="lazy"
+                             src="@(string.IsNullOrEmpty(tour.FeaturedImageUrl) ? "https://via.placeholder.com/320x160?text=No+Image" : tour.FeaturedImageUrl)"
+                             width="320" />
+                        <div class="absolute top-0 right-0 bg-pink-600 text-white text-xs font-semibold px-2 py-0.5 rounded-bl-md select-none">
+                            @tour.TourCode
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white text-xs">
+                            <div class="font-semibold text-sm">@tour.TourName</div>
+                            <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+                                @RenderStars(avgRating)
+                                <span class="ml-1">(@(tour.Reviews?.Count() ?? 0)) reviews</span>
+                            </div>
+                            <div class="text-xs">From $@price</div>
+                            <div class="text-xs opacity-80">@((tour.Description?.Length ?? 0) > 20 ? tour.Description.Substring(0, 20) + "..." : tour.Description)</div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</section>
+
+<nav class="mt-6 flex justify-center" aria-label="Pagination">
+    <ul class="inline-flex -space-x-px text-sm">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li>
+                <a href="@Url.Action("Index", "Home", new {
+                    page = ViewBag.CurrentPage - 1,
+                    keyword = ViewBag.Keyword,
+                    departureDate = ViewBag.DepartureDate,
+                    departureCity = ViewBag.DepartureCity,
+                    sortBy = ViewBag.SortBy,
+                    sortOrder = ViewBag.SortOrder
+                })" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <span class="px-3 py-2 rounded-l-md border border-gray-300 bg-gray-200 text-gray-500 cursor-not-allowed">Previous</span>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <li>
+                    <span aria-current="page" class="px-3 py-2 border border-pink-600 bg-pink-600 text-white font-semibold">@i</span>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Home", new {
+                        page = i,
+                        keyword = ViewBag.Keyword,
+                        departureDate = ViewBag.DepartureDate,
+                        departureCity = ViewBag.DepartureCity,
+                        sortBy = ViewBag.SortBy,
+                        sortOrder = ViewBag.SortOrder
+                    })" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">@i</a>
+                </li>
+            }
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li>
+                <a href="@Url.Action("Index", "Home", new {
+                    page = ViewBag.CurrentPage + 1,
+                    keyword = ViewBag.Keyword,
+                    departureDate = ViewBag.DepartureDate,
+                    departureCity = ViewBag.DepartureCity,
+                    sortBy = ViewBag.SortBy,
+                    sortOrder = ViewBag.SortOrder
+                })" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">Next</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <span class="px-3 py-2 rounded-r-md border border-gray-300 bg-gray-200 text-gray-500 cursor-not-allowed">Next</span>
+            </li>
+        }
+    </ul>
+</nav>
+
+
+
+<!-- Recommend Destinations -->
+<section class="max-w-[1200px] mx-auto px-4 sm:px-6 mt-10">
+    <h2 class="font-semibold text-black mb-4 text-sm">
+        Recommend Destinations
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        @if (ViewBag.RecommendTours != null)
+        {
+            var recommendTours = (List<Model.Models.Tour>)ViewBag.RecommendTours;
+            foreach (var tour in recommendTours)
+            {
+                decimal price = 0;
+                if (tour.TourSchedules != null && tour.TourSchedules.Any())
+                {
+                    price = tour.TourSchedules.Min(s => s.Price);
+                }
+
+                double avgRating = 0;
+                if (tour.Reviews != null && tour.Reviews.Any())
+                {
+                    avgRating = Math.Round(tour.Reviews.Average(r => r.Rating ?? 0), 1);
+                }
+                <a href="/pages/tourdetails.html?id=@tour.TourId" class="block">
+                    <div class="relative rounded-md overflow-hidden">
+                        <img alt="@tour.TourName"
+                             class="w-full h-40 object-cover"
+                             height="160"
+                             loading="lazy"
+                             src="@(string.IsNullOrEmpty(tour.FeaturedImageUrl) ? "https://via.placeholder.com/320x160?text=No+Image" : tour.FeaturedImageUrl)"
+                             width="320" />
+                        <div class="absolute top-0 right-0 bg-pink-600 text-white text-xs font-semibold px-2 py-0.5 rounded-bl-md select-none">
+                            @tour.TourCode
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white text-xs">
+                            <div class="font-semibold text-sm">@tour.TourName</div>
+                            <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+                                @RenderStars(avgRating)
+                                <span class="ml-1">(@(tour.Reviews?.Count() ?? 0)) reviews</span>
+                            </div>
+                            <div class="text-xs">From $@price</div>
+                            <div class="text-xs opacity-80">@((tour.Description?.Length ?? 0) > 20 ? tour.Description.Substring(0, 20) + "..." : tour.Description)</div>
+                        </div>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</section>
+
+
+
+<!-- Special Offers -->
+<section class="max-w-[1200px] mx-auto px-4 sm:px-6 mt-10">
+    <h2 class="font-semibold text-black mb-4 text-sm">Special Offers</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="relative rounded-md overflow-hidden">
+            <img alt="Special offer image for Summer Sale with beach and sun"
+                 class="w-full h-36 object-cover"
+                 height="140"
+                 loading="lazy"
+                 src="https://storage.googleapis.com/a1aa/image/57f384dc-a293-4684-5891-ec98b45c55c1.jpg"
+                 width="400" />
+            <div class="absolute top-3 left-3 bg-pink-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded select-none">
+                Limited Time
+            </div>
+            <div class="absolute bottom-3 left-3 right-3 text-white text-xs font-semibold">
+                <div>Summer Sale</div>
+                <div class="font-normal text-[11px]">
+                    Up to 30% off on selected hotels
+                </div>
+            </div>
+        </div>
+        <div class="relative rounded-md overflow-hidden">
+            <img alt="Special offer image for Flight Deals with airplane and clouds"
+                 class="w-full h-36 object-cover"
+                 height="140"
+                 loading="lazy"
+                 src="https://storage.googleapis.com/a1aa/image/87fc472e-9cc9-4d29-30e9-524cff796db8.jpg"
+                 width="400" />
+            <div class="absolute top-3 left-3 bg-pink-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded select-none">
+                Limited Time
+            </div>
+            <div class="absolute bottom-3 left-3 right-3 text-white text-xs font-semibold">
+                <div>Flight Deals</div>
+                <div class="font-normal text-[11px]">
+                    Domestic flights starting at $49
+                </div>
+            </div>
+        </div>
+        <div class="relative rounded-md overflow-hidden">
+            <img alt="Special offer image for Package Discount with travel icons"
+                 class="w-full h-36 object-cover"
+                 height="140"
+                 loading="lazy"
+                 src="https://storage.googleapis.com/a1aa/image/8193e585-da5b-42de-3541-74a544df661f.jpg"
+                 width="400" />
+            <div class="absolute top-3 left-3 bg-pink-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded select-none">
+                Limited Time
+            </div>
+            <div class="absolute bottom-3 left-3 right-3 text-white text-xs font-semibold">
+                <div>Package Discount</div>
+                <div class="font-normal text-[11px]">
+                    Save 15% when you book flight + hotel
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Book With Us -->
+<section class="max-w-[1200px] mx-auto px-4 sm:px-6 mt-10">
+    <h2 class="sr-only">Why Book With Us</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center text-gray-500 text-xs">
+        <div class="flex flex-col items-center space-y-2">
+            <div aria-hidden="true"
+                 class="bg-pink-100 text-pink-500 rounded-full p-3 flex items-center justify-center">
+                <i class="fas fa-tags fa-lg"> </i>
+            </div>
+            <div class="font-semibold text-black text-[11px]">
+                Best Price Guarantee
+            </div>
+            <div class="max-w-[180px]">
+                Find a lower price? We'll match it and give you an additional
+                discount.
+            </div>
+        </div>
+        <div class="flex flex-col items-center space-y-2">
+            <div aria-hidden="true"
+                 class="bg-pink-100 text-pink-500 rounded-full p-3 flex items-center justify-center">
+                <i class="fas fa-clock fa-lg"> </i>
+            </div>
+            <div class="font-semibold text-black text-[11px]">
+                24/7 Customer Support
+            </div>
+            <div class="max-w-[180px]">
+                Our support team is available round the clock to assist you.
+            </div>
+        </div>
+        <div class="flex flex-col items-center space-y-2">
+            <div aria-hidden="true"
+                 class="bg-pink-100 text-pink-500 rounded-full p-3 flex items-center justify-center">
+                <i class="fas fa-heart fa-lg"> </i>
+            </div>
+            <div class="font-semibold text-black text-[11px]">
+                Loyalty Rewards
+            </div>
+            <div class="max-w-[180px]">
+                Earn points with every booking and redeem them for discounts.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Chat Popup -->
+<div class="chat-popup" id="chat-popup" style="position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px; background-color: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; overflow: hidden; transition: all 0.3s ease; opacity: 0; transform: translateY(20px); pointer-events: none; z-index: 1000;">
+    <div class="chat-header" style="background-color: #0f172a; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+        <div class="flex items-center">
+            <i class="fas fa-robot mr-2"></i>
+            <span class="font-semibold">Travel Assistant</span>
+        </div>
+        <button id="close-chat" style="color: white; background: none; border: none; cursor: pointer; font-size: 18px;">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="chat-messages" id="chat-messages" style="flex: 1; padding: 15px; overflow-y: auto;">
+        <div class="message assistant-message" style="background-color: #f0f0f0; color: #333; padding: 10px 15px; border-radius: 18px 18px 18px 0; margin-bottom: 15px; max-width: 80%; word-wrap: break-word;">
+            Hello! I'm your travel assistant. How can I help you plan your next trip?
+        </div>
+    </div>
+    <div class="chat-input" style="display: flex; padding: 10px; border-top: 1px solid #eaeaea;">
+        <input type="text" id="chat-input-field" placeholder="Type your message..."
+               style="flex: 1; padding: 10px 15px; border: 1px solid #ddd; border-radius: 20px; outline: none;" />
+        <button id="send-message" style="background-color: #0f172a; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Button toggle chat -->
+<button id="btn-chat-toggle" aria-label="Toggle chat box"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 1001; width: 60px; height: 60px; border-radius: 50%; background-color: #0f172a; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
+    <i class="fas fa-comment-dots" style="font-size: 24px;"></i>
+</button>
+
+
+<!-- Nền mờ -->
+<div id="adBannerOverlay" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;"></div>
+
+<!-- Banner quảng cáo -->
+<div id="adBanner" style="
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);">
+
+    <div style="position: relative; display: inline-block;">
+        <img src="https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/500736259_122101962482887101_8974032921336258939_n.png?_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeH-qKkH1wgIBFeaFY4piBePm8B6ZQYK6cybwHplBgrpzMknxDuuvKoNtWIrbfi_1tYjJzpCHCH_F4vpkENqlEKe&_nc_ohc=5UGYhVRp9kEQ7kNvwFTAaZ6&_nc_oc=AdncA9GVZDCTtdZMmD4jgUVoCK805F0_o6x0v_VbtR9AfIJnojxXSCYSl4IIoA9u1j4&_nc_zt=23&_nc_ht=scontent.fhan15-2.fna&_nc_gid=JiqLANL_ZRClaBZho4rTJg&oh=00_AfPtuK7NQN2zVaDc856SRJxipETcdpfwQ2fYcJoXjkLsUA&oe=6847A56F" 
+             alt="Quảng cáo" 
+             style="max-width: 100%; height: auto; border-radius: 10px;">
+        
+        <button onclick="closeBanner()" style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;">×</button>
+    </div>
+</div>
+
+<script>document.addEventListener("DOMContentLoaded", function () {
+    const images = [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/PANO0002-Pano.jpg/1200px-PANO0002-Pano.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/L%C4%83ng_B%C3%A1c_-_NKS.jpg/1200px-L%C4%83ng_B%C3%A1c_-_NKS.jpg",
+        "https://static.vinwonders.com/production/ho-hoan-kiem-2.jpg",
+    ];
+    let currentIndex = 0;
+    const bgImage = document.getElementById("background-image");
+
+    function changeImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        bgImage.src = images[currentIndex];
+    }
+
+    setInterval(changeImage, 5000);
+
+    const chatPopup = document.getElementById("chat-popup");
+    const btnToggle = document.getElementById("btn-chat-toggle");
+    const closeChatBtn = document.getElementById("close-chat");
+    const chatMessages = document.getElementById("chat-messages");
+    const chatInputField = document.getElementById("chat-input-field");
+    const sendMessageBtn = document.getElementById("send-message");
+
+    // Hàm bật/tắt chat popup
+    function toggleChat() {
+        if (chatPopup.style.opacity === "1") {
+            chatPopup.style.opacity = "0";
+            chatPopup.style.transform = "translateY(20px)";
+            chatPopup.style.pointerEvents = "none";
+        } else {
+            chatPopup.style.opacity = "1";
+            chatPopup.style.transform = "translateY(0)";
+            chatPopup.style.pointerEvents = "all";
+            chatInputField.focus();
+        }
+    }
+
+    btnToggle.addEventListener("click", toggleChat);
+    closeChatBtn.addEventListener("click", toggleChat);
+
+    // Hàm thêm tin nhắn vào chat
+    function addMessage(role, content, tours = null) {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message");
+        messageDiv.style.marginBottom = "15px";
+        messageDiv.style.maxWidth = "80%";
+        messageDiv.style.wordWrap = "break-word";
+        if (role === "user") {
+            messageDiv.style.backgroundColor = "#e2f5ff";
+            messageDiv.style.color = "#333";
+            messageDiv.style.padding = "10px 15px";
+            messageDiv.style.borderRadius = "18px 18px 0 18px";
+            messageDiv.style.marginLeft = "auto";
+            messageDiv.textContent = content;
+        } else {
+            messageDiv.style.backgroundColor = "#f0f0f0";
+            messageDiv.style.color = "#333";
+            messageDiv.style.padding = "10px 15px";
+            messageDiv.style.borderRadius = "18px 18px 18px 0";
+            const lines = content.split("\n");
+            lines.forEach((line) => {
+                const lineDiv = document.createElement("div");
+                lineDiv.textContent = line;
+                messageDiv.appendChild(lineDiv);
+            });
+
+            if (tours) {
+                tours.forEach(tour => {
+                    const tourDiv = document.createElement("div");
+
+                    tourDiv.innerHTML = `
+                        <h4>${tour.name}</h4>
+                    `;
+                    messageDiv.appendChild(tourDiv);
+                });
+            }
+        }
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Dữ liệu hội thoại mẫu
+    const mockConversation = [
+        {
+            role: "user",
+            content: "hi",
+        },
+        {
+            role: "assistant",
+            content: "Hi I am Viego Assistant, Please type Give me recommend to get the support",
+        },
+        {
+            role: "user",
+            content: "Give me recommend",
+        },
+        {
+            role: "assistant",
+            content:
+                "Hello I Am Viego Assistant Here the list tour Available\n$100-$200 and go 2n1d\n$200-$300 and go 2n1d\n$100-$200 and go 3n2d\n$200-$300 and go 3n2d\n$100-$200 and go 4n3d\n$200-$300 and go 4n3d",
+        },
+        {
+            role: "user",
+            content: "$100-$200 and go 2n1d",
+        },
+        {
+            role: "assistant",
+            content: "Here are some sea travel tours for your 2-day, 1-night trip within $100-$200:",
+            tours: [
+                { name: "Vung Tau Quick Escape", price: "$120" },
+                { name: "Cat Ba Coastal Sprint", price: "$130" },
+                { name: "Nha Trang Island Hop", price: "$140" },
+                { name: "Phu Quoc Short Getaway", price: "$150" },
+                { name: "Mui Ne Beach Blitz", price: "$160" },
+                { name: "Da Nang Coastal Dash", price: "$170" },
+            ],
+        },
+        {
+            role: "user",
+            content: "$200-$300 and go 2n1d",
+        },
+        {
+            role: "assistant",
+            content: "Here are some sea travel tours for your 2-day, 1-night trip within $200-$300:",
+            tours: [
+                { name: "Hoi An Beach Break", price: "$210" },
+                { name: "Quy Nhon Quick Retreat", price: "$220" },
+                { name: "Phan Thiet Sea Snap", price: "$230" },
+                { name: "Cam Ranh Bay Brief", price: "$240" },
+                { name: "Ly Son Island Discovery", price: "$250" },
+                { name: "Nam Du Archipelago Tour", price: "$260" },
+            ],
+        },
+        {
+            role: "user",
+            content: "$100-$200 and go 3n2d",
+        },
+        {
+            role: "assistant",
+            content: "Here are some sea travel tours for your 3-day, 2-night trip within $100-$200:",
+            tours: [
+                { name: "Vung Tau Beach Retreat", price: "$150" },
+                { name: "Cat Ba Island Adventure", price: "$160" },
+                { name: "Nha Trang Coastal Escape", price: "$170" },
+                { name: "Phu Quoc Budget Getaway", price: "$180" },
+                { name: "Mui Ne Sand Dunes & Sea", price: "$190" },
+                { name: "Con Dao Island Hopping", price: "$195" },
+            ],
+        },
+        {
+            role: "user",
+            content: "$200-$300 and go 3n2d",
+        },
+        {
+            role: "assistant",
+            content: "Here are some sea travel tours for your 3-day, 2-night trip within $200-$300:",
+            tours: [
+                { name: "Ha Long Bay Short Cruise", price: "$210" },
+                { name: "Da Nang Beach Break", price: "$220" },
+                { name: "Quy Nhon Coastal Charm", price: "$230" },
+                { name: "Phan Thiet Sea Escape", price: "$240" },
+                { name: "Cam Ranh Bay Adventure", price: "$250" },
+                { name: "Hoi An Coastal Retreat", price: "$260" },
+            ],
+        },
+        {
+            role: "user",
+            content: "$100-$200 and go 4n3d",
+        },
+        {
+            role: "assistant",
+            content: "Here are some sea travel tours for your 4-day, 3-night trip within $100-$200:",
+            tours: [
+                { name: "Phu Quoc Extended Adventure", price: "$150" },
+                { name: "Ha Long Bay Long Cruise", price: "$160" },
+                { name: "Nha Trang Deep Dive", price: "$170" },
+                { name: "Con Dao Island Retreat", price: "$180" },
+                { name: "Mui Ne Coastal Journey", BLOOD: "$190" },
+                { name: "Da Nang Extended Beach", price: "$195" },
+            ],
+        },
+        {
+            role: "user",
+            content: "$200-$300 and go 4n3d",
+        },
+        {
+            role: "assistant",
+            content: "Here are some sea travel tours for your 4-day, 3-night trip within $200-$300:",
+            tours: [
+                { name: "Quy Nhon Sea Exploration", price: "$210" },
+                { name: "Phan Thiet Long Escape", price: "$220" },
+                { name: "Nam Du Island Adventure", price: "$230" },
+                { name: "Ly Son Volcanic Tour", price: "$240" },
+                { name: "Bai Tu Long Bay Cruise", price: "$250" },
+                { name: "Cua Lo Beach Vacation", price: "$260" },
+            ],
+        },
+    ];
+
+    // Gửi tin nhắn
+    function sendMessage() {
+        const message = chatInputField.value.trim();
+        if (message === "") return;
+
+        addMessage("user", message);
+        chatInputField.value = "";
+
+        // Xử lý logic phản hồi dựa trên mockConversation
+        if (message.toLowerCase() === "hi" || message.toLowerCase() === "hello") {
+            setTimeout(() => {
+                addMessage(
+                    "assistant",
+                    "Hi I am Viego Assistant, Please type Give me recommend to get the support"
+                );
+            }, 1000);
+        } else if (message.toLowerCase() === "give me recommend") {
+            setTimeout(() => {
+                addMessage(
+                    "assistant",
+                    "Hello I Am Viego Assistant Here the list tour Available\n$100-$200 and go 2n1d\n$200-$300 and go 2n1d\n$100-$200 and go 3n2d\n$200-$300 and go 3n2d\n$100-$200 and go 4n3d\n$200-$300 and go 4n3d"
+                );
+            }, 1000);
+        } else if (
+            message.includes("$100-$200") &&
+            (message.includes("2n1d") ||
+                message.includes("2-day") ||
+                message.includes("2 day"))
+        ) {
+            setTimeout(() => {
+                const tourResponse = mockConversation.find(
+                    (msg) =>
+                        msg.tours &&
+                        msg.content.includes("2-day, 1-night") &&
+                        msg.content.includes("$100-$200")
+                );
+                if (tourResponse) {
+                    addMessage(
+                        "assistant",
+                        tourResponse.content,
+                        tourResponse.tours
+                    );
+                }
+            }, 1000);
+        } else if (
+            message.includes("$200-$300") &&
+            (message.includes("2n1d") ||
+                message.includes("2-day") ||
+                message.includes("2 day"))
+        ) {
+            setTimeout(() => {
+                const tourResponse = mockConversation.find(
+                    (msg) =>
+                        msg.tours &&
+                        msg.content.includes("2-day, 1-night") &&
+                        msg.content.includes("$200-$300")
+                );
+                if (tourResponse) {
+                    addMessage(
+                        "assistant",
+                        tourResponse.content,
+                        tourResponse.tours
+                    );
+                }
+            }, 1000);
+        } else if (
+            message.includes("$100-$200") &&
+            (message.includes("3n2d") ||
+                message.includes("3-day") ||
+                message.includes("3 day"))
+        ) {
+            setTimeout(() => {
+                const tourResponse = mockConversation.find(
+                    (msg) =>
+                        msg.tours &&
+                        msg.content.includes("3-day, 2-night") &&
+                        msg.content.includes("$100-$200")
+                );
+                if (tourResponse) {
+                    addMessage(
+                        "assistant",
+                        tourResponse.content,
+                        tourResponse.tours
+                    );
+                }
+            }, 1000);
+        } else if (
+            message.includes("$200-$300") &&
+            (message.includes("3n2d") ||
+                message.includes("3-day") ||
+                message.includes("3 day"))
+        ) {
+            setTimeout(() => {
+                const tourResponse = mockConversation.find(
+                    (msg) =>
+                        msg.tours &&
+                        msg.content.includes("3-day, 2-night") &&
+                        msg.content.includes("$200-$300")
+                );
+                if (tourResponse) {
+                    addMessage(
+                        "assistant",
+                        tourResponse.content,
+                        tourResponse.tours
+                    );
+                }
+            }, 1000);
+        } else if (
+            message.includes("$100-$200") &&
+            (message.includes("4n3d") ||
+                message.includes("4-day") ||
+                message.includes("4 day"))
+        ) {
+            setTimeout(() => {
+                const tourResponse = mockConversation.find(
+                    (msg) =>
+                        msg.tours &&
+                        msg.content.includes("4-day, 3-night") &&
+                        msg.content.includes("$100-$200")
+                );
+                if (tourResponse) {
+                    addMessage(
+                        "assistant",
+                        tourResponse.content,
+                        tourResponse.tours
+                    );
+                }
+            }, 1000);
+        } else if (
+            message.includes("$200-$300") &&
+            (message.includes("4n3d") ||
+                message.includes("4-day") ||
+                message.includes("4 day"))
+        ) {
+            setTimeout(() => {
+                const tourResponse = mockConversation.find(
+                    (msg) =>
+                        msg.tours &&
+                        msg.content.includes("4-day, 3-night") &&
+                        msg.content.includes("$200-$300")
+                );
+                if (tourResponse) {
+                    addMessage(
+                        "assistant",
+                        tourResponse.content,
+                        tourResponse.tours
+                    );
+                }
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                addMessage(
+                    "assistant",
+                    "I'm sorry, I can't answer this question please type Give me recommend to get the support"
+                );
+            }, 1000);
+        }
+    }
+
+    sendMessageBtn.addEventListener("click", sendMessage);
+    chatInputField.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+});</script>
+
+
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            document.getElementById('adBanner').style.display = 'block';
+            document.getElementById('adBannerOverlay').style.display = 'block';
+        }, 500);
+    }
+
+    function closeBanner() {
+        document.getElementById('adBanner').style.display = 'none';
+        document.getElementById('adBannerOverlay').style.display = 'none';
+    }
+</script>
+
+
+
+<!-- Import FontAwesome CDN nếu bạn chưa có trong layout -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />

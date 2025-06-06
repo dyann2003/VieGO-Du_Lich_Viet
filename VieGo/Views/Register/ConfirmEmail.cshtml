@@ -1,0 +1,46 @@
+﻿@model Model.DTOs.ConfirmEmailModel
+
+@{
+    ViewData["Title"] = "Confirm Email";
+    var backgroundImageUrl = "https://wallpaperaccess.com/full/1318227.jpg";
+}
+
+<div class="fixed inset-0 z-40">
+    <img src="@backgroundImageUrl" alt="Background" class="w-full h-full object-cover" />
+</div>
+
+<!-- Modal confirm email -->
+<div id="login-register-modal" class="fixed inset-0 flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="bg-white rounded-lg max-w-md w-full p-6 relative shadow-lg">
+        <a href="/Home" id="modal-close" aria-label="Close modal"
+           class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none" type="button"
+           onclick="document.getElementById('login-register-modal').classList.add('hidden')">
+            <i class="fas fa-times text-base"></i>
+        </a>
+        <h2 id="modal-title" class="text-center font-semibold text-xl text-gray-900 mb-4">Xác nhận Email</h2>
+
+        <form asp-action="ConfirmEmail" method="post" novalidate>
+            <!-- Hidden email field giữ lại email -->
+            <input asp-for="Email" type="hidden" />
+
+            <label for="Code" class="block text-gray-900 text-sm mb-1 font-normal">Mã xác nhận</label>
+            <input asp-for="Code" id="Code" type="text" placeholder="Nhập mã xác nhận"
+                   class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent mb-4" />
+            <span asp-validation-for="Code" class="text-red-600 text-sm mb-4 block"></span>
+
+            <button type="submit"
+                    class="w-full bg-gray-200 text-gray-700 font-semibold py-2 rounded-md mb-2 hover:bg-gray-300 focus:outline-none">
+                Tiếp tục
+            </button>
+        </form>
+
+        <p class="text-center text-gray-500 text-xs leading-tight">
+            Bằng cách tiếp tục, bạn đồng ý với
+            <a href="#" class="text-blue-600 hover:underline">Điều khoản &amp; Chính sách</a>.
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

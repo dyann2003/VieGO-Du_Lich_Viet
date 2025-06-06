@@ -1,0 +1,96 @@
+@model Model.Models.User
+
+<div class="bg-white rounded-md shadow-md w-full max-w-3xl mx-auto mt-10 p-6"
+     role="document"
+     aria-labelledby="view-page-title">
+    <!-- Header -->
+    <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
+        <h2 id="view-page-title" class="text-gray-900 text-xl font-semibold leading-6">
+            User Details
+        </h2>
+        <a href="/User"
+           class="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <i class="fas fa-times"></i>
+        </a>
+    </div>
+
+    <!-- Content -->
+    <div class="space-y-4">
+        <!-- User ID -->
+        <div>
+            <h3 class="text-sm font-semibold text-gray-900 mb-1">User ID</h3>
+            <p class="text-sm text-gray-700">@Model.UserId</p>
+        </div>
+
+        <!-- User Name -->
+        <div>
+            <h3 class="text-sm font-semibold text-gray-900 mb-1">Full Name</h3>
+            <p class="text-sm text-gray-700">@Model.FullName</p>
+        </div>
+
+        <!-- Date of Birth & Gender -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">Date of Birth</h3>
+                <p class="text-sm text-gray-700">@Model.DateOfBirth?.ToString("dd/MM/yyyy")</p>
+            </div>
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">Gender</h3>
+                <p class="text-sm text-gray-700">@Model.Gender</p>
+            </div>
+        </div>
+
+        <!-- Email & Phone -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">Email</h3>
+                <p class="text-sm text-gray-700">@Model.Email</p>
+            </div>
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">Phone</h3>
+                <p class="text-sm text-gray-700">@Model.PhoneNumber</p>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div>
+            <h3 class="text-sm font-semibold text-gray-900 mb-1">Address</h3>
+            <p class="text-sm text-gray-700">@Model.Address</p>
+        </div>
+
+        <!-- Status & User Type -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">Status</h3>
+                <p class="text-sm text-gray-700">
+                    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full @((Model.Status == 1) ? "bg-green-600 text-white" : "bg-red-500 text-white")">
+                        @(Model.Status == 1 ? "Active" : "Inactive")
+                    </span>
+                </p>
+            </div>
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 mb-1">User Type</h3>
+                <p class="text-sm text-gray-700">@Model.UserType</p>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div>
+            <h3 class="text-sm font-semibold text-gray-900 mb-1">Notes</h3>
+            <p class="text-sm text-gray-700">@Model.Notes</p>
+        </div>
+    </div>
+
+    <!-- Footer buttons -->
+    <div class="flex justify-end gap-3 mt-6 border-t pt-4 border-gray-200">
+        <a href="/User"
+           class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-normal text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Close
+        </a>
+        <a asp-action="Edit"
+           asp-route-id="@Model.UserId"
+           class="rounded-md bg-indigo-900 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Edit User
+        </a>
+    </div>
+</div>

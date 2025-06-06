@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Payment Success</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 50px;
+            background-color: #e6ffe6;
+        }
+
+        .message {
+            color: #2e7d32;
+            font-size: 24px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #2e7d32;
+            color: white;
+            border-radius: 5px;
+        }
+        #countdown {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="message">🎉 Thanh toán thành công!</h1>
+    <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+    <p>Bạn sẽ được chuyển hướng về trang chủ sau <span id="countdown">5</span> giây...</p>
+    <a href="/">Quay lại trang chủ</a>
+
+    <script>
+        // Tách thông tin từ returnUrl
+        const params = new URLSearchParams(window.location.search);
+        const orderCode = params.get("orderCode");
+        const amount = parseFloat(params.get("amount"));
+        const tourId = parseInt(params.get("tourId"));
+        const quantity = parseInt(params.get("people"));
+
+        if (orderCode && amount && tourId) {
+            fetch("/api/Booking/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    tourId: tourId,
+                    quantity: quantity,
+                    totalPrice: amount,
+                    paymentNotes: `Order: ${orderCode}`
+                })
+            })
+                .then(async res => {
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.message || "Unknown error");
+                    }
+                    console.log("Booking saved:", data);
+                })
+                .catch(err => console.error("Lỗi lưu booking:", err));
+        }
+
+        // Countdown logic
+        let countdown = 5;
+        const countdownEl = document.getElementById('countdown');
+
+        const timer = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = "/";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

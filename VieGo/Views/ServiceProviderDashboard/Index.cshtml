@@ -1,0 +1,525 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model Model.DTOs.DashboardDto
+@using Newtonsoft.Json
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Traveloka Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+          rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+          font-family: "Inter", sans-serif;
+        }
+        /* Custom scrollbar for sidebar */
+        aside::-webkit-scrollbar {
+          width: 6px;
+        }
+        aside::-webkit-scrollbar-thumb {
+          background-color: #cbd5e1;
+          border-radius: 3px;
+        }
+        /* Fix chart container width in analytics tab */
+        #content-analytics > div {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+        #chartSalesAnalysis {
+          max-width: 100% !important;
+          height: 300px !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <header class="bg-white border-b border-gray-200 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-6">
+                    <a class="flex items-center space-x-2 cursor-pointer"
+                       id="logo-button"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Toggle mobile menu"
+                       href="home.html">
+                        <span class="font-bold text-base text-black select-none">
+                            Viego
+                        </span>
+                    </a>
+                    <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]"
+                        id="desktop-menu">
+                        <li>
+                            <a class="hover:underline" href="aboutus.html"> About Us </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="faq.html"> FAQs </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="#"> Blog </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="tourguidedashboard.html">
+                                Tour Guide
+                            </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="serviceproviderdashboard.html">
+                                Service Provider
+                            </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="mybooking.html">
+                                My Bookings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 text-sm font-normal text-[#1a1a1a]"
+                     id="desktop-actions">
+                    <button aria-label="Toggle dark mode"
+                            class="hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 rounded">
+                        <i class="fas fa-sun"> </i>
+                    </button>
+                    <button class="flex items-center space-x-1 hover:text-gray-600">
+                        <i class="fas fa-globe"> </i>
+                        <span> EN </span>
+                    </button>
+                    <a class="hover:underline" href="#"> Log In </a>
+                    <a class="bg-[#0f172a] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#1e293b]"
+                       href="#">
+                        Register
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button"
+                            id="mobile-menu-button"
+                            class="text-gray-700 hover:text-gray-900 focus:outline-none"
+                            aria-label="Toggle mobile menu"
+                            aria-expanded="false"
+                            aria-controls="mobile-dropdown">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile dropdown menu -->
+            <div class="mobile-dropdown md:hidden hidden"
+                 id="mobile-dropdown"
+                 role="menu"
+                 aria-label="Mobile menu">
+                <nav class="px-4 py-3 space-y-3">
+                    <a href="aboutus.html"
+                       class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2"
+                       role="menuitem"
+                       tabindex="-1">
+                        About Us
+                    </a>
+                    <a href="faq.html"
+                       class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2"
+                       role="menuitem"
+                       tabindex="-1">
+                        FAQs
+                    </a>
+                    <a href="#"
+                       class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2"
+                       role="menuitem"
+                       tabindex="-1">
+                        Blog
+                    </a>
+                    <a href="tourguidedashboard.html"
+                       class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2"
+                       role="menuitem"
+                       tabindex="-1">
+                        Tour Guide
+                    </a>
+                    <a href="serviceproviderdashboard.html"
+                       class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2"
+                       role="menuitem"
+                       tabindex="-1">
+                        Service Provider
+                    </a>
+                    <a href="mybooking.html"
+                       class="block py-2 text-sm text-gray-700 hover:bg-gray-50 rounded px-2"
+                       role="menuitem"
+                       tabindex="-1">
+                        My Bookings
+                    </a>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-gray-500">Theme</span>
+                            <button class="text-gray-700 hover:text-gray-900 focus:outline-none"
+                                    aria-label="Toggle dark mode">
+                                <i class="fas fa-sun"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-gray-500">Language</span>
+                            <button class="text-gray-700 hover:text-gray-900 focus:outline-none flex items-center"
+                                    aria-label="Change language">
+                                <i class="fas fa-globe mr-1"></i>
+                                <span>EN</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-2 pt-3">
+                        <a href="#"
+                           class="text-sm text-gray-700 hover:underline py-2"
+                           role="menuitem"
+                           tabindex="-1">
+                            Log In
+                        </a>
+                        <a href="#"
+                           class="bg-[#0f172a] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#1e293b] text-center"
+                           role="menuitem"
+                           tabindex="-1">
+                            Register
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="flex min-h-screen">
+        <aside class="w-56 border-r border-gray-200 px-4 py-6 text-sm font-semibold text-gray-900 select-none overflow-y-auto">
+            <h2 class="mb-4">Service Provider</h2>
+            <nav class="flex flex-col space-y-2 text-gray-700 font-normal">
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="serviceproviderdashboard.html"><i class="fas fa-list-alt text-xs"></i><span>Dashboard</span></a>
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="serviceprovidermanagetour.html"><i class="fas fa-list-alt text-xs"></i><span>Manage Tours</span></a>
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="serviceProvidermanagevoucher.html">
+                    <i class="fas fa-ticket-alt text-xs"></i><span>Manage Vouchers</span>
+                </a>
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="serviceProvidervoucherusage.html">
+                    <i class="fas fa-chart-pie text-xs"></i><span>Voucher Usage</span>
+                </a>
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="serviceprovidermanagebookings.html">
+                    <i class="fas fa-calendar-check text-xs"></i><span>Manage Bookings</span>
+                </a>
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="#">
+                    <i class="fas fa-comment-alt text-xs"></i><span>Customer Reviews</span>
+                </a>
+                <a class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200"
+                   href="#">
+                    <i class="far fa-star text-xs"></i><span>Rating Statistics</span>
+                </a>
+            </nav>
+        </aside>
+        <section class="flex-1 p-6 space-y-6">
+            <header>
+                <h1 class="text-2xl font-extrabold text-gray-900 leading-tight">
+                    Hi, Welcome back
+                    <span aria-label="waving hand" role="img">👋</span>
+                </h1>
+                <p class="text-gray-500 text-sm mt-1">
+                    Monitor your business performance and manage your tours
+                </p>
+            </header>
+            <nav class="flex space-x-4 border border-gray-200 rounded-md text-xs font-normal text-gray-600">
+                <button class="px-4 py-1 border-b-2 border-gray-900 text-gray-900"
+                        id="tab-overview"
+                        onclick="switchTab('overview')">
+                    Overview
+                </button>
+                <button class="px-4 py-1 hover:text-gray-900"
+                        id="tab-analytics"
+                        onclick="switchTab('analytics')">
+                    Analytics
+                </button>
+                <button class="px-4 py-1 hover:text-gray-900"
+                        id="tab-reports"
+                        onclick="switchTab('reports')">
+                    Reports
+                </button>
+                <button class="px-4 py-1 hover:text-gray-900"
+                        id="tab-notifications"
+                        onclick="switchTab('notifications')">
+                    Notifications
+                </button>
+            </nav>
+
+            <div id="content-overview" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 border rounded shadow-sm bg-white">
+                        <p class="text-xs text-gray-600">Total Booking</p>
+                        <p class="text-2xl font-bold text-gray-800">@Model.TotalBooking</p>
+                        <p class="text-xs text-green-600 mt-1 flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i>+2.6%
+                        </p>
+                    </div>
+                    <div class="p-4 border rounded shadow-sm bg-white">
+                        <p class="text-xs text-gray-600">Total Users</p>
+                        <p class="text-2xl font-bold text-gray-800">@Model.TotalUser</p>
+                        <p class="text-xs text-red-600 mt-1 flex items-center">
+                            <i class="fas fa-arrow-down mr-1"></i>-0.1%
+                        </p>
+                    </div>
+                    <div class="p-4 border rounded shadow-sm bg-white">
+                        <p class="text-xs text-gray-600">Purchase Orders</p>
+                        <p class="text-2xl font-bold text-gray-800">$@Model.PurchaseOrders</p>
+                        <p class="text-xs text-green-600 mt-1 flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i>+2.8%
+                        </p>
+                    </div>
+                    <div class="p-4 border rounded shadow-sm bg-white">
+                        <p class="text-xs text-gray-600">Comment</p>
+                        <p class="text-2xl font-bold text-gray-800">@Model.Comments</p>
+                        <p class="text-xs text-green-600 mt-1 flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i>+3.6%
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="border border-gray-200 rounded-md p-4 md:col-span-1">
+                        <h2 class="font-semibold text-gray-900 mb-2">Percentage Ratings</h2>
+
+                        <div style="max-width: 300px; margin: auto;">
+                            <canvas id="ratingChart"></canvas>
+                        </div>
+
+                        <p id="totalValue" class="text-sm text-gray-700 mt-2 font-medium text-center">
+                            Total Reviews: @Model.Ratings?.Values.Sum()
+                        </p>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-md p-4 md:col-span-1">
+                        <h2 class="font-semibold text-gray-900 mb-2">
+                            Percentage Booking Status
+                        </h2>
+                        <div style="max-width: 300px; margin: auto;">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                        <p id="totalValue1" class="text-sm text-gray-700 mt-2 font-medium text-center">
+                            Total Bookings: @Model.BookingStatus?.Values.Sum()
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-analytics" class="hidden space-y-4">
+                <div class="border border-gray-200 rounded-md p-4 max-w-full overflow-x-auto">
+                    <h2 class="font-semibold text-gray-900 mb-2">
+                        Sales Analysis by Month
+                    </h2>
+                    <div style="max-width: 1000px; margin: auto;">
+                        <canvas id="salesChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-reports"
+                 class="hidden text-gray-500 text-center py-20">
+                Reports content placeholder
+            </div>
+            <div id="content-notifications"
+                 class="hidden text-gray-500 text-center py-20">
+                Notifications content placeholder
+            </div>
+        </section>
+    </main>
+
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+
+
+        <script>
+            function switchTab(tab) {
+                const tabs = ['overview', 'analytics', 'reports', 'notifications'];
+                tabs.forEach(t => {
+                    document.getElementById(`content-${t}`).classList.add("hidden");
+                    document.getElementById(`tab-${t}`).classList.remove("border-b-2", "border-gray-900", "text-gray-900");
+                });
+
+                document.getElementById(`content-${tab}`).classList.remove("hidden");
+                document.getElementById(`tab-${tab}`).classList.add("border-b-2", "border-gray-900", "text-gray-900");
+            }
+
+            // Khởi tạo mặc định tab đầu tiên
+            window.addEventListener("DOMContentLoaded", () => {
+                switchTab("overview");
+            });
+        </script>
+
+        @using System.Text.Json
+    @{
+            var fullStars = new[] { 5, 4, 3, 2, 1 };
+            var ratingsDict = Model.Ratings ?? new Dictionary<int, int>();
+            var ratingLabels = fullStars.Select(r => r + " Stars").ToList();
+            var ratingValues = fullStars.Select(r => ratingsDict.ContainsKey(r) ? ratingsDict[r] : 0).ToList();
+            var totalReviews = ratingValues.Sum();
+
+            var ratingLabelsJson = JsonConvert.SerializeObject(ratingLabels);
+            var ratingValuesJson = JsonConvert.SerializeObject(ratingValues);
+        }
+        @{
+            var statusColors = new Dictionary<string, string> {
+        { "Pending", "#facc15" },
+        { "Confirmed", "#22c55e" },
+        { "Completed", "#3b82f6" },
+        { "Cancelled", "#ef4444" }
+        };
+
+            var bookingStatus = Model.BookingStatus ?? new Dictionary<string, int>();
+            var statusLabels = bookingStatus.Keys.ToList();
+            var statusValues = statusLabels.Select(k => bookingStatus[k]).ToList();
+            var statusColorsList = statusLabels.Select(k => statusColors.ContainsKey(k) ? statusColors[k] : "#cccccc").ToList();
+
+            var statusLabelsJson = JsonConvert.SerializeObject(statusLabels);
+            var statusValuesJson = JsonConvert.SerializeObject(statusValues);
+            var statusColorsJson = JsonConvert.SerializeObject(statusColorsList);
+        }
+
+        @{
+            var allMonths = Enumerable.Range(1, 12).ToList();
+            var salesData = Model.SalesByMonth ?? new Dictionary<int, decimal>();
+            var salesLabels = allMonths
+            .Select(m => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m))
+            .ToList();
+            var salesValues = allMonths
+            .Select(m => salesData.ContainsKey(m) ? salesData[m] : 0m)
+            .ToList();
+        }
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const ratingChart = document.getElementById("ratingChart");
+
+                const ratingData = {
+                    labels: @Html.Raw(ratingLabelsJson),
+                    datasets: [{
+                        data: @Html.Raw(ratingValuesJson),
+                        backgroundColor: [
+                            '#facc15', // ⭐️5 - Vàng
+                            '#22c55e', // ⭐️4 - Xanh lá cây
+                            '#3b82f6', // ⭐️3 - Xanh dương
+                            '#fb923c', // ⭐️2 - Cam
+                            '#ef4444'  // ⭐️1 - Đỏ
+                        ]
+                    }]
+                };
+
+                if (ratingChart && ratingData.datasets[0].data.length > 0) {
+                    new Chart(ratingChart, {
+                        type: 'pie',
+                        data: ratingData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { position: 'top' },
+                                title: { display: true, text: 'Rating Distribution' }
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const statusChart = document.getElementById("statusChart");
+
+                const statusData = {
+                    labels: @Html.Raw(statusLabelsJson),
+                    datasets: [{
+                        data: @Html.Raw(statusValuesJson),
+                        backgroundColor: @Html.Raw(statusColorsJson)
+                    }]
+                };
+
+                if (statusChart && statusData.datasets[0].data.length > 0) {
+                    new Chart(statusChart, {
+                        type: 'pie',
+                        data: statusData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { position: 'top' },
+                                title: { display: true, text: 'Booking Status Breakdown' }
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const ctx = document.getElementById('salesChart');
+                if (ctx) {
+                    const salesData = {
+                        labels:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(salesLabels)),
+                        datasets: [{
+                            label: 'Sales ($)',
+                            data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(salesValues)),
+                            backgroundColor: '#60a5fa'
+                        }]
+                    };
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: salesData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Sales by Month (All Year)'
+                                },
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: value => '$' + value
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        maxRotation: 0,
+                                        minRotation: 0
+                                    }
+                                }
+                            },
+                            layout: {
+                                padding: 10
+                            },
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.5
+                        }
+                    });
+                }
+            });
+        </script>
+
+}
+    
+</body>
+</html>

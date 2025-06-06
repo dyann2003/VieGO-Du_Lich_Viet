@@ -1,0 +1,273 @@
+﻿@model List<Model.DTOs.BookingDTO>
+
+<main class="flex min-h-[calc(100vh-48px)]">
+    <aside class="w-56 border-r border-gray-200 px-4 py-6 text-sm font-semibold text-gray-900 select-none overflow-y-auto">
+        <h2 class="mb-4">Service Provider</h2>
+        <nav class="flex flex-col space-y-2 text-gray-700 font-normal">
+            <a href="serviceproviderdashboard.html" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="fas fa-list-alt text-xs"></i><span>Dashboard</span>
+            </a>
+            <a href="serviceprovidermanagetour.html" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="fas fa-list-alt text-xs"></i><span>Manage Tours</span>
+            </a>
+            <a href="serviceProvidermanagevoucher.html" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="fas fa-ticket-alt text-xs"></i><span>Manage Vouchers</span>
+            </a>
+            <a href="serviceProvidervoucherusage.html" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="fas fa-chart-pie text-xs"></i><span>Voucher Usage</span>
+            </a>
+            <a href="serviceprovidermanagebookings.html" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="fas fa-calendar-check text-xs"></i><span>Manage Bookings</span>
+            </a>
+            <a href="#" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="fas fa-comment-alt text-xs"></i><span>Customer Reviews</span>
+            </a>
+            <a href="#" class="flex items-center space-x-2 hover:text-gray-900 transition-colors duration-200">
+                <i class="far fa-star text-xs"></i><span>Rating Statistics</span>
+            </a>
+        </nav>
+    </aside>
+
+    <section class="flex-1 p-6">
+        <h1 class="font-bold text-xl mb-1">Manage Bookings</h1>
+        <p class="text-gray-500 text-sm mb-6">You have @Model.Count bookings in total</p>
+
+        <div class="bg-white border border-gray-100 rounded-md p-4 max-w-full overflow-x-auto">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0 relative">
+                <input type="text" id="searchInput" placeholder="Search bookings by tour name or ID..." class="flex-1 border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                <div class="ml-auto sm:ml-4 relative">
+                    <button id="statusFilterBtn" aria-haspopup="true" aria-expanded="false" aria-controls="statusDropdown" class="flex items-center space-x-1 border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                        <span>Status: All</span>
+                        <i class="fas fa-sort text-[10px]"></i>
+                    </button>
+                    <ul id="statusDropdown" class="hidden absolute right-0 mt-1 w-32 bg-white border border-gray-200 rounded-md shadow-lg text-xs z-10">
+                        <li><button class="w-full text-left px-3 py-2 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none" data-status="All">All</button></li>
+                        <li><button class="w-full text-left px-3 py-2 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none" data-status="Paid">Paid</button></li>
+                        <li><button class="w-full text-left px-3 py-2 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none" data-status="Pending">Pending</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <table id="bookingsTable" class="w-full text-left text-xs text-gray-700 border-collapse border border-gray-100">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[80px]">Booking ID</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold">Tour</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[100px]">Booking Date</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[100px]">Travel Start</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[100px]">Travel End</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[90px]">Adults</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[90px]">Children</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[100px]">Total Price</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[90px]">Booking Status</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[90px]">Payment Status</th>
+                        <th class="border border-gray-100 px-3 py-2 font-semibold w-[50px]">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr class="border border-gray-100" data-status="@booking.PaymentStatus" data-tourname="@booking.TourName" data-bookingid="@booking.BookingId.ToString()">
+                            <td class="border border-gray-100 px-3 py-2 align-top font-semibold">@booking.BookingId</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.TourName</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.TravelStartDate.ToString("yyyy-MM-dd")</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.TravelEndDate.ToString("yyyy-MM-dd")</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.NumAdults</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.NumChildren </td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.TotalPrice.ToString("C")</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">
+                                <span class="bg-gray-900 text-white text-[10px] font-semibold rounded-full px-3 py-1 inline-block select-none">@booking.BookingStatus</span>
+                            </td>
+                            <td class="border border-gray-100 px-3 py-2 align-top">@booking.PaymentStatus</td>
+                            <td class="border border-gray-100 px-3 py-2 align-top text-center cursor-pointer text-blue-600 hover:text-blue-800">
+                                <button class="viewBtn font-semibold text-xs">View</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<!-- Modal -->
+<div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative mx-4 sm:mx-auto">
+        <button id="modalCloseBtn" aria-label="Close modal" class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-lg font-bold">&times;</button>
+        <h2 class="text-lg font-bold mb-4">Tour & Customer Details</h2>
+        <div id="modalContent" class="text-xs text-gray-700"></div>
+    </div>
+</div>
+
+<script>
+    const statusFilterBtn = document.getElementById("statusFilterBtn");
+    const statusDropdown = document.getElementById("statusDropdown");
+    const bookingsTableBody = document.getElementById("bookingsTable").querySelector("tbody");
+    const statusButtons = statusDropdown.querySelectorAll("button[data-status]");
+    const searchInput = document.getElementById("searchInput");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalContent = document.getElementById("modalContent");
+
+    // Toggle dropdown visibility
+    statusFilterBtn.addEventListener("click", () => {
+      const expanded = statusFilterBtn.getAttribute("aria-expanded") === "true";
+      statusFilterBtn.setAttribute("aria-expanded", !expanded);
+      statusDropdown.classList.toggle("hidden");
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener("click", (e) => {
+      if (!statusFilterBtn.contains(e.target) && !statusDropdown.contains(e.target)) {
+        statusDropdown.classList.add("hidden");
+        statusFilterBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Filter rows by status
+    statusButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedStatus = button.getAttribute("data-status");
+        statusFilterBtn.querySelector("span").textContent = `Status: ${selectedStatus}`;
+        statusDropdown.classList.add("hidden");
+        statusFilterBtn.setAttribute("aria-expanded", "false");
+        filterTable();
+      });
+    });
+
+    // Filter rows by search input and status
+    searchInput.addEventListener("input", () => {
+      filterTable();
+    });
+
+    function filterTable() {
+      const selectedStatus = statusFilterBtn.querySelector("span").textContent.replace('Status: ', '');
+      const searchText = searchInput.value.toLowerCase();
+
+      const rows = bookingsTableBody.querySelectorAll("tr");
+      rows.forEach(row => {
+        const status = row.getAttribute("data-status");
+        const tourName = row.getAttribute("data-tourname").toLowerCase();
+        const bookingId = row.getAttribute("data-bookingid").toLowerCase();
+
+        const statusMatch = (selectedStatus === "All") || (status === selectedStatus);
+        const searchMatch = tourName.includes(searchText) || bookingId.includes(searchText);
+
+        if (statusMatch && searchMatch) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    // Modal open/close logic
+    function createModalContent(row) {
+      const bookingId = row.querySelector("td:nth-child(1)").textContent.trim();
+      const tourName = row.querySelector("td:nth-child(2)").textContent.trim();
+      const departureDate = row.querySelector("td:nth-child(3)").textContent.trim();
+      const returnDate = row.querySelector("td:nth-child(4)").textContent.trim();
+      const adults = row.querySelector("td:nth-child(6)").textContent.trim();
+      const children = row.querySelector("td:nth-child(7)").textContent.trim();
+      const totalPrice = row.querySelector("td:nth-child(8)").textContent.trim();
+      const bookingStatus = row.querySelector("td:nth-child(9)").textContent.trim();
+      const paymentStatus = row.querySelector("td:nth-child(10)").textContent.trim();
+
+      // Demo customer data - replace with real data if available
+      const customers = [
+        { name: "Nguyen Van A", phone: "0123 456 789", email: "a.nguyen@example.com" },
+        { name: "Tran Thi B", phone: "0987 654 321", email: "b.tran@example.com" },
+        { name: "Le Van C", phone: "0111 222 333", email: "c.le@example.com" },
+        { name: "Pham Thi D", phone: "0444 555 666", email: "d.pham@example.com" }
+      ];
+
+      return `
+        <div class="mb-4">
+          <h3 class="font-semibold text-sm mb-2">Tour Information</h3>
+          <table class="w-full text-xs text-gray-700 border border-gray-200 rounded-md">
+            <tbody>
+              <tr class="border-b border-gray-200">
+                <td class="px-3 py-2 font-semibold w-36">Booking ID</td>
+                <td class="px-3 py-2">${bookingId}</td>
+              </tr>
+              <tr class="border-b border-gray-200 bg-gray-50">
+                <td class="px-3 py-2 font-semibold">Tour Name</td>
+                <td class="px-3 py-2">${tourName}</td>
+              </tr>
+              <tr class="border-b border-gray-200 bg-gray-50">
+                <td class="px-3 py-2 font-semibold">Departure Date</td>
+                <td class="px-3 py-2">${departureDate}</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="px-3 py-2 font-semibold">Return Date</td>
+                <td class="px-3 py-2">${returnDate}</td>
+              </tr>
+              <tr class="border-b border-gray-200 bg-gray-50">
+                <td class="px-3 py-2 font-semibold">Adults</td>
+                <td class="px-3 py-2">${adults}</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="px-3 py-2 font-semibold">Children</td>
+                <td class="px-3 py-2">${children}</td>
+              </tr>
+              <tr class="border-b border-gray-200 bg-gray-50">
+                <td class="px-3 py-2 font-semibold">Total Price</td>
+                <td class="px-3 py-2">${totalPrice}</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="px-3 py-2 font-semibold">Booking Status</td>
+                <td class="px-3 py-2">${bookingStatus}</td>
+              </tr>
+              <tr class="border-b border-gray-200 bg-gray-50">
+                <td class="px-3 py-2 font-semibold">Payment Status</td>
+                <td class="px-3 py-2">${paymentStatus}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 class="font-semibold text-sm mb-2">Customer Information</h3>
+          <table class="w-full text-xs text-gray-700 border border-gray-200 rounded-md">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="border border-gray-200 px-3 py-2 text-left">Name</th>
+                <th class="border border-gray-200 px-3 py-2 text-left">Phone</th>
+                <th class="border border-gray-200 px-3 py-2 text-left">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${customers.map(c => `
+                <tr class="border-b border-gray-200 last:border-b-0">
+                  <td class="border border-gray-200 px-3 py-2">${c.name}</td>
+                  <td class="border border-gray-200 px-3 py-2">${c.phone}</td>
+                  <td class="border border-gray-200 px-3 py-2">${c.email}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    document.querySelectorAll(".viewBtn").forEach(button => {
+      button.addEventListener("click", (e) => {
+        const row = e.target.closest("tr");
+        modalContent.innerHTML = createModalContent(row);
+        modalOverlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    modalCloseBtn.addEventListener("click", () => {
+      modalOverlay.classList.add("hidden");
+      document.body.style.overflow = "";
+    });
+
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+    });
+</script>
