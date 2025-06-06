@@ -76,6 +76,10 @@ namespace VieGo
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            builder.WebHost.ConfigureKestrel(options => {
+                options.ListenAnyIP(80);
+            });
+
 
             builder.Services.AddHttpContextAccessor();
 

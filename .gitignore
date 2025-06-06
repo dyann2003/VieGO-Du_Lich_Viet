@@ -1,0 +1,48 @@
+# Build
+bin/
+obj/
+build/
+*.user
+*.suo
+
+# Visual Studio
+.vs/
+*.vscode/
+*.DS_Store
+
+# ASP.NET Secrets
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Local.json
+appsettings.*.json
+
+# Logs
+*.log
+logs/
+
+# User-specific
+*.userprefs
+
+# Rider
+.idea/
+
+# Dotnet tools
+tools/
+
+# npm
+node_modules/
+
+# Publish outputs
+/publish/
+/out/
+
+# Docker
+*.tar
+docker-compose.override.yml
+
+# Database files
+*.mdf
+*.ldf
+
+# Secrets (Google OAuth, PayOS, SMTP...)
+secrets.json
