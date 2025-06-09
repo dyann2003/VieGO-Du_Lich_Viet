@@ -26,34 +26,23 @@ namespace VieGo.Controllers
         }
 
         [HttpGet("GetBooking/{tourId}")]
-        public async Task<IActionResult> GetBooking(int tourId, [FromQuery] int quantity, [FromQuery] decimal price)
+        public async Task<IActionResult> GetBooking(int tourId, [FromQuery] int quantity)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
-            if (!userId.HasValue)
-            {
-                return Unauthorized("User not authenticated.");
-            }
-
-            if (tourId <= 0)
-            {
-                return BadRequest("Invalid tour ID.");
-            }
+            if (!userId.HasValue) return Unauthorized("User not authenticated.");
+            if (tourId <= 0) return BadRequest("Invalid tour ID.");
 
             try
             {
                 var user = await _userService.GetUserByIdAsync(userId.Value);
-                if (user == null)
-                {
-                    return NotFound("User not found.");
-                }
+                if (user == null) return NotFound("User not found.");
 
                 var tour = _tourService.GetById(tourId);
                 if (tour == null || tour.TourSchedules == null || !tour.TourSchedules.Any())
-                {
                     return NotFound("Tour or schedule not found.");
-                }
 
-                var schedule = tour.TourSchedules.First();
+                var schedule = tour.TourSchedules.FirstOrDefault();
+                if (schedule == null) return NotFound("No valid schedule found.");
 
                 var viewModel = new CheckoutViewModel
                 {
@@ -67,14 +56,14 @@ namespace VieGo.Controllers
                     TourInfo = new TourInfoModel
                     {
                         Name = tour.TourName,
-                        StartDate = schedule.DepartureDate.ToString("d MMM yyyy") ?? "Flexible",
-                        EndDate = schedule.ReturnDate.ToString("d MMM yyyy") ?? "Flexible",
+                        StartDate = schedule.DepartureDate.ToString("d MMM yyyy"),
+                        EndDate = schedule.ReturnDate.ToString("d MMM yyyy"),
                         AvailableSeats = schedule.AvailableSlots,
-                        Price = price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")) // Dùng giá từ URL
+                        Price = schedule.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN"))
                     },
                     PassengerInfo = new PassengerInfoModel
                     {
-                        Quantity = quantity // Dùng số lượng từ URL
+                        Quantity = quantity
                     }
                 };
 
@@ -82,7 +71,7 @@ namespace VieGo.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing your request.");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
