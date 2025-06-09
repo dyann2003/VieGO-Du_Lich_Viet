@@ -294,18 +294,18 @@
                     <p id="discount-message" class="mt-2 text-sm font-medium"></p>
                 </div>
                 <!--<h4 class="font-semibold text-gray-900 mb-3">
-        Bảng giá tour chi tiết
-    </h4>
-    <div class="mb-4 space-y-1">
-        <div class="flex justify-between">
-            <div>Người lớn (từ 12 tuổi)</div>
-            <div>$250</div>
-        </div>
-        <div class="flex justify-between">
-            <div>Trẻ em (2 - 11 tuổi)</div>
-            <div>$187.5</div>
-        </div>
-    </div>-->
+                    Bảng giá tour chi tiết
+                </h4>
+                <div class="mb-4 space-y-1">
+                    <div class="flex justify-between">
+                        <div>Người lớn (từ 12 tuổi)</div>
+                        <div>$250</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div>Trẻ em (2 - 11 tuổi)</div>
+                        <div>$187.5</div>
+                    </div>
+                </div>-->
                 <div class="border-t border-gray-300 pt-3 space-y-2 font-semibold text-gray-900">
                     <div class="flex justify-between">
                         <div>Số lượng (2 x $250)</div>
@@ -420,14 +420,16 @@
         const params = new URLSearchParams(window.location.search);
         const tourId = params.get('tourId');
         const quantity = params.get('quantity');
-        let price = parseInt(params.get('price')); // Make price mutable for discount
         const baseUrl = `${window.location.protocol}//${window.location.host}`;
-        const API_URL = `${baseUrl}/api/Booking/GetBooking/${tourId}?quantity=${quantity}&price=${price}`;
+        const API_URL = `${baseUrl}/api/Booking/GetBooking/${tourId}?quantity=${quantity}`;
 
         // Store the original price, discounted price, and discount amount
-        let originalPrice = price;
-        let discountedPrice = price;
+        let originalPrice = 0;
+        let discountedPrice = 0;
         let discountAmount = 0;
+
+        // Tỷ giá USD to VND
+        const EXCHANGE_RATE = 24000;
 
         async function fetchData() {
             try {
@@ -480,11 +482,11 @@
                 }
 
                 // === Price ===
-                // price từ URL có thể dùng fallback nếu data không có giá trị rõ ràng
-                // TourInfo.price đang ở dạng string '7.200.000 ₫' => cần convert sang số để tính toán
                 const priceString = tour.price || '0 ₫';
-                originalPrice = parsePriceString(priceString); // chuyển '7.200.000 ₫' -> 7200000
-                discountedPrice = originalPrice;  // Bạn chưa có discount info nên tạm bằng nhau
+                const basePriceUSD = parsePriceString(priceString); // Giá cơ bản (USD)
+                const basePriceVND = basePriceUSD * EXCHANGE_RATE; // Chuyển sang VND
+                originalPrice = basePriceVND * quantityFromData; // Tính tổng giá (VND)
+                discountedPrice = originalPrice; // Khởi tạo giá sau giảm giá
                 discountAmount = 0;
 
                 updatePriceDisplay(quantityFromData);
@@ -494,10 +496,9 @@
             }
         }
 
-        // Hàm hỗ trợ chuyển chuỗi tiền '7.200.000 ₫' thành số 7200000
+        // Hàm hỗ trợ chuyển chuỗi tiền '150' thành số 150
         function parsePriceString(priceStr) {
             if (!priceStr) return 0;
-            // Loại bỏ ký tự không phải số, ví dụ dấu chấm và khoảng trắng, đồng thời xóa ký hiệu ₫
             const cleaned = priceStr.replace(/[.\s₫]/g, '');
             return parseInt(cleaned) || 0;
         }
@@ -529,10 +530,6 @@
             });
         }
 
-        // Gọi hàm fetchData khi trang load xong
-        fetchData();
-
-        // Discount application function
         async function applyDiscount() {
             const discountInput = document.getElementById('discount-code');
             const discountMessage = document.getElementById('discount-message');
@@ -545,7 +542,7 @@
             }
 
             try {
-                const response = await fetch(`https://localhost:5001/api/DiscountCodeApi/validate?code=${encodeURIComponent(code)}`);
+                const response = await fetch(`https://viegotravel.io.vn/api/DiscountCodeApi/validate?code=${encodeURIComponent(code)}`);
                 const data = await response.json();
 
                 if (data.valid) {
@@ -554,33 +551,31 @@
                     discountMessage.classList.remove('text-red-500');
                     discountMessage.classList.add('text-green-500');
 
-                    // Calculate discount amount and new total price
                     discountAmount = (originalPrice * percentage) / 100;
                     discountedPrice = originalPrice - discountAmount;
 
-                    // Update the displayed price
-                    updatePriceDisplay();
+                    updatePriceDisplay(parseInt(quantity) || 1);
                 } else {
                     discountMessage.textContent = 'Invalid or expired discount code.';
                     discountMessage.classList.add('text-red-500');
-                    discountedPrice = originalPrice; // Reset to original price
-                    discountAmount = 0; // Reset discount amount
-                    updatePriceDisplay();
+                    discountedPrice = originalPrice;
+                    discountAmount = 0;
+                    updatePriceDisplay(parseInt(quantity) || 1);
                 }
             } catch (error) {
                 console.error('Error validating discount code:', error);
                 discountMessage.textContent = 'Error applying discount. Please try again.';
                 discountMessage.classList.add('text-red-500');
-                discountedPrice = originalPrice; // Reset to original price
-                discountAmount = 0; // Reset discount amount
-                updatePriceDisplay();
+                discountedPrice = originalPrice;
+                discountAmount = 0;
+                updatePriceDisplay(parseInt(quantity) || 1);
             }
         }
 
         async function payWithPayOS(fullName, amount, orderInfor, tourId) {
             const orderCode = Math.floor(Math.random() * 1000000000);
-            const cancelUrl = "https://localhost:5001/payment/payment-cancel.html";
-            const returnUrl = `https://localhost:5001/payment/payment-success.html?orderCode=${orderCode}&amount=${amount}&tourId=${tourId}&people=${quantity}`;
+            const cancelUrl = "https://viegotravel.io.vn/payment/payment-cancel.html";
+            const returnUrl = `https://viegotravel.io.vn/payment/payment-success.html?orderCode=${orderCode}&amount=${amount}&tourId=${tourId}&people=${quantity}`;
             const description = orderInfor;
 
             const dataToSign = `amount=${amount}&cancelUrl=${cancelUrl}&description=${description}&orderCode=${orderCode}&returnUrl=${returnUrl}`;
@@ -688,7 +683,7 @@
                 const fullNameInput = document.getElementById("fullname");
                 const fullName = fullNameInput ? fullNameInput.value : '';
 
-                const amount = discountedPrice; // Use discounted price for payment
+                const amount = discountedPrice;
                 const tourNameElem = document.getElementById("tourName");
                 const tourName = tourNameElem ? tourNameElem.textContent : '';
 
@@ -701,7 +696,6 @@
             console.error('Element #payPayOSBtn not found');
         }
 
-        // Add event listener for the Apply button
         const applyDiscountBtn = document.querySelector('button[onclick="applyDiscount()"]');
         if (applyDiscountBtn) {
             applyDiscountBtn.addEventListener('click', applyDiscount);

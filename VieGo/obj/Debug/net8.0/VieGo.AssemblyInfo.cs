@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VieGo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cebed03d9bfdc9850d464a33c48f708cd35b43a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23541bced156b854c63d3afad9ab70d5ab96ee3e")]
 [assembly: System.Reflection.AssemblyProductAttribute("VieGo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VieGo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

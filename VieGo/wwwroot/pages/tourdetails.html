@@ -734,6 +734,8 @@
                     price: document.getElementById('tour-price'),
                     priceOriginal: document.getElementById('tour-price-original'),
                     discount: document.getElementById('tour-discount'),
+                    adults: document.getElementById('adults'),
+                    adultsCount: document.getElementById('adults-count'),
                 };
 
                 if (el.title) el.title.textContent = data.tourName || "N/A";
@@ -743,6 +745,8 @@
                 if (el.image) el.image.src = data.featuredImageUrl || "https://dummyimage.com/600x400/cccccc/000000&text=Tour+Image";
                 if (el.duration) el.duration.textContent = data.duration || "N/A";
                 if (el.departureCity) el.departureCity.textContent = data.departureCity || "N/A";
+                if (el.adults) el.adults.textContent = data.groupSizeMin;
+                if (el.adultsCount) el.adultsCount.textContent = data.groupSizeMin;
 
                 const firstSchedule = data.tourSchedules?.[0];
                 if (el.departureDate) el.departureDate.textContent = firstSchedule?.departureDate ?? "N/A";
@@ -885,18 +889,8 @@
         // Hàm kiểm tra và gửi dữ liệu khi nhấn Book Now
         function bookNow() {
             const quantityText = document.getElementById('adults-count')?.textContent;
-            const totalPriceText = document.getElementById('total-price')?.textContent;
 
             const quantity = parseInt(quantityText) || 0;
-
-            // Extract VND price from text like "($300.00) 7.200.000₫"
-            const priceMatch = totalPriceText?.match(/[\d.,]+(?=\s?₫)/);
-            let price = 0;
-
-            if (priceMatch) {
-                const cleaned = priceMatch[0].replace(/\./g, '').replace(',', '.'); // Convert to number
-                price = parseFloat(cleaned);
-            }
 
             const discountCode = document.getElementById('discount-code')?.value || '';
 
@@ -906,7 +900,7 @@
             }
             //& discountCode=${ encodeURIComponent(discountCode) }
             // Chuyển hướng với query string đúng
-            window.location.href = `checkout.html?tourId=${tourId}&quantity=${quantity}&price=${price}`;
+            window.location.href = `checkout.html?tourId=${tourId}&quantity=${quantity}`;
         }
 
 
