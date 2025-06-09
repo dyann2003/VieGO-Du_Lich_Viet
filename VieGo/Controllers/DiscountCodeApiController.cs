@@ -57,13 +57,19 @@ namespace VieGo.Controllers
         [HttpGet("validate")]
         public IActionResult ValidateDiscount([FromQuery] string code)
         {
-            var discount = _service.GetByCode(code).FirstOrDefault(d => d.Code == code && d.Status == "Active"); // hoặc query DB
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest(new { valid = false, message = "Discount code is required." });
+
+            var discount = _service.GetByCode(code)
+                .FirstOrDefault(d => d.Code == code && d.Status == "Active");
+
             if (discount == null || discount.IsExpired)
             {
-                return NotFound(new { valid = false });
+                return NotFound(new { valid = false, message = "Discount code is invalid or expired." });
             }
 
             return Ok(new { valid = true, percentage = discount.DiscountValue });
         }
+
     }
 }

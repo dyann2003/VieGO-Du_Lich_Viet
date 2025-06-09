@@ -533,44 +533,50 @@
         async function applyDiscount() {
             const discountInput = document.getElementById('discount-code');
             const discountMessage = document.getElementById('discount-message');
-
             const code = discountInput.value.trim();
+
             if (!code) {
                 discountMessage.textContent = 'Please enter a discount code.';
+                discountMessage.classList.remove('text-green-500');
                 discountMessage.classList.add('text-red-500');
                 return;
             }
 
             try {
-                const response = await fetch(`https://viegotravel.io.vn/api/DiscountCodeApi/validate?code=${encodeURIComponent(code)}`);
+                const response = await fetch(`${baseUrl}/api/DiscountCodeApi/validate?code=${encodeURIComponent(code)}`);
+
                 const data = await response.json();
 
-                if (data.valid) {
-                    const percentage = data.percentage;
-                    discountMessage.textContent = `Discount applied: ${percentage}% off!`;
-                    discountMessage.classList.remove('text-red-500');
-                    discountMessage.classList.add('text-green-500');
-
-                    discountAmount = (originalPrice * percentage) / 100;
-                    discountedPrice = originalPrice - discountAmount;
-
-                    updatePriceDisplay(parseInt(quantity) || 1);
-                } else {
-                    discountMessage.textContent = 'Invalid or expired discount code.';
+                if (!response.ok || !data.valid) {
+                    discountMessage.textContent = data.message || 'Invalid or expired discount code.';
+                    discountMessage.classList.remove('text-green-500');
                     discountMessage.classList.add('text-red-500');
                     discountedPrice = originalPrice;
                     discountAmount = 0;
                     updatePriceDisplay(parseInt(quantity) || 1);
+                    return;
                 }
+
+                const percentage = data.percentage;
+                discountMessage.textContent = `Discount applied: ${percentage}% off!`;
+                discountMessage.classList.remove('text-red-500');
+                discountMessage.classList.add('text-green-500');
+
+                discountAmount = (originalPrice * percentage) / 100;
+                discountedPrice = originalPrice - discountAmount;
+                updatePriceDisplay(parseInt(quantity) || 1);
+
             } catch (error) {
                 console.error('Error validating discount code:', error);
                 discountMessage.textContent = 'Error applying discount. Please try again.';
+                discountMessage.classList.remove('text-green-500');
                 discountMessage.classList.add('text-red-500');
                 discountedPrice = originalPrice;
                 discountAmount = 0;
                 updatePriceDisplay(parseInt(quantity) || 1);
             }
         }
+
 
         async function payWithPayOS(fullName, amount, orderInfor, tourId) {
             const orderCode = Math.floor(Math.random() * 1000000000);
