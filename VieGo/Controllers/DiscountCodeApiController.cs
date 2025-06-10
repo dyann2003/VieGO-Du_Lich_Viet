@@ -60,7 +60,7 @@ namespace VieGo.Controllers
             if (string.IsNullOrWhiteSpace(code))
                 return BadRequest(new { valid = false, message = "Discount code is required." });
 
-            var discount = _service.GetByCode(code)
+            var discount = _service.GetByCode(code.ToUpper())
                 .FirstOrDefault(d => d.Code == code && d.Status == "Active");
 
             if (discount == null || discount.IsExpired)

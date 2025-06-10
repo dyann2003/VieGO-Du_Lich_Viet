@@ -19,51 +19,55 @@
     <header class="bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="flex items-center justify-between h-16">
+                <!-- Logo + Desktop Nav -->
                 <div class="flex items-center space-x-6">
-                    <a class="flex items-center space-x-2 cursor-pointer"
-                       id="logo-button"
-                       role="button"
-                       tabindex="0"
-                       aria-label="Toggle mobile menu"
-                       href="/Home">
-                        <!-- Logo Image -->
+                    <a href="/Home" class="flex items-center space-x-2">
                         <img src="/images/logo.png" alt="VieGo Logo" style="height: 120px; width: 120px;" />
-
                     </a>
                     <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]">
-                        <li>
-                            <a class="hover:underline" href="aboutus.html"> About Us </a>
-                        </li>
-                        <li>
-                            <a class="hover:underline" href="faq.html"> FAQs </a>
-                        </li>
-                        <li>
-                            <a class="hover:underline" href="blog.html"> Blog </a>
-                        </li>
-                        <li>
-                            <a class="hover:underline" href="/MyBooking">
-                                My Bookings
-                            </a>
-                        </li>
+                        <li><a class="hover:underline" href="aboutus.html">About Us</a></li>
+                        <li><a class="hover:underline" href="faq.html">FAQs</a></li>
+                        <li><a class="hover:underline" href="blog.html">Blog</a></li>
+                        <li><a class="hover:underline" href="/MyBooking">My Bookings</a></li>
                     </ul>
                 </div>
+
+                <!-- Hamburger Icon (Mobile) -->
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </nav>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden mt-2 space-y-2 text-sm font-normal text-[#1a1a1a]">
+                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="aboutus.html">About Us</a>
+                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="faq.html">FAQs</a>
+                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="blog.html">Blog</a>
+                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="/MyBooking">My Bookings</a>
+            </div>
         </div>
     </header>
+
+
     <!-- Hero Section -->
     <section class="relative bg-gray-500 bg-opacity-90 text-white px-4 sm:px-6 md:px-10 py-12 flex flex-col md:flex-row md:items-center md:justify-between">
         <div class="max-w-xl">
             <h1 class="font-semibold text-lg mb-2">About Viego</h1>
             <p class="text-xs leading-tight max-w-md">
                 Connecting travelers with unforgettable experiences across Vietnam and
-                Southeast Asia since 2010.
+                Southeast Asia since 2025.
             </p>
         </div>
         <div class="mt-8 md:mt-0 md:ml-10 flex justify-center w-full max-w-lg">
             <img alt="Gray placeholder image with circle and image icon in center"
                  class="w-full max-w-lg"
                  height="200"
-                 src="https://storage.googleapis.com/a1aa/image/7f9e1cde-0c80-4a71-bf1e-bfef6b49c77f.jpg"
+                 src="https://scontent.fhan5-10.fna.fbcdn.net/v/t39.30808-6/500710510_122101963832887101_6173894742156236310_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFyY3cu527KyrRAWLSvJgqYlbA58BcEtwWVsDnwFwS3BQMaT-8C7loLxNk3bpXWFHxAJCHv50l8RG3MlKtZPL90&_nc_ohc=y2EeozvWLmcQ7kNvwENwQNi&_nc_oc=Adn-CnKo_JZmN_OBMdScTEV-pZ4j1Zfa1qWVgt_pK1tMUg7en_QIlAGtpjjuyS-4Zfk&_nc_zt=23&_nc_ht=scontent.fhan5-10.fna&_nc_gid=ZwW2dMDjfqLf9HYl7pkYhA&oh=00_AfPtHRm3YowHf4dsvFhHPRvqkLeeYMZH0r_UlU2w630JNw&oe=684B662E"
                  width="400" />
         </div>
     </section>
@@ -72,27 +76,26 @@
         <div class="max-w-xl text-sm text-gray-900">
             <h2 class="font-semibold text-base mb-4">Our Story</h2>
             <p class="mb-3 leading-tight">
-                Founded in 2025, Viego began as a small travel agency in Ho Chi Minh
-                City with a simple mission: to help travelers discover the authentic
-                beauty of Vietnam.
+                Founded in 2025, Viego is a project created by a group of six students
+                from FPT University who share a common passion: showcasing the beauty
+                of Vietnam’s tourism to the world.
             </p>
             <p class="mb-3 leading-tight">
-                Over the years, we’ve grown into one of Vietnam’s leading travel
-                companies, expanding our services to cover all of Southeast Asia while
-                maintaining our commitment to authentic, responsible, and memorable
-                travel experiences.
+                Driven by our love for our homeland and a desire to promote its
+                culture and landscapes, we built this platform to introduce stunning
+                destinations, authentic experiences, and the unique values of Vietnam.
             </p>
             <p class="leading-tight">
-                Today, we serve over 500,000 travelers annually, offering everything
-                from cultural city tours to adventurous mountain treks, luxurious
-                beach getaways, and immersive local experiences.
+                Though we are still students, we are committed to producing genuine,
+                creative, and inspiring content in the hope of connecting both local
+                and international travelers with the charm of Vietnam.
             </p>
         </div>
         <div class="w-full max-w-lg bg-gray-200 rounded-md flex justify-center items-center aspect-[4/3]">
             <img alt="Gray placeholder image with circle and image icon in center"
                  class="w-full h-full object-cover rounded-md"
                  height="300"
-                 src="https://storage.googleapis.com/a1aa/image/7f9e1cde-0c80-4a71-bf1e-bfef6b49c77f.jpg"
+                 src="https://scontent.fhan5-10.fna.fbcdn.net/v/t39.30808-6/500710510_122101963832887101_6173894742156236310_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFyY3cu527KyrRAWLSvJgqYlbA58BcEtwWVsDnwFwS3BQMaT-8C7loLxNk3bpXWFHxAJCHv50l8RG3MlKtZPL90&_nc_ohc=y2EeozvWLmcQ7kNvwENwQNi&_nc_oc=Adn-CnKo_JZmN_OBMdScTEV-pZ4j1Zfa1qWVgt_pK1tMUg7en_QIlAGtpjjuyS-4Zfk&_nc_zt=23&_nc_ht=scontent.fhan5-10.fna&_nc_gid=ZwW2dMDjfqLf9HYl7pkYhA&oh=00_AfPtHRm3YowHf4dsvFhHPRvqkLeeYMZH0r_UlU2w630JNw&oe=684B662E"
                  width="400" />
         </div>
     </section>
@@ -359,5 +362,11 @@
             © 2023 Viego Clone. All rights reserved.
         </div>
     </footer>
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function () {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+        });
+    </script>
 </body>
 </html>
