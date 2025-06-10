@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|c:\\users\\nduya\\documents\\summer 2025\\exe201\\push git\\viego\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|solutionrelative:viego\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|c:\\users\\nduya\\documents\\summer 2025\\exe201\\push git\\viego\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|solutionrelative:viego\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|c:\\users\\nduya\\documents\\summer 2025\\exe201\\push git\\viego\\views\\mybooking\\bookingdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|solutionrelative:viego\\views\\mybooking\\bookingdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|c:\\users\\nduya\\documents\\summer 2025\\exe201\\push git\\viego\\views\\mybooking\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|solutionrelative:viego\\views\\mybooking\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|c:\\users\\nduya\\documents\\summer 2025\\exe201\\push git\\viego\\wwwroot\\pages\\tourdetails.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{2620B2D4-1410-4376-9436-AC92310F2BEB}|VieGo\\VieGo.csproj|solutionrelative:viego\\wwwroot\\pages\\tourdetails.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -91,6 +107,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "VieGo\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "VieGo\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAIMBAAAAAAAAAAAswJ4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T14:47:52.139Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "VieGo\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "VieGo\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAGIDAAAAAAAAAAAwwHwDAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T14:47:07.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Bookingdetails.cshtml",
+              "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\MyBooking\\Bookingdetails.cshtml",
+              "RelativeDocumentMoniker": "VieGo\\Views\\MyBooking\\Bookingdetails.cshtml",
+              "ToolTip": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\MyBooking\\Bookingdetails.cshtml",
+              "RelativeToolTip": "VieGo\\Views\\MyBooking\\Bookingdetails.cshtml",
+              "ViewState": "AgIAAJsCAAAAAAAAAAAswLICAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T14:46:55.164Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\MyBooking\\Index.cshtml",
+              "RelativeDocumentMoniker": "VieGo\\Views\\MyBooking\\Index.cshtml",
+              "ToolTip": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\Views\\MyBooking\\Index.cshtml",
+              "RelativeToolTip": "VieGo\\Views\\MyBooking\\Index.cshtml",
+              "ViewState": "AgIAAEIDAAAAAAAAAAAwwGsDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T14:46:28.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "tourdetails.html",
               "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\wwwroot\\pages\\tourdetails.html",
               "RelativeDocumentMoniker": "VieGo\\wwwroot\\pages\\tourdetails.html",
@@ -103,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "faq.html",
               "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\wwwroot\\pages\\faq.html",
               "RelativeDocumentMoniker": "VieGo\\wwwroot\\pages\\faq.html",
@@ -111,12 +179,11 @@
               "RelativeToolTip": "VieGo\\wwwroot\\pages\\faq.html",
               "ViewState": "AgIAAJgBAAAAAAAAAAAUwMIBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-06-10T14:41:48.096Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T14:41:48.096Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "checkout.html",
               "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\wwwroot\\pages\\checkout.html",
               "RelativeDocumentMoniker": "VieGo\\wwwroot\\pages\\checkout.html",
@@ -124,12 +191,11 @@
               "RelativeToolTip": "VieGo\\wwwroot\\pages\\checkout.html",
               "ViewState": "AgIAAA0AAAAAAAAAAAAAAB8AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-06-10T14:39:50.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T14:39:50.414Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "blog-detail.html",
               "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\wwwroot\\pages\\blog-detail.html",
               "RelativeDocumentMoniker": "VieGo\\wwwroot\\pages\\blog-detail.html",
@@ -137,12 +203,11 @@
               "RelativeToolTip": "VieGo\\wwwroot\\pages\\blog-detail.html",
               "ViewState": "AgIAAJgDAAAAAAAAAAAUwMIDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-06-10T14:39:37.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T14:39:37.605Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "blog.html",
               "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\wwwroot\\pages\\blog.html",
               "RelativeDocumentMoniker": "VieGo\\wwwroot\\pages\\blog.html",
@@ -150,12 +215,11 @@
               "RelativeToolTip": "VieGo\\wwwroot\\pages\\blog.html",
               "ViewState": "AgIAAGYBAAAAAAAAAAAUwJABAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-06-10T14:39:28.449Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T14:39:28.449Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "aboutus.html",
               "DocumentMoniker": "C:\\Users\\nduya\\Documents\\Summer 2025\\EXE201\\push git\\VieGo\\wwwroot\\pages\\aboutus.html",
               "RelativeDocumentMoniker": "VieGo\\wwwroot\\pages\\aboutus.html",
@@ -163,8 +227,7 @@
               "RelativeToolTip": "VieGo\\wwwroot\\pages\\aboutus.html",
               "ViewState": "AgIAAEoBAAAAAAAAAAAUwFsBAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-06-10T14:39:01.911Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T14:39:01.911Z"
             }
           ]
         },

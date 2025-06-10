@@ -84,88 +84,87 @@
       />
 </section>
 
-<div class="d-flex justify-content-center p-3 border bg-light max-w-[1200px] mx-auto mt-4 flex flex-wrap gap-4">
-    <span class="p-2 whitespace-nowrap font-semibold">Order By</span>
+<div class="container mt-4">
+    <div class="bg-light border rounded p-3">
+        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-md-center gap-2 gap-md-4 flex-wrap">
+            <span class="fw-semibold">Order By</span>
 
-    @{
-        string currentKeyword = ViewBag.Keyword ?? "";
-        string currentDepartureDate = ViewBag.DepartureDate ?? "";
-        string currentDepartureCity = ViewBag.DepartureCity ?? "";
-        string currentSortBy = (ViewBag.SortBy ?? "").ToString().ToLower();
-        string currentSortOrder = (ViewBag.SortOrder ?? "asc").ToString().ToLower();
+            @{
+                string currentKeyword = ViewBag.Keyword ?? "";
+                string currentDepartureDate = ViewBag.DepartureDate ?? "";
+                string currentDepartureCity = ViewBag.DepartureCity ?? "";
+                string currentSortBy = (ViewBag.SortBy ?? "").ToString().ToLower();
+                string currentSortOrder = (ViewBag.SortOrder ?? "asc").ToString().ToLower();
 
-        Func<string, string> getNextSortOrder = (sortField) =>
-        {
-            if (sortField.ToLower() == currentSortBy)
-                return currentSortOrder == "asc" ? "desc" : "asc";
-            return "asc";
-        };
-    }
+                Func<string, string> getNextSortOrder = (sortField) =>
+                {
+                    if (sortField.ToLower() == currentSortBy)
+                        return currentSortOrder == "asc" ? "desc" : "asc";
+                    return "asc";
+                };
+            }
 
-    <a href="@Url.Action("Index", "Home", new {
-        keyword = currentKeyword,
-        departureDate = currentDepartureDate,
-        departureCity = currentDepartureCity,
-        sortBy = "departure",
-        sortOrder = getNextSortOrder("departure"),
-        page = 1
-    })"
-       class="sort-option flex items-center space-x-1 text-sm cursor-pointer @(currentSortBy == "departure" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
-        <span>Departure Date</span>
-        <span class="sort-arrow font-bold">@((currentSortBy == "departure") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
-    </a>
+            <a href="@Url.Action("Index", "Home", new {
+                keyword = currentKeyword,
+                departureDate = currentDepartureDate,
+                departureCity = currentDepartureCity,
+                sortBy = "departure",
+                sortOrder = getNextSortOrder("departure"),
+                page = 1
+            })"
+               class="text-decoration-none text-sm @(currentSortBy == "departure" ? "text-danger fw-semibold" : "text-secondary")">
+                Departure Date @((currentSortBy == "departure") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")
+            </a>
 
-    <a href="@Url.Action("Index", "Home", new {
-        keyword = currentKeyword,
-        departureDate = currentDepartureDate,
-        departureCity = currentDepartureCity,
-        sortBy = "price",
-        sortOrder = getNextSortOrder("price"),
-        page = 1
-    })"
-       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "price" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
-        <span>Price</span>
-        <span class="sort-arrow font-bold">@((currentSortBy == "price") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
-    </a>
+            <a href="@Url.Action("Index", "Home", new {
+                keyword = currentKeyword,
+                departureDate = currentDepartureDate,
+                departureCity = currentDepartureCity,
+                sortBy = "price",
+                sortOrder = getNextSortOrder("price"),
+                page = 1
+            })"
+               class="text-decoration-none text-sm @(currentSortBy == "price" ? "text-danger fw-semibold" : "text-secondary")">
+                Price @((currentSortBy == "price") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")
+            </a>
 
-    <a href="@Url.Action("Index", "Home", new {
-        keyword = currentKeyword,
-        departureDate = currentDepartureDate,
-        departureCity = currentDepartureCity,
-        sortBy = "duration",
-        sortOrder = getNextSortOrder("duration"),
-        page = 1
-    })"
-       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "duration" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
-        <span>Time</span>
-        <span class="sort-arrow font-bold">@((currentSortBy == "duration") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
-    </a>
+            <a href="@Url.Action("Index", "Home", new {
+                keyword = currentKeyword,
+                departureDate = currentDepartureDate,
+                departureCity = currentDepartureCity,
+                sortBy = "duration",
+                sortOrder = getNextSortOrder("duration"),
+                page = 1
+            })"
+               class="text-decoration-none text-sm @(currentSortBy == "duration" ? "text-danger fw-semibold" : "text-secondary")">
+                Time @((currentSortBy == "duration") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")
+            </a>
 
-    <a href="@Url.Action("Index", "Home", new {
-        keyword = currentKeyword,
-        departureDate = currentDepartureDate,
-        departureCity = currentDepartureCity,
-        sortBy = "stars",
-        sortOrder = getNextSortOrder("stars"),
-        page = 1
-    })"
-       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "stars" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
-        <span>Stars Rating</span>
-        <span class="sort-arrow font-bold">@((currentSortBy == "stars") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
-    </a>
+            <a href="@Url.Action("Index", "Home", new {
+                keyword = currentKeyword,
+                departureDate = currentDepartureDate,
+                departureCity = currentDepartureCity,
+                sortBy = "stars",
+                sortOrder = getNextSortOrder("stars"),
+                page = 1
+            })"
+               class="text-decoration-none text-sm @(currentSortBy == "stars" ? "text-danger fw-semibold" : "text-secondary")">
+                Stars Rating @((currentSortBy == "stars") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")
+            </a>
 
-    <a href="@Url.Action("Index", "Home", new {
-        keyword = currentKeyword,
-        departureDate = currentDepartureDate,
-        departureCity = currentDepartureCity,
-        sortBy = "popular",
-        sortOrder = getNextSortOrder("popular"),
-        page = 1
-    })"
-       class="sort-option flex items-center space-x-1 ml-6 text-sm cursor-pointer @(currentSortBy == "popular" ? "text-pink-600 font-semibold" : "text-gray-600") hover:text-pink-600 transition-colors duration-200">
-        <span>Popular Tour</span>
-        <span class="sort-arrow font-bold">@((currentSortBy == "popular") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")</span>
-    </a>
+            <a href="@Url.Action("Index", "Home", new {
+                keyword = currentKeyword,
+                departureDate = currentDepartureDate,
+                departureCity = currentDepartureCity,
+                sortBy = "popular",
+                sortOrder = getNextSortOrder("popular"),
+                page = 1
+            })"
+               class="text-decoration-none text-sm @(currentSortBy == "popular" ? "text-danger fw-semibold" : "text-secondary")">
+                Popular Tour @((currentSortBy == "popular") ? (currentSortOrder == "asc" ? "↑" : "↓") : "")
+            </a>
+        </div>
+    </div>
 </div>
 
 <section class="max-w-[1200px] mx-auto px-4 sm:px-6 mt-10">
@@ -886,16 +885,20 @@
 
 <script>
     window.onload = function () {
+    if (!sessionStorage.getItem('bannerShown')) {
         setTimeout(function () {
             document.getElementById('adBanner').style.display = 'block';
             document.getElementById('adBannerOverlay').style.display = 'block';
+            sessionStorage.setItem('bannerShown', 'true');
         }, 500);
     }
+}
 
-    function closeBanner() {
-        document.getElementById('adBanner').style.display = 'none';
-        document.getElementById('adBannerOverlay').style.display = 'none';
-    }
+function closeBanner() {
+    document.getElementById('adBanner').style.display = 'none';
+    document.getElementById('adBannerOverlay').style.display = 'none';
+}
+
 </script>
 
 
