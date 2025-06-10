@@ -61,7 +61,7 @@ namespace VieGo.Controllers
                 return BadRequest(new { valid = false, message = "Discount code is required." });
 
             var discount = _service.GetByCode(code.ToUpper())
-                .FirstOrDefault(d => d.Code == code && d.Status == "Active");
+                .FirstOrDefault(d => d.Code == code.ToUpper() && d.Status == "Active");
 
             if (discount == null || discount.IsExpired)
             {
