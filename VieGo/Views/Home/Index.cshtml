@@ -442,38 +442,6 @@
     </div>
 </section>
 
-<!-- Chat Popup -->
-<div class="chat-popup" id="chat-popup" style="position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px; background-color: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; overflow: hidden; transition: all 0.3s ease; opacity: 0; transform: translateY(20px); pointer-events: none; z-index: 1000;">
-    <div class="chat-header" style="background-color: #0f172a; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
-        <div class="flex items-center">
-            <i class="fas fa-robot mr-2"></i>
-            <span class="font-semibold">Travel Assistant</span>
-        </div>
-        <button id="close-chat" style="color: white; background: none; border: none; cursor: pointer; font-size: 18px;">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="chat-messages" id="chat-messages" style="flex: 1; padding: 15px; overflow-y: auto;">
-        <div class="message assistant-message" style="background-color: #f0f0f0; color: #333; padding: 10px 15px; border-radius: 18px 18px 18px 0; margin-bottom: 15px; max-width: 80%; word-wrap: break-word;">
-            Hello! I'm your travel assistant. How can I help you plan your next trip?
-        </div>
-    </div>
-    <div class="chat-input" style="display: flex; padding: 10px; border-top: 1px solid #eaeaea;">
-        <input type="text" id="chat-input-field" placeholder="Type your message..."
-               style="flex: 1; padding: 10px 15px; border: 1px solid #ddd; border-radius: 20px; outline: none;" />
-        <button id="send-message" style="background-color: #0f172a; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-</div>
-
-<!-- Button toggle chat -->
-<button id="btn-chat-toggle" aria-label="Toggle chat box"
-        style="position: fixed; bottom: 20px; right: 20px; z-index: 1001; width: 60px; height: 60px; border-radius: 50%; background-color: #0f172a; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
-    <i class="fas fa-comment-dots" style="font-size: 24px;"></i>
-</button>
-
-
 <!-- Nền mờ -->
 <div id="adBannerOverlay" style="
     display: none;
@@ -516,371 +484,24 @@
     </div>
 </div>
 
-<script>document.addEventListener("DOMContentLoaded", function () {
-    const images = [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/PANO0002-Pano.jpg/1200px-PANO0002-Pano.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/L%C4%83ng_B%C3%A1c_-_NKS.jpg/1200px-L%C4%83ng_B%C3%A1c_-_NKS.jpg",
-        "https://static.vinwonders.com/production/ho-hoan-kiem-2.jpg",
-    ];
-    let currentIndex = 0;
-    const bgImage = document.getElementById("background-image");
-
-    function changeImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        bgImage.src = images[currentIndex];
-    }
-
-    setInterval(changeImage, 5000);
-
-    const chatPopup = document.getElementById("chat-popup");
-    const btnToggle = document.getElementById("btn-chat-toggle");
-    const closeChatBtn = document.getElementById("close-chat");
-    const chatMessages = document.getElementById("chat-messages");
-    const chatInputField = document.getElementById("chat-input-field");
-    const sendMessageBtn = document.getElementById("send-message");
-
-    // Hàm bật/tắt chat popup
-    function toggleChat() {
-        if (chatPopup.style.opacity === "1") {
-            chatPopup.style.opacity = "0";
-            chatPopup.style.transform = "translateY(20px)";
-            chatPopup.style.pointerEvents = "none";
-        } else {
-            chatPopup.style.opacity = "1";
-            chatPopup.style.transform = "translateY(0)";
-            chatPopup.style.pointerEvents = "all";
-            chatInputField.focus();
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const images = [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/PANO0002-Pano.jpg/1200px-PANO0002-Pano.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/L%C4%83ng_B%C3%A1c_-_NKS.jpg/1200px-L%C4%83ng_B%C3%A1c_-_NKS.jpg",
+            "https://static.vinwonders.com/production/ho-hoan-kiem-2.jpg",
+        ];
+        let currentIndex = 0;
+        const bgImage = document.getElementById("background-image");
+    
+        function changeImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            bgImage.src = images[currentIndex];
         }
-    }
-
-    btnToggle.addEventListener("click", toggleChat);
-    closeChatBtn.addEventListener("click", toggleChat);
-
-    // Hàm thêm tin nhắn vào chat
-    function addMessage(role, content, tours = null) {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message");
-        messageDiv.style.marginBottom = "15px";
-        messageDiv.style.maxWidth = "80%";
-        messageDiv.style.wordWrap = "break-word";
-        if (role === "user") {
-            messageDiv.style.backgroundColor = "#e2f5ff";
-            messageDiv.style.color = "#333";
-            messageDiv.style.padding = "10px 15px";
-            messageDiv.style.borderRadius = "18px 18px 0 18px";
-            messageDiv.style.marginLeft = "auto";
-            messageDiv.textContent = content;
-        } else {
-            messageDiv.style.backgroundColor = "#f0f0f0";
-            messageDiv.style.color = "#333";
-            messageDiv.style.padding = "10px 15px";
-            messageDiv.style.borderRadius = "18px 18px 18px 0";
-            const lines = content.split("\n");
-            lines.forEach((line) => {
-                const lineDiv = document.createElement("div");
-                lineDiv.textContent = line;
-                messageDiv.appendChild(lineDiv);
-            });
-
-            if (tours) {
-                tours.forEach(tour => {
-                    const tourDiv = document.createElement("div");
-
-                    tourDiv.innerHTML = `
-                        <h4>${tour.name}</h4>
-                    `;
-                    messageDiv.appendChild(tourDiv);
-                });
-            }
-        }
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Dữ liệu hội thoại mẫu
-    const mockConversation = [
-        {
-            role: "user",
-            content: "hi",
-        },
-        {
-            role: "assistant",
-            content: "Hi I am Viego Assistant, Please type Give me recommend to get the support",
-        },
-        {
-            role: "user",
-            content: "Give me recommend",
-        },
-        {
-            role: "assistant",
-            content:
-                "Hello I Am Viego Assistant Here the list tour Available\n$100-$200 and go 2n1d\n$200-$300 and go 2n1d\n$100-$200 and go 3n2d\n$200-$300 and go 3n2d\n$100-$200 and go 4n3d\n$200-$300 and go 4n3d",
-        },
-        {
-            role: "user",
-            content: "$100-$200 and go 2n1d",
-        },
-        {
-            role: "assistant",
-            content: "Here are some sea travel tours for your 2-day, 1-night trip within $100-$200:",
-            tours: [
-                { name: "Vung Tau Quick Escape", price: "$120" },
-                { name: "Cat Ba Coastal Sprint", price: "$130" },
-                { name: "Nha Trang Island Hop", price: "$140" },
-                { name: "Phu Quoc Short Getaway", price: "$150" },
-                { name: "Mui Ne Beach Blitz", price: "$160" },
-                { name: "Da Nang Coastal Dash", price: "$170" },
-            ],
-        },
-        {
-            role: "user",
-            content: "$200-$300 and go 2n1d",
-        },
-        {
-            role: "assistant",
-            content: "Here are some sea travel tours for your 2-day, 1-night trip within $200-$300:",
-            tours: [
-                { name: "Hoi An Beach Break", price: "$210" },
-                { name: "Quy Nhon Quick Retreat", price: "$220" },
-                { name: "Phan Thiet Sea Snap", price: "$230" },
-                { name: "Cam Ranh Bay Brief", price: "$240" },
-                { name: "Ly Son Island Discovery", price: "$250" },
-                { name: "Nam Du Archipelago Tour", price: "$260" },
-            ],
-        },
-        {
-            role: "user",
-            content: "$100-$200 and go 3n2d",
-        },
-        {
-            role: "assistant",
-            content: "Here are some sea travel tours for your 3-day, 2-night trip within $100-$200:",
-            tours: [
-                { name: "Vung Tau Beach Retreat", price: "$150" },
-                { name: "Cat Ba Island Adventure", price: "$160" },
-                { name: "Nha Trang Coastal Escape", price: "$170" },
-                { name: "Phu Quoc Budget Getaway", price: "$180" },
-                { name: "Mui Ne Sand Dunes & Sea", price: "$190" },
-                { name: "Con Dao Island Hopping", price: "$195" },
-            ],
-        },
-        {
-            role: "user",
-            content: "$200-$300 and go 3n2d",
-        },
-        {
-            role: "assistant",
-            content: "Here are some sea travel tours for your 3-day, 2-night trip within $200-$300:",
-            tours: [
-                { name: "Ha Long Bay Short Cruise", price: "$210" },
-                { name: "Da Nang Beach Break", price: "$220" },
-                { name: "Quy Nhon Coastal Charm", price: "$230" },
-                { name: "Phan Thiet Sea Escape", price: "$240" },
-                { name: "Cam Ranh Bay Adventure", price: "$250" },
-                { name: "Hoi An Coastal Retreat", price: "$260" },
-            ],
-        },
-        {
-            role: "user",
-            content: "$100-$200 and go 4n3d",
-        },
-        {
-            role: "assistant",
-            content: "Here are some sea travel tours for your 4-day, 3-night trip within $100-$200:",
-            tours: [
-                { name: "Phu Quoc Extended Adventure", price: "$150" },
-                { name: "Ha Long Bay Long Cruise", price: "$160" },
-                { name: "Nha Trang Deep Dive", price: "$170" },
-                { name: "Con Dao Island Retreat", price: "$180" },
-                { name: "Mui Ne Coastal Journey", BLOOD: "$190" },
-                { name: "Da Nang Extended Beach", price: "$195" },
-            ],
-        },
-        {
-            role: "user",
-            content: "$200-$300 and go 4n3d",
-        },
-        {
-            role: "assistant",
-            content: "Here are some sea travel tours for your 4-day, 3-night trip within $200-$300:",
-            tours: [
-                { name: "Quy Nhon Sea Exploration", price: "$210" },
-                { name: "Phan Thiet Long Escape", price: "$220" },
-                { name: "Nam Du Island Adventure", price: "$230" },
-                { name: "Ly Son Volcanic Tour", price: "$240" },
-                { name: "Bai Tu Long Bay Cruise", price: "$250" },
-                { name: "Cua Lo Beach Vacation", price: "$260" },
-            ],
-        },
-    ];
-
-    // Gửi tin nhắn
-    function sendMessage() {
-        const message = chatInputField.value.trim();
-        if (message === "") return;
-
-        addMessage("user", message);
-        chatInputField.value = "";
-
-        // Xử lý logic phản hồi dựa trên mockConversation
-        if (message.toLowerCase() === "hi" || message.toLowerCase() === "hello") {
-            setTimeout(() => {
-                addMessage(
-                    "assistant",
-                    "Hi I am Viego Assistant, Please type Give me recommend to get the support"
-                );
-            }, 1000);
-        } else if (message.toLowerCase() === "give me recommend") {
-            setTimeout(() => {
-                addMessage(
-                    "assistant",
-                    "Hello I Am Viego Assistant Here the list tour Available\n$100-$200 and go 2n1d\n$200-$300 and go 2n1d\n$100-$200 and go 3n2d\n$200-$300 and go 3n2d\n$100-$200 and go 4n3d\n$200-$300 and go 4n3d"
-                );
-            }, 1000);
-        } else if (
-            message.includes("$100-$200") &&
-            (message.includes("2n1d") ||
-                message.includes("2-day") ||
-                message.includes("2 day"))
-        ) {
-            setTimeout(() => {
-                const tourResponse = mockConversation.find(
-                    (msg) =>
-                        msg.tours &&
-                        msg.content.includes("2-day, 1-night") &&
-                        msg.content.includes("$100-$200")
-                );
-                if (tourResponse) {
-                    addMessage(
-                        "assistant",
-                        tourResponse.content,
-                        tourResponse.tours
-                    );
-                }
-            }, 1000);
-        } else if (
-            message.includes("$200-$300") &&
-            (message.includes("2n1d") ||
-                message.includes("2-day") ||
-                message.includes("2 day"))
-        ) {
-            setTimeout(() => {
-                const tourResponse = mockConversation.find(
-                    (msg) =>
-                        msg.tours &&
-                        msg.content.includes("2-day, 1-night") &&
-                        msg.content.includes("$200-$300")
-                );
-                if (tourResponse) {
-                    addMessage(
-                        "assistant",
-                        tourResponse.content,
-                        tourResponse.tours
-                    );
-                }
-            }, 1000);
-        } else if (
-            message.includes("$100-$200") &&
-            (message.includes("3n2d") ||
-                message.includes("3-day") ||
-                message.includes("3 day"))
-        ) {
-            setTimeout(() => {
-                const tourResponse = mockConversation.find(
-                    (msg) =>
-                        msg.tours &&
-                        msg.content.includes("3-day, 2-night") &&
-                        msg.content.includes("$100-$200")
-                );
-                if (tourResponse) {
-                    addMessage(
-                        "assistant",
-                        tourResponse.content,
-                        tourResponse.tours
-                    );
-                }
-            }, 1000);
-        } else if (
-            message.includes("$200-$300") &&
-            (message.includes("3n2d") ||
-                message.includes("3-day") ||
-                message.includes("3 day"))
-        ) {
-            setTimeout(() => {
-                const tourResponse = mockConversation.find(
-                    (msg) =>
-                        msg.tours &&
-                        msg.content.includes("3-day, 2-night") &&
-                        msg.content.includes("$200-$300")
-                );
-                if (tourResponse) {
-                    addMessage(
-                        "assistant",
-                        tourResponse.content,
-                        tourResponse.tours
-                    );
-                }
-            }, 1000);
-        } else if (
-            message.includes("$100-$200") &&
-            (message.includes("4n3d") ||
-                message.includes("4-day") ||
-                message.includes("4 day"))
-        ) {
-            setTimeout(() => {
-                const tourResponse = mockConversation.find(
-                    (msg) =>
-                        msg.tours &&
-                        msg.content.includes("4-day, 3-night") &&
-                        msg.content.includes("$100-$200")
-                );
-                if (tourResponse) {
-                    addMessage(
-                        "assistant",
-                        tourResponse.content,
-                        tourResponse.tours
-                    );
-                }
-            }, 1000);
-        } else if (
-            message.includes("$200-$300") &&
-            (message.includes("4n3d") ||
-                message.includes("4-day") ||
-                message.includes("4 day"))
-        ) {
-            setTimeout(() => {
-                const tourResponse = mockConversation.find(
-                    (msg) =>
-                        msg.tours &&
-                        msg.content.includes("4-day, 3-night") &&
-                        msg.content.includes("$200-$300")
-                );
-                if (tourResponse) {
-                    addMessage(
-                        "assistant",
-                        tourResponse.content,
-                        tourResponse.tours
-                    );
-                }
-            }, 1000);
-        } else {
-            setTimeout(() => {
-                addMessage(
-                    "assistant",
-                    "I'm sorry, I can't answer this question please type Give me recommend to get the support"
-                );
-            }, 1000);
-        }
-    }
-
-    sendMessageBtn.addEventListener("click", sendMessage);
-    chatInputField.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            sendMessage();
-        }
+    
+        setInterval(changeImage, 5000);
     });
-});</script>
+</script>
 
 
 <script>
@@ -898,10 +519,19 @@ function closeBanner() {
     document.getElementById('adBanner').style.display = 'none';
     document.getElementById('adBannerOverlay').style.display = 'none';
 }
-
 </script>
 
-
+<script async
+  src="https://bxltnusxr7dbbcmktlsemisb.agents.do-ai.run/static/chatbot/widget.js"
+  data-agent-id="595c1d02-5106-11f0-bf8f-4e013e2ddde4"
+  data-chatbot-id="whyUn5QjT22s0UzWkl3Ik8mbf8qRSGkZ"
+  data-name="VieGo Chatbot"
+  data-primary-color="#0a1963"
+  data-secondary-color="#000000"
+  data-button-background-color="#0a1963"
+  data-starting-message="Ask me about Vietnam's Tours!"
+  data-logo="https://res.cloudinary.com/ddutk6rhm/image/upload/c_crop,w_666,h_800/v1750778774/logo_awtytm.png">
+</script>
 
 <!-- Import FontAwesome CDN nếu bạn chưa có trong layout -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
