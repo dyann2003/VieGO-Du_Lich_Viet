@@ -139,37 +139,35 @@
     <header class="bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="flex items-center justify-between h-16">
-                <!-- Logo + Desktop Nav -->
                 <div class="flex items-center space-x-6">
-                    <a href="/Home" class="flex items-center space-x-2">
+                    <a class="flex items-center space-x-2 cursor-pointer"
+                       id="logo-button"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Toggle mobile menu"
+                       href="/Home">
+                        <!-- Logo Image -->
                         <img src="/images/logo.png" alt="VieGo Logo" style="height: 120px; width: 120px;" />
+
                     </a>
                     <ul class="hidden md:flex space-x-6 text-sm font-normal text-[#1a1a1a]">
-                        <li><a class="hover:underline" href="aboutus.html">About Us</a></li>
-                        <li><a class="hover:underline" href="faq.html">FAQs</a></li>
-                        <li><a class="hover:underline" href="blog.html">Blog</a></li>
-                        <li><a class="hover:underline" href="/MyBooking">My Bookings</a></li>
+                        <li>
+                            <a class="hover:underline" href="aboutus.html"> About Us </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="faq.html"> FAQs </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="blog.html"> Blog </a>
+                        </li>
+                        <li>
+                            <a class="hover:underline" href="/MyBooking">
+                                My Bookings
+                            </a>
+                        </li>
                     </ul>
                 </div>
-
-                <!-- Hamburger Icon (Mobile) -->
-                <div class="md:hidden">
-                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-                             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
             </nav>
-
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="md:hidden hidden mt-2 space-y-2 text-sm font-normal text-[#1a1a1a]">
-                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="aboutus.html">About Us</a>
-                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="faq.html">FAQs</a>
-                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="blog.html">Blog</a>
-                <a class="block px-4 py-2 hover:bg-gray-100 rounded" href="/MyBooking">My Bookings</a>
-            </div>
         </div>
     </header>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-12">
@@ -286,13 +284,13 @@
                             Itinerary
                         </button>
                         <button class="pb-2 hover:text-gray-900"
-                                data-tab="included"
+                                data-tab="included-excluded"
                                 type="button"
                                 id="included-excluded-tab">
                             Included/Excluded
                         </button>
                         <button class="pb-2 hover:text-gray-900"
-                                data-tab="dates"
+                                data-tab="available-dates"
                                 type="button"
                                 id="available-dates-tab">
                             Available Dates
@@ -316,70 +314,23 @@
                     <div id="itinerary" class="tab-content">
                         <h3 class="font-semibold mb-2" id="tour-highlights">Tour Highlights</h3>
                         <ul id="highlights-list" class="list-disc list-inside space-y-1 text-gray-700"></ul>
-                        <li>Visit the sacred Uluwatu Temple</li>
+                        <!--<li>Visit the sacred Uluwatu Temple</li>
                         <li>Explore the beautiful beaches of Kuta and Nusa Dua</li>
                         <li>Experience traditional Balinese culture and dance</li>
-                        <li>Enjoy water activities and adventure sports</li>
+                        <li>Enjoy water activities and adventure sports</li>-->
                         </ul>
                         <h3 class="font-semibold mt-6 mb-2">Detailed Itinerary</h3>
                         <div class="space-y-4 text-gray-800">
                             <div>
-                                <p id="itinerary-day1">
-                                    <span class="font-semibold text-pink-600">
-                                        Day 1: Arrival – Kuta Beach
-                                    </span>
-                                    <br />
-                                    Arrive at Ngurah Rai International Airport. Transfer to
-                                    hotel. Free time at Kuta Beach. Welcome dinner.
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    <span class="font-semibold text-pink-600">
-                                        Day 2: Ubud - Cultural Day
-                                    </span>
-                                    <br />
-                                    Visit Ubud Monkey Forest, Tegallalang Rice Terraces, and
-                                    traditional art villages. Experience a traditional dance
-                                    performance.
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    <span class="font-semibold text-pink-600">
-                                        Day 3: Water Temple &amp; Beaches
-                                    </span>
-                                    <br />
-                                    Visit Tanah Lot Temple, Uluwatu Temple, and enjoy time at
-                                    Nusa Dua Beach. Optional water sports activities.
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    <span class="font-semibold text-pink-600">
-                                        Day 4: Departure
-                                    </span>
-                                    <br />
-                                    Free time for shopping. Transfer to airport for departure.
-                                </p>
+                                <p id="itinerary-day1"></p>
                             </div>
                         </div>
                     </div>
                     <div id="included-excluded" class="tab-content hidden">
                         <h3 class="font-semibold mb-2">Included</h3>
-                        <ul id="included-items" class="list-disc list-inside space-y-1 text-gray-700">
-                            <li>Accommodation in 3-star hotels</li>
-                            <li>Daily breakfast and welcome dinner</li>
-                            <li>Airport transfers and transportation</li>
-                            <li>Guided tours and entrance fees</li>
-                        </ul>
+                        <ul id="included-items" class="list-disc list-inside space-y-1 text-gray-700"></ul>
                         <h3 class="font-semibold mt-6 mb-2">Excluded</h3>
-                        <ul id="excluded-items" class="list-disc list-inside space-y-1 text-gray-700">
-                            <li>International airfare</li>
-                            <li>Personal expenses and tips</li>
-                            <li>Travel insurance</li>
-                            <li>Optional activities and water sports</li>
-                        </ul>
+                        <ul id="excluded-items" class="list-disc list-inside space-y-1 text-gray-700"></ul>
                     </div>
                     <div id="available-dates" class="tab-content hidden">
                         <h3 class="font-semibold mb-2">Available Dates</h3>
@@ -394,79 +345,20 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="available-dates-table">
-                                    <tr>
-                                        <td>T3, 27/05/2025</td>
-                                        <td>CN, 01/06/2025</td>
-                                        <td><span class="contact-available">Liên hệ</span></td>
-                                        <td class="price">32.900.000 đ</td>
-                                        <td><button class="book-btn">Book</button></td>
-                                    </tr>
-                                    <tr class="table-row-bg">
-                                        <td>T3, 03/06/2025</td>
-                                        <td>CN, 08/06/2025</td>
-                                        <td><span class="contact-limited">Liên hệ</span></td>
-                                        <td class="price">34.900.000 đ</td>
-                                        <td><button class="book-btn">Book</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>T3, 10/06/2025</td>
-                                        <td>CN, 15/06/2025</td>
-                                        <td><span class="contact-limited">Liên hệ</span></td>
-                                        <td class="price">34.900.000 đ</td>
-                                        <td><button class="book-btn">Book</button></td>
-                                    </tr>
-                                    <tr class="table-row-bg">
-                                        <td>T3, 17/06/2025</td>
-                                        <td>CN, 22/06/2025</td>
-                                        <td><span class="contact-limited">Liên hệ</span></td>
-                                        <td class="price">34.900.000 đ</td>
-                                        <td><button class="book-btn">Book</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>T3, 24/06/2025</td>
-                                        <td>CN, 29/06/2025</td>
-                                        <td><span class="contact-limited">Liên hệ</span></td>
-                                        <td class="price">34.900.000 đ</td>
-                                        <td><button class="book-btn">Book</button></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="available-dates-table"></tbody>
                             </table>
                         </div>
                     </div>
                     <div id="reviews" class="tab-content hidden">
                         <h3 class="font-semibold mb-2">Reviews</h3>
                         <div class="space-y-4 text-gray-800">
-                            <div>
-                                <p class="font-semibold text-pink-600 review-card">John D.</p>
-                                <p>
-                                    Great experience! The tour was well organized and the guide
-                                    was very knowledgeable.
-                                </p>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-pink-600 review-card">Maria S.</p>
-                                <p>
-                                    Loved the cultural day in Ubud and the beaches were
-                                    stunning. Highly recommend!
-                                </p>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-pink-600 review-card">Alex P.</p>
-                                <p>
-                                    Good value for money. The itinerary was packed but
-                                    enjoyable.
-                                </p>
-                            </div>
+                            
                         </div>
                     </div>
                     <div id="policies" class="tab-content hidden">
                         <h3 class="font-semibold mb-2">Policies</h3>
                         <ul id="policies-content" class="list-disc list-inside space-y-1 text-gray-700">
-                            <li>Cancellation free up to 7 days before departure</li>
-                            <li>Full refund for cancellations made 14 days prior</li>
-                            <li>Travel insurance is recommended</li>
-                            <li>Participants must carry valid ID during the tour</li>
+                            
                         </ul>
                     </div>
                 </section>
@@ -475,12 +367,13 @@
             <aside class="w-full max-w-md bg-white border border-gray-200 rounded-md p-5 text-xs text-gray-700">
                 <div class="flex items-center justify-between mb-3">
                     <div>
-                        <p class="text-pink-600 font-semibold text-lg" id="tour-price"></p>
-                        <p class="line-through text-gray-400 text-xs" id="tour-price-original"></p>
+                        <p class="text-pink-600 font-semibold text-lg" id="tour-price">$250</p>
+                        <p class="line-through text-gray-400 text-xs" id="tour-price-original">$300</p>
                     </div>
-                    <!--<div id="tour-discount"
+                    <div id="tour-discount"
                          class="text-green-600 text-xs font-semibold border border-green-300 rounded px-2 py-0.5">
-                    </div>-->
+                        17% OFF
+                    </div>
                 </div>
                 <form class="space-y-4">
                     <!--<div>
@@ -539,10 +432,10 @@
                     </div>
                 </form>
                 <div class="flex justify-between mt-4 text-xs font-semibold text-gray-900">
-                    <p><strong>People (<span id="adults-count"></span> × <span id="price-per-adult"></span>)</strong> <span id="adults-total"></span></p>
+                    <p><strong>People (<span id="adults-count">2</span> × <span id="price-per-adult">$250</span>)</strong> <span id="adults-total">$500</span></p>
                 </div>
                 <div class="flex justify-between mt-1 text-sm font-bold text-gray-900 border-t border-gray-200 pt-3">
-                    <p><strong>Total</strong> <span id="total-price"></span></p>
+                    <p><strong>Total</strong> <span id="total-price">$500.00</span></p>
                 </div>
                 <a>
                     <button id="book-now" onclick="bookNow()" class="w-full mt-4 bg-pink-600 text-white py-2 rounded text-sm font-semibold hover:bg-pink-700" disabled>
@@ -699,16 +592,34 @@
         });
 
         async function getExchangeRate(from = 'USD', to = 'VND') {
+            const API_KEY = '3d34e42faae65616d33919f4010a0dca';
+            const url = `https://api.exchangerate.host/live?base=${from}&symbols=${to}&access_key=${API_KEY}`;
+
             try {
-                const res = await fetch(`https://api.exchangerate.host/latest?base=${from}&symbols=${to}`);
-                const data = await res.json();
-                return data.rates[to];
-            } catch (e) {
-                console.error("Exchange rate fetch failed", e);
-                return 24000; // fallback
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error?.info || "Exchange API returned failure");
+                }
+
+                const key = from + to;
+                const rate = parseFloat(data.quotes?.[key]);
+
+                if (isNaN(rate) || rate <= 0) {
+                    throw new Error(`Invalid rate received for ${key}`);
+                }
+
+                return rate;
+            } catch (error) {
+                console.error("Failed to fetch exchange rate:", error.message);
+                return 26000; // fallback rate
             }
         }
-
 
         async function fetchTourData() {
             try {
@@ -739,6 +650,7 @@
                     adultsCount: document.getElementById('adults-count'),
                 };
 
+                // Populate basic fields
                 if (el.title) el.title.textContent = data.tourName || "N/A";
                 if (el.code) el.code.textContent = data.tourCode || "N/A";
                 if (el.rating) el.rating.textContent = (data.rating || 0).toFixed(1);
@@ -752,18 +664,17 @@
                 const firstSchedule = data.tourSchedules?.[0];
                 if (el.departureDate) el.departureDate.textContent = firstSchedule?.departureDate ?? "N/A";
                 if (el.availableSeats) el.availableSeats.textContent = firstSchedule?.availableSlots ?? "N/A";
-
                 if (el.groupSize) el.groupSize.textContent = `${data.groupSizeMin || 0}-${data.groupSizeMax || 0} people`;
                 if (el.provider) el.provider.textContent = data.serviceProvider?.name || "N/A";
 
+                // Exchange rate and pricing
                 const price = firstSchedule?.price || 0;
-
                 currentExchangeRate = await getExchangeRate("USD", "VND");
                 const convertedPrice = price * currentExchangeRate;
-
                 if (el.pricePerAdult) el.pricePerAdult.textContent = `$${price.toFixed(2)} (${convertedPrice.toLocaleString('vi-VN')} ₫)`;
                 if (el.price) el.price.textContent = `$${price.toFixed(2)} (${convertedPrice.toLocaleString('vi-VN')} ₫)`;
 
+                // Original price and discount
                 if (el.priceOriginal) {
                     if (data.originalPrice && data.originalPrice > price) {
                         el.priceOriginal.textContent = `$${data.originalPrice}`;
@@ -772,7 +683,6 @@
                         el.priceOriginal.style.display = 'none';
                     }
                 }
-
                 if (el.discount) {
                     if (data.originalPrice && data.originalPrice > price) {
                         const discount = Math.round(((data.originalPrice - price) / data.originalPrice) * 100);
@@ -783,15 +693,111 @@
                     }
                 }
 
-                if (typeof updateTotalPrice === 'function') {
-                    updateTotalPrice();
+                // TOUR HIGHLIGHTS
+                const highlightsList = document.getElementById('highlights-list');
+                if (highlightsList) {
+                    highlightsList.innerHTML = '';
+                    data.tourHighlights?.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item.description;
+                        highlightsList.appendChild(li);
+                    });
                 }
+
+                // DETAILED ITINERARY
+                const itineraryContainer = document.querySelector('#itinerary .space-y-4');
+                if (itineraryContainer) {
+                    itineraryContainer.innerHTML = '';
+                    data.itineraries?.forEach(it => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<span class="font-semibold text-pink-600">
+                            Day ${it.dayNumber}: ${it.location}</span><br>${it.description}`;
+                        const div = document.createElement('div');
+                        div.appendChild(p);
+                        itineraryContainer.appendChild(div);
+                    });
+                }
+
+                // INCLUSIONS
+                const includedList = document.getElementById('included-items');
+                if (includedList) {
+                    includedList.innerHTML = '';
+                    data.tourInclusions?.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item.description;
+                        includedList.appendChild(li);
+                    });
+                }
+
+                // EXCLUSIONS
+                const excludedList = document.getElementById('excluded-items');
+                if (excludedList) {
+                    excludedList.innerHTML = '';
+                    data.tourExclusions?.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item.description;
+                        excludedList.appendChild(li);
+                    });
+                }
+
+                // AVAILABLE DATES TABLE
+                const datesTable = document.getElementById('available-dates-table');
+                if (datesTable) {
+                    datesTable.innerHTML = '';
+                    data.tourSchedules?.forEach(schedule => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${formatVNDate(schedule.departureDate)}</td>
+                            <td>${formatVNDate(schedule.returnDate)}</td>
+                            <td><span class="contact-available">${schedule.status}</span></td>
+                            <td class="price">${(schedule.price * currentExchangeRate).toLocaleString('vi-VN')} đ</td>
+                            <td><button class="book-btn">Book</button></td>
+                        `;
+                        datesTable.appendChild(tr);
+                    });
+                }
+
+                // POLICIES
+                const policiesList = document.getElementById('policies-content');
+                if (policiesList) {
+                    policiesList.innerHTML = '';
+                    const lines = data.policies?.split('\n') ?? [];
+                    lines.forEach(policy => {
+                        if (policy.trim()) {
+                            const li = document.createElement('li');
+                            li.textContent = policy.trim();
+                            policiesList.appendChild(li);
+                        }
+                    });
+                }
+
+                // (Optional) REVIEWS
+                const reviewsContainer = document.querySelector('#reviews .space-y-4');
+                if (reviewsContainer) {
+                    reviewsContainer.innerHTML = '';
+                    data.reviews?.forEach(r => {
+                        const div = document.createElement('div');
+                        div.innerHTML = `
+                            <p class="font-semibold text-pink-600 review-card">${r.author ?? "Anonymous"}</p>
+                            <p>${r.content}</p>
+                        `;
+                        reviewsContainer.appendChild(div);
+                    });
+                }
+
+                if (typeof updateTotalPrice === 'function') updateTotalPrice();
 
             } catch (error) {
                 console.error('Error fetching tour data:', error);
             }
         }
 
+        // Helper: Format date to "T3, 25/06/2025"
+        function formatVNDate(dateStr) {
+            const date = new Date(dateStr);
+            const days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+            return `${days[date.getDay()]}, ${date.toLocaleDateString('vi-VN')}`;
+        }
 
         // Book button click handler
         document.addEventListener("DOMContentLoaded", function () {
@@ -934,9 +940,27 @@
 
     </script>
     <script>
-        document.getElementById("menu-toggle").addEventListener("click", function () {
-            const menu = document.getElementById("mobile-menu");
-            menu.classList.toggle("hidden");
+        document.addEventListener("DOMContentLoaded", () => {
+            const tabs = document.querySelectorAll("nav [data-tab]");
+            const contents = document.querySelectorAll(".tab-content");
+
+            function activateTab(tab) {
+                const target = tab.getAttribute("data-tab");
+                contents.forEach(c => c.classList.add("hidden"));
+                document.getElementById(target)?.classList.remove("hidden");
+                tabs.forEach(t => t.classList.remove("border-b-2", "border-pink-500", "text-pink-600"));
+                tab.classList.add("border-b-2", "border-pink-500", "text-pink-600");
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener("click", () => activateTab(tab));
+            });
+
+            // Active tab đầu tiên nếu chưa có tab nào hiển thị
+            const firstTab = tabs[0];
+            if (firstTab) {
+                activateTab(firstTab);
+            }
         });
     </script>
 </body>
