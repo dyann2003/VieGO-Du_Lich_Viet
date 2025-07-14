@@ -45,7 +45,7 @@ namespace Data.Repository
                 .Select(g => new
                 {
                     Month = g.Key,
-                    Total = g.Sum(b => b.TotalPrice) * 0.05m // ✅ 5% admin
+                    Total = g.Sum(b => b.TotalPrice)
                 })
                 .ToDictionary(g => g.Month, g => g.Total );
 
