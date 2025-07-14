@@ -24,10 +24,9 @@ namespace Data.Repository
             var totalBooking = _context.Bookings.Count();
             var totalUser = _context.Users.Count(u => u.RoleId == 2);
             var comments = _context.Reviews.Count();
-            var purchaseOrders = Math.Round(
-                _context.Bookings
+            var purchaseOrders = _context.Bookings
                     .Where(b => b.BookingStatus == "Completed")
-                    .Sum(b => b.TotalPrice));
+                    .Sum(b => b.TotalPrice);
 
 
             var ratings = _context.Reviews
