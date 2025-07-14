@@ -27,9 +27,7 @@ namespace Data.Repository
             var purchaseOrders = Math.Round(
                 _context.Bookings
                     .Where(b => b.BookingStatus == "Completed")
-                    .Sum(b => b.TotalPrice) * 0.05m,
-                2
-            );
+                    .Sum(b => b.TotalPrice);
 
 
             var ratings = _context.Reviews
