@@ -397,11 +397,11 @@
             var allMonths = Enumerable.Range(1, 12).ToList();
             var salesData = Model.SalesByMonth ?? new Dictionary<int, decimal>();
             var salesLabels = allMonths
-            .Select(m => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m))
-            .ToList();
+                .Select(m => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m))
+                .ToList();
             var salesValues = allMonths
-            .Select(m => salesData.ContainsKey(m) ? salesData[m] : 0m)
-            .ToList();
+                .Select(m => salesData.ContainsKey(m) ? salesData[m] : 0m)
+                .ToList();
         }
 
 
@@ -474,14 +474,14 @@
                 const ctx = document.getElementById('salesChart');
                 if (ctx) {
                     const salesData = {
-                        labels:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(salesLabels)),
+                        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(salesLabels)),
                         datasets: [{
-                            label: 'Sales ($)',
+                            label: 'Doanh thu (VNĐ)',
                             data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(salesValues)),
                             backgroundColor: '#60a5fa'
                         }]
                     };
-
+        
                     new Chart(ctx, {
                         type: 'bar',
                         data: salesData,
@@ -490,7 +490,7 @@
                             plugins: {
                                 title: {
                                     display: true,
-                                    text: 'Sales by Month (All Year)'
+                                    text: 'Doanh thu theo tháng (Cả năm)'
                                 },
                                 legend: {
                                     display: false
@@ -500,7 +500,9 @@
                                 y: {
                                     beginAtZero: true,
                                     ticks: {
-                                        callback: value => '$' + value
+                                        callback: function (value) {
+                                            return value.toLocaleString('vi-VN') + ' đ';
+                                        }
                                     }
                                 },
                                 x: {
@@ -520,7 +522,6 @@
                 }
             });
         </script>
-
 }
     
 </body>
